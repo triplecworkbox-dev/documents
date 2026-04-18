@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facilitator Mind Map — Aniké × Creative HQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: #1a1a2e;
+overflow: hidden;
+font-family: ‘DM Sans’, sans-serif;
+cursor: grab;
+user-select: none;
+}
+
+body.dragging { cursor: grabbing; }
+
+#canvas {
+position: fixed;
+inset: 0;
+width: 100vw;
+height: 100vh;
+}
+
+/* ── TOOLBAR ── */
+#toolbar {
+position: fixed;
+top: 18px;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(255,255,255,0.08);
+backdrop-filter: blur(12px);
+border: 1px solid rgba(255,255,255,0.12);
+border-radius: 32px;
+padding: 8px 20px;
+display: flex;
+align-items: center;
+gap: 18px;
+z-index: 100;
+color: rgba(255,255,255,0.7);
+font-size: 12px;
+letter-spacing: 0.06em;
+}
+
+.toolbar-dot {
+width: 8px; height: 8px;
+border-radius: 50%;
+}
+
+#zoom-controls {
+position: fixed;
+bottom: 24px;
+right: 24px;
+display: flex;
+flex-direction: column;
+gap: 4px;
+z-index: 100;
+}
+
+.zoom-btn {
+width: 36px; height: 36px;
+background: rgba(255,255,255,0.1);
+border: 1px solid rgba(255,255,255,0.15);
+border-radius: 8px;
+color: white;
+font-size: 18px;
+cursor: pointer;
+display: flex; align-items: center; justify-content: center;
+transition: background 0.15s;
+}
+.zoom-btn:hover { background: rgba(255,255,255,0.2); }
+
+/* ── LEGEND ── */
+#legend {
+position: fixed;
+bottom: 24px;
+left: 24px;
+z-index: 100;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.legend-item {
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 11px;
+color: rgba(255,255,255,0.5);
+letter-spacing: 0.05em;
+}
+
+.legend-chip {
+width: 28px; height: 12px;
+border-radius: 3px;
+}
+
+/* ── GRID BACKGROUND ── */
+#canvas {
+background-image:
+radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0);
+background-size: 32px 32px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <div class="toolbar-dot" style="background:#ff6b6b"></div>
+  <span>Aniké Jenneker</span>
+  <div style="width:1px; height:14px; background:rgba(255,255,255,0.2)"></div>
+  <div class="toolbar-dot" style="background:#4ecdc4"></div>
+  <span>Creative HQ</span>
+  <div style="width:1px; height:14px; background:rgba(255,255,255,0.2)"></div>
+  <div class="toolbar-dot" style="background:#ffe66d"></div>
+  <span>Convergence</span>
+  <div style="width:1px; height:14px; background:rgba(255,255,255,0.2)"></div>
+  <span style="opacity:0.4">drag · scroll to zoom</span>
+</div>
+
+<div id="zoom-controls">
+  <button class="zoom-btn" id="zin">+</button>
+  <button class="zoom-btn" id="zout">−</button>
+  <button class="zoom-btn" id="zreset" style="font-size:11px">⌂</button>
+</div>
+
+<div id="legend">
+  <div class="legend-item"><div class="legend-chip" style="background:#ff6b6b55; border:1.5px solid #ff6b6b"></div>Aniké cluster</div>
+  <div class="legend-item"><div class="legend-chip" style="background:#4ecdc455; border:1.5px solid #4ecdc4"></div>Creative HQ cluster</div>
+  <div class="legend-item"><div class="legend-chip" style="background:#ffe66d55; border:1.5px solid #ffe66d"></div>Convergence zone</div>
+  <div class="legend-item"><div class="legend-chip" style="background:rgba(255,255,255,0.08); border:1.5px solid rgba(255,255,255,0.2)"></div>HMW / tension</div>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+// ── STATE ──
+let W, H;
+let pan = { x: 0, y: 0 };
+let zoom = 1;
+let dragging = false;
+let lastMouse = { x: 0, y: 0 };
+let hoveredNode = null;
+let animFrame = 0;
+
+// ── RESIZE ──
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  pan.x = W / 2;
+  pan.y = H / 2;
+  draw();
+}
+window.addEventListener('resize', resize);
+
+// ── DATA ──
+// Positions are relative to canvas centre (0,0)
+
+const CENTER = { x: 0, y: 0 };
+
+const nodes = [
+
+  // ════ CENTRE ════
+  {
+    id: 'centre',
+    x: 0, y: 0,
+    label: 'THE FIT',
+    sub: 'Where two\nevolutions meet',
+    type: 'centre',
+    r: 64,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+
+  // ════ ANIKÉ CLUSTER (left) ════
+  {
+    id: 'anike',
+    x: -420, y: -20,
+    label: 'ANIKÉ\nJENNEKER',
+    sub: '18 yrs · 4 continents',
+    type: 'stakeholder',
+    r: 52,
+    color: '#ff6b6b',
+    textColor: '#fff',
+  },
+
+  // Aniké branches
+  {
+    id: 'a-delivery',
+    x: -680, y: -200,
+    label: 'Delivery\ntrack record',
+    sub: 'SAP · BNZ · Transpower\nDubai · PCH China',
+    type: 'anike',
+    r: 44,
+    color: '#ff6b6b',
+    textColor: '#fff',
+  },
+  {
+    id: 'a-startup',
+    x: -700, y: 60,
+    label: 'Startup\nfounder',
+    sub: 'Carepon — built solo\n↓40% manual entry',
+    type: 'anike',
+    r: 40,
+    color: '#ff6b6b',
+    textColor: '#fff',
+  },
+  {
+    id: 'a-methods',
+    x: -560, y: -360,
+    label: 'Methods',
+    sub: 'Lean · Agile · Design\nThinking · Sprint · BABOK',
+    type: 'anike',
+    r: 38,
+    color: '#ff9999',
+    textColor: '#fff',
+  },
+  {
+    id: 'a-coaching',
+    x: -380, y: -280,
+    label: 'Coaching &\ntraining',
+    sub: '30+ users upskilled\nAgile ceremonies led',
+    type: 'anike',
+    r: 36,
+    color: '#ff9999',
+    textColor: '#fff',
+  },
+  {
+    id: 'a-range',
+    x: -720, y: -430,
+    label: 'Sector\nrange',
+    sub: 'Health · Finance · Utilities\nMfg · Govt · SaaS',
+    type: 'anike-leaf',
+    r: 30,
+    color: '#ffbbbb',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'a-energy',
+    x: -560, y: 220,
+    label: 'Energy &\npersonality',
+    sub: 'Triple-C · servant\nleadership · D&I',
+    type: 'anike-leaf',
+    r: 30,
+    color: '#ffbbbb',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'a-global',
+    x: -820, y: -80,
+    label: 'Global\nexposure',
+    sub: 'NZ · RSA · Dubai\nChina · Germany · Azerbaijan',
+    type: 'anike-leaf',
+    r: 28,
+    color: '#ffbbbb',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'a-creative-tech',
+    x: -300, y: -400,
+    label: 'Creative tech\ncuriosity',
+    sub: 'UXPin · prototyping\nIBM Watson · AI tools',
+    type: 'anike-leaf',
+    r: 28,
+    color: '#ffbbbb',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'a-workshops',
+    x: -820, y: 220,
+    label: 'Workshop\ndesign',
+    sub: 'Process mapping\nBPMN · facilitation',
+    type: 'anike-leaf',
+    r: 26,
+    color: '#ffbbbb',
+    textColor: '#1a1a2e',
+  },
+
+  // ════ CHQ CLUSTER (right) ════
+  {
+    id: 'chq',
+    x: 420, y: -20,
+    label: 'CREATIVE\nHQ',
+    sub: '23 yrs · 500+ startups',
+    type: 'stakeholder',
+    r: 52,
+    color: '#4ecdc4',
+    textColor: '#1a1a2e',
+  },
+
+  // CHQ branches
+  {
+    id: 'c-programmes',
+    x: 670, y: -200,
+    label: 'Innovation\nprogrammes',
+    sub: 'Sprints · accelerators\ncapability building',
+    type: 'chq',
+    r: 44,
+    color: '#4ecdc4',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-ecosystem',
+    x: 700, y: 60,
+    label: 'Full\necosystem',
+    sub: 'Startups · corporates\ngovernment · international',
+    type: 'chq',
+    r: 40,
+    color: '#4ecdc4',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-values',
+    x: 550, y: -360,
+    label: 'Values',
+    sub: 'Go Together\nChallenge · Bring Energy',
+    type: 'chq',
+    r: 38,
+    color: '#88e8e2',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-creative-tech',
+    x: 370, y: -300,
+    label: 'Creative tech\nopportunity',
+    sub: 'Film · games · immersive\nmedia — emerging focus',
+    type: 'chq',
+    r: 36,
+    color: '#88e8e2',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-gap',
+    x: 700, y: -430,
+    label: 'The gap\nthey\'re filling',
+    sub: 'Creative founders need\ndifferent support',
+    type: 'chq-leaf',
+    r: 30,
+    color: '#bbf0ed',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-bptw',
+    x: 820, y: -80,
+    label: 'Best Places\nto Work 2025',
+    sub: 'Culture signal\nteam quality',
+    type: 'chq-leaf',
+    r: 28,
+    color: '#bbf0ed',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-pacific',
+    x: 820, y: 220,
+    label: 'Pacific\nreach',
+    sub: 'Travel up to\n2 weeks required',
+    type: 'chq-leaf',
+    r: 26,
+    color: '#bbf0ed',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-bex',
+    x: 550, y: 220,
+    label: 'Rebecca\n(People Lead)',
+    sub: 'NZTE · MoJ · Global\nWomen Activate',
+    type: 'chq-leaf',
+    r: 28,
+    color: '#bbf0ed',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'c-chloe',
+    x: 370, y: 200,
+    label: 'Chloe\n(Marketing)',
+    sub: 'Already connected\n→ warm signal',
+    type: 'chq-leaf',
+    r: 26,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+
+  // ════ CONVERGENCE ZONE (middle) ════
+  {
+    id: 'conv-coaching',
+    x: -20, y: -240,
+    label: 'Coaching\nfounders',
+    sub: 'She\'s done it\nthey need it',
+    type: 'converge',
+    r: 36,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'conv-ambiguity',
+    x: -160, y: 200,
+    label: 'Comfort with\nambiguity',
+    sub: 'Built in incomplete\ninfo environments',
+    type: 'converge',
+    r: 32,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'conv-energy',
+    x: 160, y: 200,
+    label: 'Bring\nthe energy',
+    sub: 'Triple-C =\nCHQ values lived',
+    type: 'converge',
+    r: 32,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+  {
+    id: 'conv-design',
+    x: 0, y: 260,
+    label: 'Programme\ndesign',
+    sub: 'Adapts content\nper context',
+    type: 'converge',
+    r: 30,
+    color: '#ffe66d',
+    textColor: '#1a1a2e',
+  },
+
+  // ════ HMW / TENSION NODES ════
+  {
+    id: 'hmw1',
+    x: -80, y: -400,
+    label: 'HMW →',
+    sub: 'bring someone who\'s\nalready done the work?',
+    type: 'hmw',
+    r: 34,
+    color: 'rgba(255,255,255,0.06)',
+    textColor: 'rgba(255,255,255,0.8)',
+    border: 'rgba(255,255,255,0.25)',
+  },
+  {
+    id: 'hmw2',
+    x: -200, y: 360,
+    label: 'TENSION →',
+    sub: 'Contractor mindset\nvs team embed',
+    type: 'hmw',
+    r: 30,
+    color: 'rgba(255,255,255,0.06)',
+    textColor: 'rgba(255,255,255,0.7)',
+    border: 'rgba(255,255,255,0.2)',
+  },
+  {
+    id: 'hmw3',
+    x: 200, y: 360,
+    label: 'SIGNAL →',
+    sub: 'Chloe connection\npre-validates culture fit',
+    type: 'hmw',
+    r: 30,
+    color: 'rgba(255,230,100,0.1)',
+    textColor: '#ffe66d',
+    border: 'rgba(255,230,100,0.4)',
+  },
+  {
+    id: 'hmw4',
+    x: 80, y: -420,
+    label: 'OPEN Q →',
+    sub: 'Creative tech — does she\nhave a specific POV?',
+    type: 'hmw',
+    r: 28,
+    color: 'rgba(255,255,255,0.04)',
+    textColor: 'rgba(255,255,255,0.6)',
+    border: 'rgba(255,255,255,0.18)',
+  },
+];
+
+// ── EDGES ──
+const edges = [
+  // Centre connections
+  { from: 'centre', to: 'anike', style: 'main', color: '#ff6b6b' },
+  { from: 'centre', to: 'chq', style: 'main', color: '#4ecdc4' },
+  { from: 'centre', to: 'conv-coaching', style: 'converge', color: '#ffe66d' },
+  { from: 'centre', to: 'conv-ambiguity', style: 'converge', color: '#ffe66d' },
+  { from: 'centre', to: 'conv-energy', style: 'converge', color: '#ffe66d' },
+  { from: 'centre', to: 'conv-design', style: 'converge', color: '#ffe66d' },
+
+  // Aniké branches
+  { from: 'anike', to: 'a-delivery', style: 'branch', color: '#ff6b6b' },
+  { from: 'anike', to: 'a-startup', style: 'branch', color: '#ff6b6b' },
+  { from: 'anike', to: 'a-coaching', style: 'branch', color: '#ff6b6b' },
+  { from: 'a-delivery', to: 'a-methods', style: 'leaf', color: '#ff9999' },
+  { from: 'a-delivery', to: 'a-range', style: 'leaf', color: '#ffbbbb' },
+  { from: 'a-delivery', to: 'a-global', style: 'leaf', color: '#ffbbbb' },
+  { from: 'a-startup', to: 'a-energy', style: 'leaf', color: '#ffbbbb' },
+  { from: 'a-startup', to: 'a-workshops', style: 'leaf', color: '#ffbbbb' },
+  { from: 'a-coaching', to: 'a-creative-tech', style: 'leaf', color: '#ffbbbb' },
+
+  // CHQ branches
+  { from: 'chq', to: 'c-programmes', style: 'branch', color: '#4ecdc4' },
+  { from: 'chq', to: 'c-ecosystem', style: 'branch', color: '#4ecdc4' },
+  { from: 'chq', to: 'c-creative-tech', style: 'branch', color: '#4ecdc4' },
+  { from: 'chq', to: 'c-bex', style: 'branch', color: '#4ecdc4' },
+  { from: 'chq', to: 'c-chloe', style: 'branch', color: '#ffe66d' },
+  { from: 'c-programmes', to: 'c-values', style: 'leaf', color: '#88e8e2' },
+  { from: 'c-programmes', to: 'c-bptw', style: 'leaf', color: '#bbf0ed' },
+  { from: 'c-ecosystem', to: 'c-pacific', style: 'leaf', color: '#bbf0ed' },
+  { from: 'c-creative-tech', to: 'c-gap', style: 'leaf', color: '#bbf0ed' },
+
+  // HMW connections (dashed)
+  { from: 'hmw1', to: 'conv-coaching', style: 'hmw', color: 'rgba(255,255,255,0.2)' },
+  { from: 'hmw2', to: 'conv-ambiguity', style: 'hmw', color: 'rgba(255,255,255,0.15)' },
+  { from: 'hmw3', to: 'c-chloe', style: 'hmw', color: 'rgba(255,230,100,0.3)' },
+  { from: 'hmw4', to: 'a-creative-tech', style: 'hmw', color: 'rgba(255,255,255,0.15)' },
+  { from: 'hmw4', to: 'c-creative-tech', style: 'hmw', color: 'rgba(255,255,255,0.15)' },
+
+  // Cross-connections (insight lines)
+  { from: 'a-coaching', to: 'conv-coaching', style: 'insight', color: 'rgba(255,200,100,0.35)' },
+  { from: 'a-startup', to: 'conv-ambiguity', style: 'insight', color: 'rgba(255,200,100,0.3)' },
+  { from: 'a-energy', to: 'conv-energy', style: 'insight', color: 'rgba(255,200,100,0.3)' },
+  { from: 'c-programmes', to: 'conv-coaching', style: 'insight', color: 'rgba(100,220,210,0.3)' },
+  { from: 'c-values', to: 'conv-energy', style: 'insight', color: 'rgba(100,220,210,0.3)' },
+  { from: 'a-creative-tech', to: 'c-creative-tech', style: 'insight', color: 'rgba(255,230,100,0.25)' },
+];
+
+// ── LOOKUP ──
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.id] = n);
+
+// ── DRAW ──
+function worldToScreen(x, y) {
+  return {
+    x: pan.x + x * zoom,
+    y: pan.y + y * zoom
+  };
+}
+
+function screenToWorld(x, y) {
+  return {
+    x: (x - pan.x) / zoom,
+    y: (y - pan.y) / zoom
+  };
+}
+
+function drawEdge(edge) {
+  const a = nodeMap[edge.from];
+  const b = nodeMap[edge.to];
+  if (!a || !b) return;
+
+  const sa = worldToScreen(a.x, a.y);
+  const sb = worldToScreen(b.x, b.y);
+
+  ctx.beginPath();
+
+  if (edge.style === 'main') {
+    ctx.lineWidth = 2.5 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 0.6;
+  } else if (edge.style === 'branch') {
+    ctx.lineWidth = 1.8 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 0.45;
+  } else if (edge.style === 'leaf') {
+    ctx.lineWidth = 1.2 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([4 * zoom, 4 * zoom]);
+    ctx.globalAlpha = 0.35;
+  } else if (edge.style === 'converge') {
+    ctx.lineWidth = 2 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([]);
+    ctx.globalAlpha = 0.5;
+  } else if (edge.style === 'hmw') {
+    ctx.lineWidth = 1 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([3 * zoom, 6 * zoom]);
+    ctx.globalAlpha = 0.7;
+  } else if (edge.style === 'insight') {
+    ctx.lineWidth = 1.5 * zoom;
+    ctx.strokeStyle = edge.color;
+    ctx.setLineDash([2 * zoom, 8 * zoom]);
+    ctx.globalAlpha = 0.8;
+  }
+
+  // Curved edge
+  const mx = (sa.x + sb.x) / 2;
+  const my = (sa.y + sb.y) / 2;
+  const dx = sb.x - sa.x;
+  const dy = sb.y - sa.y;
+  const curve = (edge.style === 'insight' || edge.style === 'hmw') ? 0.25 : 0.12;
+  const cx = mx - dy * curve;
+  const cy = my + dx * curve;
+
+  ctx.moveTo(sa.x, sa.y);
+  ctx.quadraticCurveTo(cx, cy, sb.x, sb.y);
+  ctx.stroke();
+
+  ctx.setLineDash([]);
+  ctx.globalAlpha = 1;
+}
+
+function drawNode(node, t) {
+  const s = worldToScreen(node.x, node.y);
+  const r = node.r * zoom;
+  const isHovered = hoveredNode === node.id;
+
+  ctx.save();
+
+  // Pulse for centre node
+  if (node.type === 'centre') {
+    const pulse = 1 + Math.sin(t * 0.04) * 0.04;
+    ctx.scale(1, 1); // handled by radius below
+    const pr = r * pulse;
+
+    // Outer glow rings
+    for (let i = 3; i >= 1; i--) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, pr + i * 12 * zoom, 0, Math.PI * 2);
+      ctx.strokeStyle = '#ffe66d';
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.06 / i;
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    // Fill
+    const grad = ctx.createRadialGradient(s.x - r * 0.3, s.y - r * 0.3, 0, s.x, s.y, pr);
+    grad.addColorStop(0, '#fff5a0');
+    grad.addColorStop(1, '#ffe66d');
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, pr, 0, Math.PI * 2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.lineWidth = 2 * zoom;
+    ctx.stroke();
+  } else {
+    // Hover effect
+    const scale = isHovered ? 1.08 : 1;
+    const cr = r * scale;
+
+    if (node.type === 'hmw') {
+      // Ghost node
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, cr, 0, Math.PI * 2);
+      ctx.fillStyle = node.color;
+      ctx.fill();
+      ctx.strokeStyle = node.border || 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = (isHovered ? 2 : 1.5) * zoom;
+      ctx.setLineDash([4 * zoom, 3 * zoom]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    } else {
+      // Shadow
+      ctx.shadowColor = node.color;
+      ctx.shadowBlur = isHovered ? 24 : 10;
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, cr, 0, Math.PI * 2);
+
+      const grad = ctx.createRadialGradient(s.x - cr * 0.35, s.y - cr * 0.35, cr * 0.1, s.x, s.y, cr);
+      grad.addColorStop(0, lighten(node.color, 40));
+      grad.addColorStop(1, node.color);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = isHovered ? 'white' : 'rgba(255,255,255,0.25)';
+      ctx.lineWidth = (isHovered ? 2 : 1) * zoom;
+      ctx.stroke();
+    }
+  }
+
+  ctx.restore();
+
+  // Label
+  if (zoom > 0.35) {
+    const lines = node.label.split('\n');
+    const subLines = node.sub ? node.sub.split('\n') : [];
+    const fs = Math.max(7, Math.min(14, node.r * zoom * 0.28));
+    const subFs = Math.max(6, Math.min(11, node.r * zoom * 0.2));
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = node.textColor || '#fff';
+
+    const totalLines = lines.length + (zoom > 0.6 && subLines.length > 0 ? subLines.length + 0.5 : 0);
+    const lineH = fs * 1.3;
+    const startY = s.y - ((totalLines - 1) / 2) * lineH;
+
+    ctx.font = `600 ${fs}px 'Caveat', cursive`;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, s.x, startY + i * lineH);
+    });
+
+    if (zoom > 0.6 && subLines.length > 0) {
+      ctx.font = `400 ${subFs}px 'DM Sans', sans-serif`;
+      ctx.fillStyle = node.type === 'centre' ? 'rgba(26,26,46,0.75)' :
+                      node.type === 'hmw' ? node.textColor :
+                      'rgba(255,255,255,0.65)';
+      const subStart = startY + lines.length * lineH + lineH * 0.3;
+      subLines.forEach((line, i) => {
+        ctx.fillText(line, s.x, subStart + i * lineH * 0.9);
+      });
+    }
+  }
+}
+
+function lighten(hex, amt) {
+  if (hex.startsWith('rgba') || hex.startsWith('rgb')) return hex;
+  const r = Math.min(255, parseInt(hex.slice(1,3),16) + amt);
+  const g = Math.min(255, parseInt(hex.slice(3,5),16) + amt);
+  const b = Math.min(255, parseInt(hex.slice(5,7),16) + amt);
+  return `rgb(${r},${g},${b})`;
+}
+
+let t = 0;
+function draw() {
+  t++;
+  ctx.clearRect(0, 0, W, H);
+
+  // Background gradient
+  const bg = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W,H));
+  bg.addColorStop(0, '#1f1f35');
+  bg.addColorStop(1, '#0d0d1a');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // Draw edges first
+  edges.forEach(e => drawEdge(e));
+
+  // Draw nodes
+  // Sort: leaves behind, stakeholders in front, centre on top
+  const order = ['anike-leaf','chq-leaf','hmw','anike','chq','converge','centre'];
+  const sorted = [...nodes].sort((a,b) => order.indexOf(a.type) - order.indexOf(b.type));
+  sorted.forEach(n => drawNode(n, t));
+
+  requestAnimationFrame(draw);
+}
+
+// ── INTERACTION ──
+function getNodeAt(sx, sy) {
+  for (const node of nodes) {
+    const s = worldToScreen(node.x, node.y);
+    const r = node.r * zoom;
+    const dx = sx - s.x, dy = sy - s.y;
+    if (dx*dx + dy*dy < r*r) return node.id;
+  }
+  return null;
+}
+
+canvas.addEventListener('mousedown', e => {
+  dragging = true;
+  lastMouse = { x: e.clientX, y: e.clientY };
+  document.body.classList.add('dragging');
+});
+
+canvas.addEventListener('mousemove', e => {
+  if (dragging) {
+    pan.x += e.clientX - lastMouse.x;
+    pan.y += e.clientY - lastMouse.y;
+    lastMouse = { x: e.clientX, y: e.clientY };
+  }
+  hoveredNode = getNodeAt(e.clientX, e.clientY);
+  canvas.style.cursor = hoveredNode ? 'pointer' : (dragging ? 'grabbing' : 'grab');
+});
+
+canvas.addEventListener('mouseup', () => {
+  dragging = false;
+  document.body.classList.remove('dragging');
+});
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const factor = e.deltaY < 0 ? 1.1 : 0.91;
+  const wx = e.clientX, wy = e.clientY;
+  pan.x = wx - (wx - pan.x) * factor;
+  pan.y = wy - (wy - pan.y) * factor;
+  zoom = Math.max(0.2, Math.min(3, zoom * factor));
+}, { passive: false });
+
+// Touch
+let lastTouchDist = null;
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    dragging = true;
+    lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+});
+canvas.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (e.touches.length === 1 && dragging) {
+    pan.x += e.touches[0].clientX - lastMouse.x;
+    pan.y += e.touches[0].clientY - lastMouse.y;
+    lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  } else if (e.touches.length === 2) {
+    const d = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    if (lastTouchDist) {
+      const f = d / lastTouchDist;
+      zoom = Math.max(0.2, Math.min(3, zoom * f));
+    }
+    lastTouchDist = d;
+  }
+}, { passive: false });
+canvas.addEventListener('touchend', () => { dragging = false; lastTouchDist = null; });
+
+// Zoom buttons
+document.getElementById('zin').onclick = () => { zoom = Math.min(3, zoom * 1.2); };
+document.getElementById('zout').onclick = () => { zoom = Math.max(0.2, zoom * 0.83); };
+document.getElementById('zreset').onclick = () => {
+  zoom = 1;
+  pan.x = W / 2;
+  pan.y = H / 2;
+};
+
+resize();
+</script>
+
+</body>
+</html>
