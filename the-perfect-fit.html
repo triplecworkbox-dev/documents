@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anik&eacute; Jenneker – Senior Innovation Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–ink: #0f0e0c;
+–paper: #f5f0e8;
+–accent: #e8431a;
+–mid: #7a6e60;
+–light: #d4cfc4;
+–rule: 1.5px solid var(–ink);
+}
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Space Mono’, monospace;
+width: 100%;
+max-width: 794px;
+margin: 0 auto;
+padding: clamp(20px, 5vw, 52px) clamp(16px, 6vw, 56px) clamp(24px, 4vw, 48px);
+position: relative;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘HMW’;
+position: absolute;
+top: -20px;
+right: -10px;
+font-family: ‘Fraunces’, serif;
+font-weight: 700;
+font-size: clamp(80px, 30vw, 260px);
+color: rgba(0,0,0,0.04);
+letter-spacing: -10px;
+line-height: 1;
+pointer-events: none;
+z-index: 0;
+}
+
+.everything { position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+.header {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+align-items: flex-end;
+justify-content: space-between;
+border-bottom: var(–rule);
+padding-bottom: 14px;
+margin-bottom: 20px;
+}
+
+.tag {
+font-size: clamp(7px, 2vw, 9px);
+letter-spacing: 0.14em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 6px;
+line-height: 1.5;
+}
+
+h1 {
+font-family: ‘Fraunces’, serif;
+font-weight: 700;
+font-size: clamp(26px, 7vw, 38px);
+line-height: 1.0;
+letter-spacing: -1px;
+}
+
+h1 span { font-style: italic; font-weight: 300; }
+
+.header-right {
+text-align: right;
+font-size: clamp(8px, 2.2vw, 10px);
+color: var(–mid);
+line-height: 1.7;
+flex-shrink: 0;
+}
+
+.header-right strong {
+display: block;
+font-size: clamp(9px, 2.4vw, 11px);
+color: var(–ink);
+letter-spacing: 0.05em;
+}
+
+/* ── HMW BANNER ── */
+.hmw-banner {
+background: var(–ink);
+color: var(–paper);
+padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 20px);
+margin-bottom: 20px;
+display: flex;
+align-items: baseline;
+gap: 12px;
+flex-wrap: wrap;
+}
+
+.hmw-label {
+font-size: clamp(7px, 2vw, 8px);
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–accent);
+white-space: nowrap;
+flex-shrink: 0;
+}
+
+.hmw-text {
+font-family: ‘Fraunces’, serif;
+font-style: italic;
+font-size: clamp(13px, 3.5vw, 17px);
+font-weight: 300;
+line-height: 1.4;
+}
+
+/* ── THREE-COLUMN GRID ── */
+.grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 0;
+border: var(–rule);
+margin-bottom: 18px;
+}
+
+.cell {
+padding: clamp(12px, 3vw, 16px);
+border-right: var(–rule);
+}
+
+.cell:last-child { border-right: none; }
+
+.cell-label {
+font-size: clamp(7px, 1.8vw, 8px);
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 8px;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+
+.cell-label::before {
+content: ‘’;
+display: inline-block;
+width: 10px;
+height: 1.5px;
+background: var(–accent);
+flex-shrink: 0;
+}
+
+.cell-body {
+font-size: clamp(9px, 2.2vw, 11px);
+line-height: 1.65;
+}
+
+.cell-body strong { font-weight: 700; }
+
+/* ── EVIDENCE ── */
+.evidence-header {
+font-size: clamp(7px, 1.8vw, 8px);
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–mid);
+margin-bottom: 10px;
+border-top: var(–rule);
+padding-top: 14px;
+}
+
+.evidence-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 8px;
+margin-bottom: 18px;
+}
+
+.evidence-card {
+border: 1px solid var(–light);
+padding: clamp(8px, 2.5vw, 11px) clamp(8px, 2.5vw, 12px);
+background: white;
+}
+
+.evidence-card .org {
+font-size: clamp(7px, 1.8vw, 8px);
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–mid);
+margin-bottom: 4px;
+}
+
+.evidence-card .proof {
+font-size: clamp(9px, 2.2vw, 10.5px);
+line-height: 1.5;
+}
+
+.evidence-card .metric {
+font-family: ‘Fraunces’, serif;
+font-size: clamp(16px, 4vw, 22px);
+font-weight: 700;
+color: var(–accent);
+line-height: 1;
+margin-top: 6px;
+}
+
+.evidence-card .metric-label {
+font-size: clamp(7px, 1.8vw, 9px);
+color: var(–mid);
+margin-top: 2px;
+}
+
+/* ── VALUES ── */
+.values-row {
+display: flex;
+flex-wrap: wrap;
+gap: 8px 14px;
+align-items: flex-start;
+border-top: var(–rule);
+padding-top: 14px;
+margin-bottom: 18px;
+}
+
+.values-label {
+font-size: clamp(7px, 1.8vw, 8px);
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–mid);
+white-space: nowrap;
+padding-top: 5px;
+flex-shrink: 0;
+}
+
+.values-tags {
+display: flex;
+gap: 8px 10px;
+flex-wrap: wrap;
+align-items: center;
+flex: 1;
+}
+
+.vtag {
+background: var(–ink);
+color: var(–paper);
+font-size: clamp(7px, 1.8vw, 9px);
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 4px 9px;
+white-space: nowrap;
+}
+
+.values-desc {
+font-size: clamp(8px, 2vw, 10px);
+color: var(–mid);
+}
+
+/* ── FOOTER ── */
+.footer {
+display: flex;
+flex-wrap: wrap;
+gap: 16px;
+align-items: flex-end;
+justify-content: space-between;
+border-top: var(–rule);
+padding-top: 14px;
+}
+
+.next-step {
+font-size: clamp(7px, 1.8vw, 8px);
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–mid);
+margin-bottom: 6px;
+}
+
+.cta {
+font-family: ‘Fraunces’, serif;
+font-style: italic;
+font-size: clamp(12px, 3.2vw, 15px);
+line-height: 1.4;
+}
+
+.contact-block {
+text-align: right;
+font-size: clamp(8px, 2.2vw, 10px);
+line-height: 1.9;
+color: var(–mid);
+flex-shrink: 0;
+}
+
+.contact-block a { color: var(–accent); text-decoration: none; }
+
+/* ── BREAKPOINTS ── */
+
+/* Tablet ~600px: evidence 2×2 */
+@media (max-width: 600px) {
+.evidence-grid {
+grid-template-columns: 1fr 1fr;
+}
+.header-right {
+text-align: left;
+}
+}
+
+/* Mobile ~420px: single column everything */
+@media (max-width: 420px) {
+.grid {
+grid-template-columns: 1fr;
+}
+.cell {
+border-right: none;
+border-bottom: var(–rule);
+}
+.cell:last-child {
+border-bottom: none;
+}
+.evidence-grid {
+grid-template-columns: 1fr 1fr;
+}
+.footer {
+flex-direction: column;
+align-items: flex-start;
+}
+.contact-block {
+text-align: left;
+}
+.values-label {
+width: 100%;
+}
+}
+</style>
+
+</head>
+<body>
+<div class="everything">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="tag">Application · Senior Innovation Specialist · Creative HQ</div>
+      <h1>Anik&eacute; <span>Jenneker</span></h1>
+    </div>
+    <div class="header-right">
+      <strong>April 2026</strong>
+      anike.jenneker@gmail.com<br>
+      +64 4 888 7451<br>
+      Wellington, NZ
+    </div>
+  </div>
+
+  <div class="hmw-banner">
+    <div class="hmw-label">HMW</div>
+    <div class="hmw-text">bring someone who's already done the work — founding, shipping, coaching, facilitating — into a room and help others do it faster?</div>
+  </div>
+
+  <div class="grid">
+    <div class="cell">
+      <div class="cell-label">Why this role</div>
+      <div class="cell-body">I've spent 18 years inside the problem this role solves — helping teams move from <strong>idea to tested assumption to working thing</strong>. I've done it in manufacturing, banking, government, and health tech. I've run the sprints. I know what blocks people. I want to teach it.</div>
+    </div>
+    <div class="cell">
+      <div class="cell-label">Why Creative HQ</div>
+      <div class="cell-body">You're the only organisation in Aotearoa connecting <strong>startups, corporates, government and international</strong> ecosystems in one place. That's not a niche — that's the whole system. I want to work where the leverage is highest. And I already know Chloe. The energy checks out.</div>
+    </div>
+    <div class="cell">
+      <div class="cell-label">Why now</div>
+      <div class="cell-body">I spent 2025 building a digital health startup solo — no safety net, real stakes. I proved I can create impact from scratch. Now I want to <strong>bring that energy into a team</strong> and amplify it. Wellington's creative-tech sector is an emerging opportunity I'd love to help CHQ shape.</div>
+    </div>
+  </div>
+
+  <div class="evidence-header">Tested assumptions · selected evidence</div>
+  <div class="evidence-grid">
+    <div class="evidence-card">
+      <div class="org">Carepon / Triple-C</div>
+      <div class="proof">Built SaaS voucher system from scratch — eligibility, audit logging, dashboards</div>
+      <div class="metric">↓40%</div>
+      <div class="metric-label">manual data entry</div>
+    </div>
+    <div class="evidence-card">
+      <div class="org">Transpower</div>
+      <div class="proof">Led Agile BA practice; facilitated Azure migration, BI products, Salesforce apps</div>
+      <div class="metric">3 yrs</div>
+      <div class="metric-label">embedded innovation delivery</div>
+    </div>
+    <div class="evidence-card">
+      <div class="org">Pan Pac / BNZ</div>
+      <div class="proof">Lead BA, SAP S4HANA; Agile training to 30+ users across Cards &amp; Payments</div>
+      <div class="metric">30+</div>
+      <div class="metric-label">people upskilled in Agile</div>
+    </div>
+    <div class="evidence-card">
+      <div class="org">PCH / BAT / Dubai</div>
+      <div class="proof">Apple/Beats acquisition BPR; ITIL rollout; smart grid delivery across 4 DEWA sites</div>
+      <div class="metric">4</div>
+      <div class="metric-label">continents, real delivery</div>
+    </div>
+  </div>
+
+  <div class="values-row">
+    <div class="values-label">CHQ values match</div>
+    <div class="values-tags">
+      <div class="vtag">We Go Together</div>
+      <span class="values-desc">servant leadership, co-design, community of practice building</span>
+      <div class="vtag">We Challenge What's Possible</div>
+      <span class="values-desc">first smart gas system in Azerbaijan; IBM Watson integration</span>
+      <div class="vtag">We Bring the Energy</div>
+      <span class="values-desc">triple-C: contribute · communicate · collaborate</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>
+      <div class="next-step">Next step</div>
+      <div class="cta">I'd welcome a conversation before the 21st — happy to fit around your timeline, Rebecca.</div>
+    </div>
+    <div class="contact-block">
+      <a href="mailto:anike.jenneker@gmail.com">anike.jenneker@gmail.com</a><br>
+      +64 4 888 7451<br>
+      [LinkedIn URL]
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
