@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Therapist Screening — Aniké Jenneker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --warm: #c9a96e;
+    --rust: #9b4a2b;
+    --sage: #5a6b5d;
+    --muted: #8a7d6e;
+    --divider: #d9d0c0;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Cormorant Garamond’, Georgia, serif;
+min-height: 100vh;
+padding: 0;
+overflow-x: hidden;
+}
+
+/* Grain texture overlay */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+opacity: 0.6;
+}
+
+.page {
+max-width: 760px;
+margin: 0 auto;
+padding: 80px 48px 120px;
+position: relative;
+z-index: 1;
+}
+
+/* Header */
+.header {
+margin-bottom: 64px;
+opacity: 0;
+animation: fadeUp 0.9s ease forwards;
+}
+
+.label {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 20px;
+}
+
+.title {
+font-size: clamp(2.4rem, 6vw, 3.8rem);
+font-weight: 300;
+line-height: 1.1;
+letter-spacing: -0.01em;
+color: var(–ink);
+margin-bottom: 8px;
+}
+
+.title em {
+font-style: italic;
+color: var(–rust);
+}
+
+.subtitle {
+font-size: 1.05rem;
+color: var(–muted);
+font-weight: 300;
+font-style: italic;
+margin-top: 12px;
+}
+
+.rule {
+width: 48px;
+height: 1px;
+background: var(–warm);
+margin: 32px 0;
+}
+
+/* Intro section */
+.intro-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.2s forwards;
+margin-bottom: 72px;
+}
+
+.section-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–sage);
+margin-bottom: 20px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.section-label::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–divider);
+}
+
+.intro-box {
+border-left: 2px solid var(–warm);
+padding: 28px 32px;
+background: rgba(201, 169, 110, 0.06);
+position: relative;
+}
+
+.intro-box p {
+font-size: 1.15rem;
+line-height: 1.85;
+font-weight: 300;
+color: var(–ink);
+margin-bottom: 1.2em;
+}
+
+.intro-box p:last-child {
+margin-bottom: 0;
+}
+
+.intro-box p em {
+font-style: italic;
+color: var(–rust);
+}
+
+.copy-btn {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–muted);
+background: none;
+border: 1px solid var(–divider);
+padding: 8px 16px;
+cursor: pointer;
+margin-top: 20px;
+transition: all 0.2s ease;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+
+.copy-btn:hover {
+border-color: var(–warm);
+color: var(–warm);
+}
+
+.copy-btn.copied {
+border-color: var(–sage);
+color: var(–sage);
+}
+
+/* Questions */
+.questions-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.4s forwards;
+}
+
+.question-item {
+margin-bottom: 48px;
+padding-bottom: 48px;
+border-bottom: 1px solid var(–divider);
+display: grid;
+grid-template-columns: 40px 1fr;
+gap: 24px;
+align-start: start;
+}
+
+.question-item:last-child {
+border-bottom: none;
+margin-bottom: 0;
+}
+
+.q-number {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–warm);
+letter-spacing: 0.1em;
+padding-top: 4px;
+}
+
+.q-body {}
+
+.q-theme {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–sage);
+margin-bottom: 10px;
+}
+
+.q-text {
+font-size: 1.2rem;
+font-weight: 400;
+line-height: 1.65;
+color: var(–ink);
+margin-bottom: 14px;
+font-style: italic;
+}
+
+.q-note {
+font-size: 0.92rem;
+color: var(–muted);
+font-weight: 300;
+line-height: 1.7;
+padding-left: 16px;
+border-left: 1px solid var(–divider);
+}
+
+/* Footer */
+.footer {
+margin-top: 80px;
+padding-top: 32px;
+border-top: 1px solid var(–divider);
+opacity: 0;
+animation: fadeUp 0.9s ease 0.6s forwards;
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+flex-wrap: wrap;
+gap: 16px;
+}
+
+.footer-note {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+line-height: 1.8;
+}
+
+.print-btn {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–muted);
+background: none;
+border: 1px solid var(–divider);
+padding: 10px 20px;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.print-btn:hover {
+border-color: var(–rust);
+color: var(–rust);
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(18px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+.page { padding: 48px 24px 80px; }
+.question-item { grid-template-columns: 1fr; gap: 8px; }
+.q-number { padding-top: 0; }
+.footer { flex-direction: column; align-items: flex-start; }
+}
+
+@media print {
+body::before { display: none; }
+.copy-btn, .print-btn { display: none; }
+.header, .intro-section, .questions-section, .footer {
+opacity: 1;
+animation: none;
+}
+}
+</style>
+
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+
+  <div class="header">
+    <div class="label">Therapist Screening Document</div>
+    <h1 class="title">Finding the right<br><em>fit for support</em></h1>
+    <p class="subtitle">Prepared for Aniké Jenneker — to be shared with a prospective therapist</p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Intro Paragraph -->
+
+  <div class="intro-section">
+    <div class="section-label">Introductory letter</div>
+    <div class="intro-box" id="intro-text">
+      <p>My name is Aniké Jenneker. I am a Coloured South African currently living in New Zealand, with a life that has spanned South Africa, China, Dubai, Australia, and now Wellington. I am reaching out because I am ready to commit to genuine therapeutic support — and I want to be honest from the beginning, which is something I have not always managed to do.</p>
+
+```
+  <p>I am carrying a great deal at once: the weight of cultural displacement and identity, significant financial stress including debt collectors, the grief and guilt of a car accident that seriously hurt my mother, a complicated relationship with my father, an unhealthy attachment to a former employer that contributed to leaving my job, and the pressure of building multiple ventures simultaneously while being unemployed. I am also exploring the possibility that I may be neurodivergent.</p>
+
+  <p>I process the world better through reading and writing than through unstructured verbal conversation, and I respond well to sensory and experiential approaches. What I need most is a therapist who can <em>hold the full weight and complexity of what I am building and surviving</em> — without asking me to scale down, simplify, or become ordinary. I have a vision for my life that is large and unconventional, and I need a professional who is curious about that rather than cautious of it.</p>
+
+  <p>I am asking these questions not to be difficult, but to protect us both from a poor fit. I hope they open a real conversation.</p>
+</div>
+<button class="copy-btn" onclick="copyIntro(this)" id="copyBtn">
+  <span>Copy letter</span>
+</button>
+```
+
+  </div>
+
+  <!-- Screening Questions -->
+
+  <div class="questions-section">
+    <div class="section-label">Five screening questions</div>
+
+```
+<div class="question-item">
+  <div class="q-number">01</div>
+  <div class="q-body">
+    <div class="q-theme">Complexity & Simultaneity</div>
+    <div class="q-text">"Have you worked with clients who are managing multiple simultaneous life crises — financial, relational, identity, and career — rather than a single presenting issue? How do you approach sessions when everything feels equally urgent and nothing can wait?"</div>
+    <div class="q-note">What to listen for: comfort with complexity, absence of a rigid treatment structure, willingness to follow the client's lead rather than impose a pathway.</div>
+  </div>
+</div>
+
+<div class="question-item">
+  <div class="q-number">02</div>
+  <div class="q-body">
+    <div class="q-theme">Cultural Identity & Migration</div>
+    <div class="q-text">"I have lived across South Africa, China, Dubai, Australia, and New Zealand. My identity as a Coloured South African shapes how I experience belonging, otherness, and self-worth in ways that are difficult to categorise. How do you approach layered cultural identity in your work — particularly when a client's background doesn't fit neatly into your own frame of reference?"</div>
+    <div class="q-note">What to listen for: genuine curiosity rather than rehearsed inclusivity language. Willingness to be taught. Experience with diaspora or immigration-related identity fracture.</div>
+  </div>
+</div>
+
+<div class="question-item">
+  <div class="q-number">03</div>
+  <div class="q-body">
+    <div class="q-theme">Vision, Ambition & Non-Pathologising</div>
+    <div class="q-text">"I am currently building multiple ventures simultaneously. This is not a symptom of avoidance — it is central to who I am and how I survive. How do you work with clients whose lives look structurally chaotic from the outside but are driven by a coherent internal vision? And would you ever encourage a client to scale back their ambitions as a therapeutic goal?"</div>
+    <div class="q-note">This is the critical filter. The answer to the last question should be a clear no, or at minimum a very thoughtful qualification. A therapist who defaults to "stability" as the goal will not be a safe space for Aniké.</div>
+  </div>
+</div>
+
+<div class="question-item">
+  <div class="q-number">04</div>
+  <div class="q-body">
+    <div class="q-theme">Financial Accessibility & Non-Judgment</div>
+    <div class="q-text">"I am navigating significant debt and active financial pressure — this is part of what I am in therapy to work through. I want to be transparent about this from the start. How do you approach fee structures for clients in financial hardship, and how do you ensure that money does not become a recurring source of shame or stress within our working relationship?"</div>
+    <div class="q-note">What to listen for: concrete answers, not vague reassurance. Sliding scale availability, willingness to agree a sustainable arrangement upfront, and zero judgment in how they discuss it.</div>
+  </div>
+</div>
+
+<div class="question-item">
+  <div class="q-number">05</div>
+  <div class="q-body">
+    <div class="q-theme">Communication Style & Neurodivergence</div>
+    <div class="q-text">"I process information significantly better through reading and writing than through open-ended verbal conversation. I am also exploring the possibility that I may be neurodivergent. Do you have experience adapting your therapeutic style for clients who find unstructured talking overwhelming? Do you offer any written components — reflections, session summaries, asynchronous check-ins — and how flexible are you with the format of our sessions?"</div>
+    <div class="q-note">What to listen for: actual flexibility, not just willingness. Ideally some experience with neurodivergent clients or a sensory/experiential modality. Openness to written communication between sessions.</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Footer -->
+
+  <div class="footer">
+    <div class="footer-note">
+      Aniké Jenneker — Therapist Screening<br>
+      Confidential document · Wellington, New Zealand
+    </div>
+    <button class="print-btn" onclick="window.print()">Save as PDF</button>
+  </div>
+
+</div>
+
+<script>
+  function copyIntro(btn) {
+    const introEl = document.getElementById('intro-text');
+    const paragraphs = introEl.querySelectorAll('p');
+    const text = Array.from(paragraphs).map(p => p.innerText).join('\n\n');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.querySelector('span').textContent = 'Copied ✓';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.querySelector('span').textContent = 'Copy letter';
+      }, 2500);
+    });
+  }
+</script>
+
+</body>
+</html>
