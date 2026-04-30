@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ Business Startup Costs</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: #f5f0e8;
+color: #1a1a1a;
+min-height: 100vh;
+padding: 40px 20px;
+}
+
+.container {
+max-width: 820px;
+margin: 0 auto;
+}
+
+header {
+margin-bottom: 36px;
+}
+
+header h1 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 2.2rem;
+color: #1a1a1a;
+line-height: 1.15;
+}
+
+header p {
+margin-top: 8px;
+font-size: 0.95rem;
+color: #666;
+font-weight: 300;
+}
+
+.flag {
+display: inline-block;
+font-size: 1.5rem;
+margin-right: 8px;
+vertical-align: middle;
+}
+
+/* Section label */
+.section-label {
+font-size: 0.7rem;
+font-weight: 500;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: #888;
+margin: 32px 0 10px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+margin-bottom: 28px;
+}
+
+thead tr {
+background: #1a1a1a;
+color: #f5f0e8;
+}
+
+thead th {
+padding: 14px 18px;
+text-align: left;
+font-size: 0.75rem;
+font-weight: 500;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+}
+
+tbody tr {
+border-bottom: 1px solid #f0ece3;
+transition: background 0.15s;
+}
+
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #faf8f4; }
+
+td {
+padding: 13px 18px;
+font-size: 0.92rem;
+vertical-align: top;
+}
+
+td:first-child { font-weight: 500; color: #1a1a1a; width: 42%; }
+td:nth-child(2) { color: #555; font-weight: 300; }
+td:last-child {
+font-weight: 500;
+color: #2a6e3f;
+white-space: nowrap;
+text-align: right;
+}
+
+/* Type badges */
+.badge {
+display: inline-block;
+font-size: 0.65rem;
+font-weight: 500;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+padding: 2px 7px;
+border-radius: 20px;
+margin-left: 6px;
+vertical-align: middle;
+}
+.badge-once { background: #e8f0fe; color: #3050b8; }
+.badge-annual { background: #e6f4ea; color: #2a6e3f; }
+.badge-varies { background: #fef3e2; color: #b45e00; }
+
+/* Total row */
+.total-row td {
+background: #1a1a1a;
+color: #f5f0e8 !important;
+font-weight: 500 !important;
+font-family: ‘DM Serif Display’, serif;
+font-size: 1rem !important;
+padding: 16px 18px;
+}
+.total-row:hover td { background: #222 !important; }
+
+/* Notes */
+.notes {
+background: #fff;
+border-radius: 12px;
+padding: 20px 22px;
+font-size: 0.85rem;
+color: #555;
+font-weight: 300;
+line-height: 1.7;
+box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+}
+.notes strong { color: #1a1a1a; font-weight: 500; }
+
+.legend {
+display: flex;
+gap: 16px;
+margin-bottom: 14px;
+flex-wrap: wrap;
+}
+.legend span {
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 0.78rem;
+color: #666;
+}
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1><span class="flag">🇳🇿</span>NZ Business Startup Costs</h1>
+    <p>Estimated costs to start and run a business in New Zealand for Year 1 (all amounts in NZD, exc. GST unless noted)</p>
+  </header>
+
+  <div class="legend">
+    <span><span class="badge badge-once">Once-off</span> One-time cost</span>
+    <span><span class="badge badge-annual">Annual</span> Recurring yearly</span>
+    <span><span class="badge badge-varies">Varies</span> Depends on situation</span>
+  </div>
+
+  <p class="section-label">Registration &amp; Structure</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Notes</th>
+        <th>Cost (NZD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sole Trader Registration <span class="badge badge-once">Once-off</span></td>
+        <td>No Companies Office fee required; just a free IRD number</td>
+        <td>$0</td>
+      </tr>
+      <tr>
+        <td>IRD Number <span class="badge badge-once">Once-off</span></td>
+        <td>Required for all business structures; free to obtain</td>
+        <td>Free</td>
+      </tr>
+      <tr>
+        <td>Company Incorporation <span class="badge badge-once">Once-off</span></td>
+        <td>Online registration via Companies Office</td>
+        <td>~$105 + GST</td>
+      </tr>
+      <tr>
+        <td>Reserve Company Name <span class="badge badge-once">Once-off</span></td>
+        <td>Optional but recommended before incorporating</td>
+        <td>$10 + GST</td>
+      </tr>
+      <tr>
+        <td>Partnership Agreement <span class="badge badge-once">Once-off</span></td>
+        <td>Template (~$20) or lawyer-drafted (~$400)</td>
+        <td>$20–$400</td>
+      </tr>
+      <tr>
+        <td>Annual Return (Company) <span class="badge badge-annual">Annual</span></td>
+        <td>Filed each year with Companies Office</td>
+        <td>~$50 + GST</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">Tax &amp; Compliance</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Notes</th>
+        <th>Cost (NZD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>GST Registration <span class="badge badge-once">Once-off</span></td>
+        <td>Mandatory if turnover exceeds $60,000/yr; free to register</td>
+        <td>Free</td>
+      </tr>
+      <tr>
+        <td>Income Tax — Company <span class="badge badge-annual">Annual</span></td>
+        <td>Flat rate on profit</td>
+        <td>28% of profit</td>
+      </tr>
+      <tr>
+        <td>Income Tax — Sole Trader <span class="badge badge-annual">Annual</span></td>
+        <td>Paid at personal income rates</td>
+        <td>10.5%–39%</td>
+      </tr>
+      <tr>
+        <td>ACC Levies <span class="badge badge-annual">Annual</span></td>
+        <td>Earner's levy ($1.75/$100), Working Safer ($0.08/$100) + Work levy by industry</td>
+        <td>$500–$3,000+</td>
+      </tr>
+      <tr>
+        <td>Accounting / Tax Filing <span class="badge badge-annual">Annual</span></td>
+        <td>Varies by complexity; hire an accountant or DIY</td>
+        <td>$1,000–$5,000</td>
+      </tr>
+      <tr>
+        <td>Accounting Software <span class="badge badge-annual">Annual</span></td>
+        <td>e.g. Xero or MYOB; ~$35–$113/month</td>
+        <td>$420–$1,356</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">Legal &amp; Intellectual Property</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Notes</th>
+        <th>Cost (NZD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Legal Setup Fees <span class="badge badge-once">Once-off</span></td>
+        <td>Shareholder agreements, contracts; fixed-fee services</td>
+        <td>$500–$1,500</td>
+      </tr>
+      <tr>
+        <td>Trademark Registration <span class="badge badge-once">Once-off</span></td>
+        <td>Per class of goods/services via IPONZ</td>
+        <td>$50–$100/class</td>
+      </tr>
+      <tr>
+        <td>Business Licences / Permits <span class="badge badge-varies">Varies</span></td>
+        <td>Depends on industry (food, financial services, trades, etc.)</td>
+        <td>$0–$5,000+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">Operations</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Notes</th>
+        <th>Cost (NZD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Business Bank Account <span class="badge badge-once">Once-off</span></td>
+        <td>Most NZ banks offer free or low-cost business accounts</td>
+        <td>$0–$200</td>
+      </tr>
+      <tr>
+        <td>Website &amp; Domain <span class="badge badge-annual">Annual</span></td>
+        <td>.nz domain ~$25/yr; basic hosting ~$100–$500/yr</td>
+        <td>$100–$600</td>
+      </tr>
+      <tr>
+        <td>Business Insurance <span class="badge badge-annual">Annual</span></td>
+        <td>Public liability, professional indemnity (varies widely)</td>
+        <td>$500–$3,000+</td>
+      </tr>
+      <tr>
+        <td>Office / Workspace <span class="badge badge-annual">Annual</span></td>
+        <td>Home office = minimal cost; leased space requires deposit + fit-out</td>
+        <td>$0–$20,000+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">Year 1 Totals (Typical Range)</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Business Type</th>
+        <th>Description</th>
+        <th>Est. Year 1 Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sole Trader (home-based)</td>
+        <td>Low overhead, no company registration, simple tax</td>
+        <td>$500–$2,500</td>
+      </tr>
+      <tr>
+        <td>Small Company (office-based)</td>
+        <td>Incorporation, accounting, ACC, insurance, software</td>
+        <td>$5,000–$10,000</td>
+      </tr>
+      <tr class="total-row">
+        <td>💡 Tip: Add 20–30% buffer</td>
+        <td>For unexpected costs, price rises, and compliance surprises</td>
+        <td>Always recommended</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="notes">
+    <strong>Key thresholds to know:</strong> GST registration is mandatory once turnover hits <strong>$60,000/year</strong>. ACC levies are compulsory for all working New Zealanders. Company tax is a flat <strong>28%</strong>; sole traders pay personal income rates. All fees above are in NZD and exclude GST unless stated. Figures are indicative for 2025–26 and subject to change.
+  </div>
+
+</div>
+</body>
+</html>
