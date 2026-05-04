@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ Limited Company — Startup Costs & Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: #f5f0e8;
+color: #1a1a1a;
+min-height: 100vh;
+padding: 40px 20px;
+}
+
+.container { max-width: 860px; margin: 0 auto; }
+
+header { margin-bottom: 36px; }
+header h1 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 2.2rem;
+color: #1a1a1a;
+line-height: 1.15;
+}
+header p {
+margin-top: 8px;
+font-size: 0.95rem;
+color: #666;
+font-weight: 300;
+}
+.flag { font-size: 1.5rem; margin-right: 8px; vertical-align: middle; }
+
+.section-label {
+font-size: 0.7rem;
+font-weight: 500;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: #888;
+margin: 32px 0 10px;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+margin-bottom: 28px;
+}
+thead tr { background: #1a1a1a; color: #f5f0e8; }
+thead th {
+padding: 14px 18px;
+text-align: left;
+font-size: 0.75rem;
+font-weight: 500;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+}
+tbody tr { border-bottom: 1px solid #f0ece3; transition: background 0.15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #faf8f4; }
+
+td { padding: 13px 18px; font-size: 0.92rem; vertical-align: top; }
+td:first-child { font-weight: 500; color: #1a1a1a; width: 40%; }
+td:nth-child(2) { color: #555; font-weight: 300; }
+td:last-child { font-weight: 500; color: #2a6e3f; white-space: nowrap; text-align: right; }
+
+.badge {
+display: inline-block;
+font-size: 0.62rem;
+font-weight: 500;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+padding: 2px 7px;
+border-radius: 20px;
+margin-left: 6px;
+vertical-align: middle;
+}
+.badge-once   { background: #e8f0fe; color: #3050b8; }
+.badge-annual { background: #e6f4ea; color: #2a6e3f; }
+.badge-varies { background: #fef3e2; color: #b45e00; }
+
+.total-row td {
+background: #1a1a1a;
+color: #f5f0e8 !important;
+font-weight: 500 !important;
+font-family: ‘DM Serif Display’, serif;
+font-size: 1rem !important;
+padding: 16px 18px;
+}
+.total-row:hover td { background: #222 !important; }
+
+.legend {
+display: flex;
+gap: 16px;
+margin-bottom: 14px;
+flex-wrap: wrap;
+}
+.legend span {
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 0.78rem;
+color: #666;
+}
+
+.notes {
+background: #fff;
+border-radius: 12px;
+padding: 20px 22px;
+font-size: 0.85rem;
+color: #555;
+font-weight: 300;
+line-height: 1.7;
+box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+margin-bottom: 40px;
+}
+.notes strong { color: #1a1a1a; font-weight: 500; }
+
+/* ── PROCESS FLOW ── */
+.flow-wrap {
+background: #fff;
+border-radius: 16px;
+padding: 28px 24px 32px;
+box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+}
+.flow-title {
+font-family: ‘DM Serif Display’, serif;
+font-size: 1.35rem;
+margin-bottom: 6px;
+}
+.flow-subtitle {
+font-size: 0.82rem;
+color: #888;
+font-weight: 300;
+margin-bottom: 28px;
+}
+
+.phase { margin-bottom: 10px; }
+.phase-label {
+font-size: 0.62rem;
+font-weight: 500;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #bbb;
+margin-bottom: 8px;
+padding-left: 2px;
+}
+
+.step-row {
+display: flex;
+align-items: center;
+gap: 0;
+min-height: 90px;
+}
+
+.step {
+display: flex;
+flex-direction: column;
+align-items: center;
+flex: 1;
+padding: 0 6px;
+}
+
+.step-card {
+background: #f8f6f1;
+border: 2px solid #e8e2d6;
+border-radius: 10px;
+padding: 10px 10px 8px;
+width: 100%;
+max-width: 148px;
+text-align: center;
+position: relative;
+transition: box-shadow 0.2s;
+}
+.step-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
+.step-card.done {
+background: #edf7f0;
+border-color: #5cb87a;
+}
+
+.step-icon { font-size: 1.3rem; margin-bottom: 4px; display: block; }
+.step-name { font-size: 0.75rem; font-weight: 500; color: #1a1a1a; line-height: 1.3; margin-bottom: 3px; }
+.step-time { font-size: 0.65rem; color: #999; font-weight: 300; }
+.step-cost { font-size: 0.68rem; color: #2a6e3f; font-weight: 500; margin-top: 2px; }
+
+.tick {
+position: absolute;
+top: -10px;
+right: -10px;
+background: #2a6e3f;
+color: #fff;
+border-radius: 50%;
+width: 22px;
+height: 22px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 0.7rem;
+font-weight: 700;
+border: 2px solid #fff;
+box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+.connector {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+width: 32px;
+flex-shrink: 0;
+}
+.connector-line {
+width: 100%;
+height: 2px;
+background: #d0c9bc;
+position: relative;
+}
+.connector-line::after {
+content: ‘’;
+position: absolute;
+right: -1px;
+top: -4px;
+border-left: 7px solid #d0c9bc;
+border-top: 5px solid transparent;
+border-bottom: 5px solid transparent;
+}
+.connector-label {
+font-size: 0.55rem;
+color: #bbb;
+letter-spacing: 0.04em;
+text-transform: uppercase;
+margin-top: 3px;
+white-space: nowrap;
+}
+
+.v-connector {
+display: flex;
+align-items: center;
+padding-left: 56px;
+margin: 4px 0 12px;
+gap: 10px;
+}
+.v-connector-line {
+width: 2px;
+height: 28px;
+background: #d0c9bc;
+position: relative;
+flex-shrink: 0;
+}
+.v-connector-line::after {
+content: ‘’;
+position: absolute;
+bottom: -1px;
+left: -4px;
+border-top: 7px solid #d0c9bc;
+border-left: 5px solid transparent;
+border-right: 5px solid transparent;
+}
+.v-note {
+font-size: 0.65rem;
+color: #aaa;
+font-style: italic;
+line-height: 1.3;
+}
+
+.timeline-grid {
+display: flex;
+gap: 8px;
+flex-wrap: wrap;
+margin-top: 24px;
+}
+.tl-card {
+background: #f8f6f1;
+border: 1px solid #e8e2d6;
+border-radius: 8px;
+padding: 10px 14px;
+font-size: 0.8rem;
+flex: 1;
+min-width: 130px;
+}
+.tl-card.done-card { background: #edf7f0; border-color: #5cb87a; }
+.tl-label { font-weight: 500; color: #1a1a1a; margin-bottom: 2px; }
+.tl-label.green { color: #2a6e3f; }
+.tl-val { color: #555; font-weight: 300; margin-bottom: 2px; }
+.tl-sub { font-size: 0.65rem; color: #aaa; }
+
+.flow-legend {
+display: flex;
+gap: 18px;
+margin-top: 22px;
+flex-wrap: wrap;
+padding-top: 16px;
+border-top: 1px solid #f0ece3;
+}
+.flow-legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #666; }
+.fl-done { width: 14px; height: 14px; background: #2a6e3f; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.55rem; font-weight: 700; flex-shrink:0; }
+.fl-pending { width: 14px; height: 14px; background: #f8f6f1; border: 2px solid #d0c9bc; border-radius: 50%; flex-shrink:0; }
+.fl-dep { width: 22px; height: 2px; background: #d0c9bc; position: relative; flex-shrink:0; }
+.fl-dep::after { content:’’; position: absolute; right: -1px; top: -3px; border-left: 6px solid #d0c9bc; border-top: 4px solid transparent; border-bottom: 4px solid transparent; }
+</style>
+
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1><span class="flag">🇳🇿</span>NZ Limited Company — Startup Costs</h1>
+    <p>Year 1 costs for registering and running a New Zealand limited liability company (NZD, excl. GST unless noted)</p>
+  </header>
+
+  <div class="legend">
+    <span><span class="badge badge-once">Once-off</span> One-time cost</span>
+    <span><span class="badge badge-annual">Annual</span> Recurring yearly</span>
+    <span><span class="badge badge-varies">Varies</span> Depends on situation</span>
+  </div>
+
+  <!-- REGISTRATION -->
+
+  <p class="section-label">Registration &amp; Structure</p>
+  <table>
+    <thead><tr><th>Item</th><th>Notes</th><th>Cost (NZD)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Reserve Company Name <span class="badge badge-once">Once-off</span></td>
+        <td>Via Companies Office; holds name for 20 working days</td>
+        <td>$10 + GST</td>
+      </tr>
+      <tr>
+        <td>Company Incorporation <span class="badge badge-once">Once-off</span></td>
+        <td>Online via Companies Office; requires reserved name + IRD number</td>
+        <td>~$105 + GST</td>
+      </tr>
+      <tr>
+        <td>IRD Number (Company) <span class="badge badge-once">Once-off</span></td>
+        <td>Apply online after incorporation; required before banking or trading</td>
+        <td>Free</td>
+      </tr>
+      <tr>
+        <td>Annual Return <span class="badge badge-annual">Annual</span></td>
+        <td>Filed each year with Companies Office to keep company active</td>
+        <td>~$50 + GST</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TAX -->
+
+  <p class="section-label">Tax &amp; Compliance</p>
+  <table>
+    <thead><tr><th>Item</th><th>Notes</th><th>Cost (NZD)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>GST Registration <span class="badge badge-once">Once-off</span></td>
+        <td>Mandatory if turnover exceeds $60,000/yr; free to register via IRD</td>
+        <td>Free</td>
+      </tr>
+      <tr>
+        <td>Company Income Tax <span class="badge badge-annual">Annual</span></td>
+        <td>Flat 28% on net profit; provisional tax if liability &gt; $5,000</td>
+        <td>28% of profit</td>
+      </tr>
+      <tr>
+        <td>ACC Levies <span class="badge badge-annual">Annual</span></td>
+        <td>Earner's ($1.75/$100) + Working Safer ($0.08/$100) + Work levy by industry</td>
+        <td>$500–$3,000+</td>
+      </tr>
+      <tr>
+        <td>Accounting / Tax Filing <span class="badge badge-annual">Annual</span></td>
+        <td>Annual accounts + tax return; companies require more than sole traders</td>
+        <td>$1,500–$5,000</td>
+      </tr>
+      <tr>
+        <td>Accounting Software <span class="badge badge-annual">Annual</span></td>
+        <td>Xero or MYOB recommended; ~$35–$113/month</td>
+        <td>$420–$1,356</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- LEGAL -->
+
+  <p class="section-label">Legal &amp; Intellectual Property</p>
+  <table>
+    <thead><tr><th>Item</th><th>Notes</th><th>Cost (NZD)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Shareholder Agreement <span class="badge badge-once">Once-off</span></td>
+        <td>Strongly recommended for multiple shareholders; lawyer-drafted or template</td>
+        <td>$500–$2,000</td>
+      </tr>
+      <tr>
+        <td>Company Constitution <span class="badge badge-once">Once-off</span></td>
+        <td>Optional — Companies Act default rules apply if not provided</td>
+        <td>$0–$800</td>
+      </tr>
+      <tr>
+        <td>Trademark Registration <span class="badge badge-once">Once-off</span></td>
+        <td>Per class via IPONZ; protects brand name &amp; logo in NZ</td>
+        <td>$50–$100/class</td>
+      </tr>
+      <tr>
+        <td>Business Licences / Permits <span class="badge badge-varies">Varies</span></td>
+        <td>Industry-dependent (food, financial services, trades, etc.)</td>
+        <td>$0–$5,000+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- OPERATIONS -->
+
+  <p class="section-label">Operations</p>
+  <table>
+    <thead><tr><th>Item</th><th>Notes</th><th>Cost (NZD)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>SIM / Mobile Number <span class="badge badge-once">Once-off</span></td>
+        <td>Needed for 2FA on bank &amp; registrations; personal SIM is fine</td>
+        <td>$5–$30</td>
+      </tr>
+      <tr>
+        <td>Business Bank Account <span class="badge badge-once">Once-off</span></td>
+        <td>Requires company number + IRD; most NZ banks free or low-cost</td>
+        <td>$0–$200</td>
+      </tr>
+      <tr>
+        <td>Domain Registration <span class="badge badge-annual">Annual</span></td>
+        <td>.nz domain ~$25/yr; personal SIM usable for verification</td>
+        <td>$20–$50</td>
+      </tr>
+      <tr>
+        <td>Website Hosting <span class="badge badge-annual">Annual</span></td>
+        <td>Shared to managed hosting; separate from domain registration</td>
+        <td>$100–$600</td>
+      </tr>
+      <tr>
+        <td>Business Insurance <span class="badge badge-annual">Annual</span></td>
+        <td>Public liability + professional indemnity; varies by industry &amp; revenue</td>
+        <td>$500–$3,000+</td>
+      </tr>
+      <tr>
+        <td>Office / Workspace <span class="badge badge-annual">Annual</span></td>
+        <td>Home office ≈ $0 extra; lease requires deposit + possible fit-out</td>
+        <td>$0–$20,000+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TOTALS -->
+
+  <p class="section-label">Year 1 Estimated Total — Limited Company</p>
+  <table>
+    <thead><tr><th>Scenario</th><th>Includes</th><th>Est. Year 1 Cost</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Lean (home-based, no staff)</td>
+        <td>Incorporation, accounting, ACC, software, domain</td>
+        <td>$3,500–$6,000</td>
+      </tr>
+      <tr>
+        <td>Mid-size (leased office, 1–3 staff)</td>
+        <td>Above + rent, insurance, payroll compliance</td>
+        <td>$15,000–$40,000+</td>
+      </tr>
+      <tr class="total-row">
+        <td>💡 Add a 20–30% buffer</td>
+        <td>Unexpected compliance, delays, professional fees</td>
+        <td>Always recommended</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="notes">
+    <strong>Key points:</strong> A company needs an IRD number before opening a bank account. GST registration is mandatory at <strong>$60,000 turnover</strong>. Company tax is a flat <strong>28%</strong> on profit. Provisional tax kicks in if your tax liability exceeds <strong>$5,000</strong>. All figures are indicative for 2025–26 and exclude GST unless stated.
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+
+  <!--           PROCESS FLOW               -->
+
+  <!-- ══════════════════════════════════════ -->
+
+  <p class="section-label">Setup Process Flow &amp; Dependencies</p>
+
+  <div class="flow-wrap">
+    <div class="flow-title">Step-by-Step: Setting Up Your Limited Company</div>
+    <div class="flow-subtitle">Arrows show dependencies — each step must be completed before the next. Ticked items are already done ✓</div>
+
+```
+<!-- PHASE 1 -->
+<div class="phase">
+  <div class="phase-label">Phase 1 — Pre-Registration (Done ✓)</div>
+  <div class="step-row">
+
+    <div class="step">
+      <div class="step-card done">
+        <div class="tick">✓</div>
+        <span class="step-icon">📱</span>
+        <div class="step-name">Get a SIM</div>
+        <div class="step-time">⏱ 30 min</div>
+        <div class="step-cost">$5–$30</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">enables</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card done">
+        <div class="tick">✓</div>
+        <span class="step-icon">🌐</span>
+        <div class="step-name">Domain Registration</div>
+        <div class="step-time">⏱ 15 min</div>
+        <div class="step-cost">$20–$50/yr</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">also enables</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card done">
+        <div class="tick">✓</div>
+        <span class="step-icon">🏷️</span>
+        <div class="step-name">Reserve Company Name</div>
+        <div class="step-time">⏱ 20 min</div>
+        <div class="step-cost">$10 + GST</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="v-connector">
+  <div class="v-connector-line"></div>
+  <div class="v-note">Name reservation must be confirmed before you can file incorporation</div>
+</div>
+
+<!-- PHASE 2 -->
+<div class="phase">
+  <div class="phase-label">Phase 2 — Incorporate</div>
+  <div class="step-row">
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">🏢</span>
+        <div class="step-name">Incorporate Company</div>
+        <div class="step-time">⏱ 1–2 hrs</div>
+        <div class="step-cost">~$105 + GST</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">then apply</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">🔢</span>
+        <div class="step-name">Company IRD Number</div>
+        <div class="step-time">⏱ 1–3 days</div>
+        <div class="step-cost">Free</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">required for</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">🏦</span>
+        <div class="step-name">Open Bank Account</div>
+        <div class="step-time">⏱ 1–5 days</div>
+        <div class="step-cost">$0–$200</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="v-connector">
+  <div class="v-connector-line"></div>
+  <div class="v-note">Bank account must be open before you can receive revenue or pay expenses</div>
+</div>
+
+<!-- PHASE 3 -->
+<div class="phase">
+  <div class="phase-label">Phase 3 — Compliance &amp; Operations (run in parallel)</div>
+  <div class="step-row">
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">📊</span>
+        <div class="step-name">Register for GST</div>
+        <div class="step-time">⏱ 30 min</div>
+        <div class="step-cost">Free</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">alongside</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">💻</span>
+        <div class="step-name">Set Up Accounting Software</div>
+        <div class="step-time">⏱ 1–2 hrs</div>
+        <div class="step-cost">$420–$1,356/yr</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">alongside</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">🛡️</span>
+        <div class="step-name">Get Business Insurance</div>
+        <div class="step-time">⏱ 1–3 days</div>
+        <div class="step-cost">$500–$3,000/yr</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="v-connector">
+  <div class="v-connector-line"></div>
+  <div class="v-note">Legal docs can be drafted any time but should be finalised before issuing shares</div>
+</div>
+
+<!-- PHASE 4 -->
+<div class="phase">
+  <div class="phase-label">Phase 4 — Legal Wrap-Up &amp; Launch</div>
+  <div class="step-row">
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">📝</span>
+        <div class="step-name">Shareholder Agreement</div>
+        <div class="step-time">⏱ 3–10 days</div>
+        <div class="step-cost">$500–$2,000</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">optional</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card">
+        <span class="step-icon">™️</span>
+        <div class="step-name">Trademark Application</div>
+        <div class="step-time">⏱ 20 min lodge; ~10 months approval</div>
+        <div class="step-cost">$50–$100/class</div>
+      </div>
+    </div>
+
+    <div class="connector">
+      <div class="connector-line"></div>
+      <div class="connector-label">then</div>
+    </div>
+
+    <div class="step">
+      <div class="step-card" style="background:#fff8e6;border-color:#f0c040;">
+        <span class="step-icon">🚀</span>
+        <div class="step-name">Launch &amp; Trade!</div>
+        <div class="step-time">⏱ You're live</div>
+        <div class="step-cost">—</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Timeline summary -->
+<div class="timeline-grid">
+  <div class="tl-card done-card">
+    <div class="tl-label green">Already Done ✓</div>
+    <div class="tl-val">SIM + Domain + Name</div>
+    <div class="tl-sub">Great head start!</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-label">Minimum</div>
+    <div class="tl-val">~1 week</div>
+    <div class="tl-sub">If IRD &amp; bank go smoothly</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-label">Typical</div>
+    <div class="tl-val">2–4 weeks</div>
+    <div class="tl-sub">Fully operational</div>
+  </div>
+  <div class="tl-card">
+    <div class="tl-label">With Trademark</div>
+    <div class="tl-val">~10–12 months</div>
+    <div class="tl-sub">Full IP protection secured</div>
+  </div>
+</div>
+
+<!-- Flow legend -->
+<div class="flow-legend">
+  <div class="flow-legend-item"><div class="fl-done">✓</div> Completed</div>
+  <div class="flow-legend-item"><div class="fl-pending"></div> Still to do</div>
+  <div class="flow-legend-item"><div class="fl-dep"></div> Dependency / must complete first</div>
+</div>
+```
+
+  </div>
+
+</div>
+</body>
+</html>
