@@ -1,0 +1,1480 @@
+import React, { useState } from ‘react’;
+import { AlertCircle, CheckCircle, Users, Calendar, Hash } from ‘lucide-react’;
+
+const VoucherSystem = () => {
+const [activeTab, setActiveTab] = useState(‘payment’);
+const [vouchers, setVouchers] = useState([
+// Week 1 (July 7-13, 2025) - Mixed activity
+{
+id: ‘EZ240715001’,
+providerId: ‘EZ’,
+providerName: ‘Ezintsha’,
+patientDOB: ‘1990-07-15’,
+sequence: ‘001’,
+batch: ‘20250707’,
+voucherType: ‘CONSULTATION’,
+voucherAmount: 350,
+clientType: ‘INDIVIDUAL’,
+firstName: ‘Sarah’,
+lastName: ‘Johnson’,
+company: ‘’,
+idNumber: ‘9007150123456’,
+isUsed: true,
+createdDate: ‘2025-07-07 09:15:30’,
+createdBy: ‘Reception Staff’,
+redemptionDate: ‘2025-07-07 14:22:15’,
+redeemedBy: ‘Reception Staff’
+},
+{
+id: ‘MC240716001’,
+providerId: ‘MC’,
+providerName: ‘MediCare’,
+patientDOB: ‘1985-04-16’,
+sequence: ‘001’,
+batch: ‘20250708’,
+voucherType: ‘CONSULTATION’,
+voucherAmount: 350,
+clientType: ‘INDIVIDUAL’,
+firstName: ‘Michael’,
+lastName: ‘Smith’,
+company: ‘’,
+idNumber: ‘8504160987654’,
+isUsed: false,
+createdDate: ‘2025-07-08 11:30:45’,
+createdBy: ‘Reception Staff’,
+redemptionDate: null,
+redeemedBy: null
+},
+{
+id: ‘EZ240717001’,
+providerId: ‘EZ’,
+providerName: ‘Ezintsha’,
+patientDOB: ‘1992-03-17’,
+sequence: ‘001’,
+batch: ‘20250709’,
+voucherType: ‘CUSTOM AMOUNT’,
+voucherAmount: 200,
+clientType: ‘CORPORATE’,
+firstName: ‘’,
+lastName: ‘’,
+company: ‘WOOLWORTHS’,
+idNumber: ‘9203170456789’,
+isUsed: true,
+createdDate: ‘2025-07-09 13:45:20’,
+createdBy: ‘Reception Staff’,
+redemptionDate: ‘2025-07-09 16:30:10’,
+redeemedBy: ‘Reception Staff’
+},
+{
+id: ‘HC240718001’,
+providerId: ‘HC’,
+providerName: ‘HealthCorp’,
+patientDOB: ‘1988-12-18’,
+sequence: ‘001’,
+batch: ‘20250710’,
+voucherType: ‘CONSULTATION’,
+voucherAmount: 350,
+clientType: ‘INDIVIDUAL’,
+firstName: ‘Emma’,
+lastName: ‘Wilson’,
+company: ‘’,
+idNumber: ‘8812180234567’,
+isUsed: true,
+createdDate: ‘2025-07-10 10:20:15’,
+createdBy: ‘Reception Staff’,
+redemptionDate: ‘2025-07-10 15:45:30’,
+redeemedBy: ‘Reception Staff’
+},
+{
+id: ‘EZ240719001’,
+providerId: ‘EZ’,
+providerName: ‘Ezintsha’,
+patientDOB: ‘1995-06-19’,
+sequence: ‘001’,
+batch: ‘20250711’,
+voucherType: ‘CONSULTATION’,
+voucherAmount: 350,
+clientType: ‘INDIVIDUAL’,
+firstName: ‘David’,
+lastName: ‘Brown’,
+company: ‘’,
+idNumber: ‘9506190345678’,
+isUsed: false,
+createdDate: ‘2025-07-11 14:10:25’,
+createdBy: ‘Reception Staff’,
+redemptionDate: null,
+redeemedBy: null
+},
+
+```
+// Week 2 (July 14-20, 2025) - Higher activity
+{
+  id: 'EZ240720001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '1987-01-20',
+  sequence: '001',
+  batch: '20250714',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Lisa',
+  lastName: 'Anderson',
+  company: '',
+  idNumber: '8701200123456',
+  isUsed: true,
+  createdDate: '2025-07-14 08:30:00',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-14 11:15:45',
+  redeemedBy: 'Reception Staff'
+},
+{
+  id: 'MC240721001',
+  providerId: 'MC',
+  providerName: 'MediCare',
+  patientDOB: '1993-09-21',
+  sequence: '001',
+  batch: '20250714',
+  voucherType: 'CUSTOM AMOUNT',
+  voucherAmount: 500,
+  clientType: 'CORPORATE',
+  firstName: '',
+  lastName: '',
+  company: 'OTHER',
+  idNumber: '9309210987654',
+  isUsed: true,
+  createdDate: '2025-07-14 12:45:30',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-14 13:20:15',
+  redeemedBy: 'Reception Staff'
+},
+{
+  id: 'EZ240722001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '1991-05-22',
+  sequence: '001',
+  batch: '20250715',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'James',
+  lastName: 'Taylor',
+  company: '',
+  idNumber: '9105220456789',
+  isUsed: true,
+  createdDate: '2025-07-15 09:20:10',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-15 14:30:25',
+  redeemedBy: 'Reception Staff'
+},
+{
+  id: 'HC240723001',
+  providerId: 'HC',
+  providerName: 'HealthCorp',
+  patientDOB: '1989-11-23',
+  sequence: '001',
+  batch: '20250715',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Maria',
+  lastName: 'Garcia',
+  company: '',
+  idNumber: '8911230234567',
+  isUsed: false,
+  createdDate: '2025-07-15 15:10:40',
+  createdBy: 'Reception Staff',
+  redemptionDate: null,
+  redeemedBy: null
+},
+{
+  id: 'EZ240724001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '1994-02-24',
+  sequence: '001',
+  batch: '20250716',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Robert',
+  lastName: 'Martinez',
+  company: '',
+  idNumber: '9402240345678',
+  isUsed: true,
+  createdDate: '2025-07-16 10:45:15',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-16 16:20:30',
+  redeemedBy: 'Reception Staff'
+},
+{
+  id: 'MC240725001',
+  providerId: 'MC',
+  providerName: 'MediCare',
+  patientDOB: '1986-08-25',
+  sequence: '001',
+  batch: '20250716',
+  voucherType: 'CUSTOM AMOUNT',
+  voucherAmount: 150,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Jennifer',
+  lastName: 'Lee',
+  company: '',
+  idNumber: '8608250123456',
+  isUsed: false,
+  createdDate: '2025-07-16 13:25:50',
+  createdBy: 'Reception Staff',
+  redemptionDate: null,
+  redeemedBy: null
+},
+{
+  id: 'EZ240726001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '1990-04-26',
+  sequence: '001',
+  batch: '20250717',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'CORPORATE',
+  firstName: '',
+  lastName: '',
+  company: 'WOOLWORTHS',
+  idNumber: '9004260987654',
+  isUsed: true,
+  createdDate: '2025-07-17 11:15:25',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-17 12:45:10',
+  redeemedBy: 'Reception Staff'
+},
+
+// Recent days (July 17-18, 2025) - Current activity
+{
+  id: 'HC240727001',
+  providerId: 'HC',
+  providerName: 'HealthCorp',
+  patientDOB: '1992-07-27',
+  sequence: '001',
+  batch: '20250717',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Kevin',
+  lastName: 'White',
+  company: '',
+  idNumber: '9207270456789',
+  isUsed: false,
+  createdDate: '2025-07-17 14:30:35',
+  createdBy: 'Reception Staff',
+  redemptionDate: null,
+  redeemedBy: null
+},
+{
+  id: 'EZ240728001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '1988-10-28',
+  sequence: '001',
+  batch: '20250717',
+  voucherType: 'CUSTOM AMOUNT',
+  voucherAmount: 250,
+  clientType: 'INDIVIDUAL',
+  firstName: 'Amanda',
+  lastName: 'Davis',
+  company: '',
+  idNumber: '8810280234567',
+  isUsed: true,
+  createdDate: '2025-07-17 16:20:15',
+  createdBy: 'Reception Staff',
+  redemptionDate: '2025-07-17 17:10:30',
+  redeemedBy: 'Reception Staff'
+},
+
+// Original sample data (updated timestamp)
+{
+  id: 'EZ240315001',
+  providerId: 'EZ',
+  providerName: 'Ezintsha',
+  patientDOB: '2024-03-15',
+  sequence: '001',
+  batch: '20240710',
+  voucherType: 'CONSULTATION',
+  voucherAmount: 350,
+  clientType: 'INDIVIDUAL',
+  firstName: 'John',
+  lastName: 'Doe',
+  company: '',
+  idNumber: '1234567890123',
+  isUsed: false,
+  createdDate: '2024-07-10 14:30:15',
+  createdBy: 'Reception Staff',
+  redemptionDate: null,
+  redeemedBy: null
+}
+```
+
+]);
+
+// Admin state
+const [providers] = useState([
+{ id: ‘EZ’, name: ‘Ezintsha’ },
+{ id: ‘MC’, name: ‘MediCare’ },
+{ id: ‘HC’, name: ‘HealthCorp’ }
+]);
+
+const [newVoucher, setNewVoucher] = useState({
+providerId: ‘EZ’,
+patientDOB: ‘’,
+idNumber: ‘’,
+voucherType: ‘CONSULTATION’,
+customAmount: ‘’,
+clientType: ‘INDIVIDUAL’,
+firstName: ‘’,
+lastName: ‘’,
+company: ‘WOOLWORTHS’
+});
+
+// Patient payment state
+const [consultationAmount] = useState(350);
+const [voucherCode, setVoucherCode] = useState(’’);
+const [voucherStatus, setVoucherStatus] = useState(’’);
+const [appliedVoucher, setAppliedVoucher] = useState(null);
+
+// Get current date and time
+const getCurrentDateTime = () => {
+const now = new Date();
+const year = now.getFullYear();
+const month = (now.getMonth() + 1).toString().padStart(2, ‘0’);
+const day = now.getDate().toString().padStart(2, ‘0’);
+const hours = now.getHours().toString().padStart(2, ‘0’);
+const minutes = now.getMinutes().toString().padStart(2, ‘0’);
+const seconds = now.getSeconds().toString().padStart(2, ‘0’);
+return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
+
+// Generate current batch number (YYYYMMDD format)
+const getCurrentBatch = () => {
+const today = new Date();
+const year = today.getFullYear();
+const month = (today.getMonth() + 1).toString().padStart(2, ‘0’);
+const day = today.getDate().toString().padStart(2, ‘0’);
+return `${year}${month}${day}`;
+};
+
+// Check voucher eligibility for a patient
+const getVoucherEligibility = (dob, idNumber, firstName, lastName) => {
+const currentYear = new Date().getFullYear();
+
+```
+// Find all vouchers for this patient in current year
+const patientVouchers = vouchers.filter(v => 
+  v.patientDOB === dob &&
+  v.idNumber === idNumber &&
+  v.firstName?.toLowerCase() === firstName?.toLowerCase() &&
+  v.lastName?.toLowerCase() === lastName?.toLowerCase() &&
+  v.createdDate.startsWith(currentYear.toString())
+);
+
+// Count used vouchers
+const usedVouchersCount = patientVouchers.filter(v => v.isUsed).length;
+const totalVouchersCount = patientVouchers.length;
+const remainingVouchers = Math.max(0, 3 - usedVouchersCount);
+
+return {
+  totalCreated: totalVouchersCount,
+  totalUsed: usedVouchersCount,
+  remaining: remainingVouchers,
+  canCreateMore: totalVouchersCount < 3,
+  canUseMore: remainingVouchers > 0
+};
+```
+
+};
+
+// Generate voucher code
+const generateVoucherCode = () => {
+if (!newVoucher.patientDOB) return;
+
+```
+const dob = new Date(newVoucher.patientDOB);
+const dobFormatted = `${dob.getFullYear().toString().slice(-2)}${(dob.getMonth() + 1).toString().padStart(2, '0')}${dob.getDate().toString().padStart(2, '0')}`;
+
+const currentBatch = getCurrentBatch();
+
+// Find next sequence number for this patient in current batch
+const existingVouchers = vouchers.filter(v => 
+  v.providerId === newVoucher.providerId && 
+  v.patientDOB === newVoucher.patientDOB &&
+  v.batch === currentBatch
+);
+
+const nextSequence = (existingVouchers.length + 1).toString().padStart(3, '0');
+
+return `${newVoucher.providerId}${dobFormatted}${nextSequence}`;
+```
+
+};
+
+// Create voucher
+const createVoucher = () => {
+const voucherCode = generateVoucherCode();
+if (!voucherCode) return;
+
+```
+// Check eligibility for individual clients
+if (newVoucher.clientType === 'INDIVIDUAL') {
+  const eligibility = getVoucherEligibility(
+    newVoucher.patientDOB, 
+    newVoucher.idNumber, 
+    newVoucher.firstName, 
+    newVoucher.lastName
+  );
+  
+  if (!eligibility.canCreateMore) {
+    alert(`Maximum of 3 vouchers per year reached for ${newVoucher.firstName} ${newVoucher.lastName}. Remaining usage: ${eligibility.remaining}`);
+    return;
+  }
+}
+
+const currentBatch = getCurrentBatch();
+const voucherAmount = newVoucher.voucherType === 'CONSULTATION' ? 350 : parseFloat(newVoucher.customAmount) || 0;
+
+const newVoucherObj = {
+  id: voucherCode,
+  providerId: newVoucher.providerId,
+  providerName: providers.find(p => p.id === newVoucher.providerId)?.name,
+  patientDOB: newVoucher.patientDOB,
+  sequence: voucherCode.slice(-3),
+  batch: currentBatch,
+  voucherType: newVoucher.voucherType,
+  voucherAmount: voucherAmount,
+  clientType: newVoucher.clientType,
+  firstName: newVoucher.firstName,
+  lastName: newVoucher.lastName,
+  company: newVoucher.clientType === 'CORPORATE' ? newVoucher.company : '',
+  idNumber: newVoucher.idNumber,
+  isUsed: false,
+  createdDate: getCurrentDateTime(),
+  createdBy: 'Reception Staff',
+  redemptionDate: null,
+  redeemedBy: null
+};
+
+setVouchers([...vouchers, newVoucherObj]);
+setNewVoucher({ 
+  providerId: 'EZ', 
+  patientDOB: '', 
+  idNumber: '', 
+  voucherType: 'CONSULTATION', 
+  customAmount: '',
+  clientType: 'INDIVIDUAL',
+  firstName: '',
+  lastName: '',
+  company: 'WOOLWORTHS'
+});
+```
+
+};
+
+// Validate voucher
+const validateVoucher = (code) => {
+const voucher = vouchers.find(v => v.id === code.toUpperCase());
+
+```
+if (!voucher) {
+  setVoucherStatus('error');
+  setAppliedVoucher(null);
+  return false;
+}
+
+if (voucher.isUsed) {
+  setVoucherStatus('used');
+  setAppliedVoucher(null);
+  return false;
+}
+
+setVoucherStatus('valid');
+setAppliedVoucher(voucher);
+return true;
+```
+
+};
+
+// Apply voucher
+const applyVoucher = () => {
+if (appliedVoucher) {
+// Check if patient has remaining usage allowance
+if (appliedVoucher.clientType === ‘INDIVIDUAL’) {
+const eligibility = getVoucherEligibility(
+appliedVoucher.patientDOB,
+appliedVoucher.idNumber,
+appliedVoucher.firstName,
+appliedVoucher.lastName
+);
+
+```
+    if (!eligibility.canUseMore) {
+      alert(`No remaining voucher usage allowance for ${appliedVoucher.firstName} ${appliedVoucher.lastName} this year.`);
+      return;
+    }
+  }
+  
+  const currentDateTime = getCurrentDateTime();
+  const updatedVouchers = vouchers.map(v => 
+    v.id === appliedVoucher.id ? { 
+      ...v, 
+      isUsed: true, 
+      redemptionDate: currentDateTime,
+      redeemedBy: 'Reception Staff'
+    } : v
+  );
+  setVouchers(updatedVouchers);
+  setVoucherStatus('applied');
+}
+```
+
+};
+
+// Reports state
+const [reportProvider, setReportProvider] = useState(‘ALL’);
+const [detailedReportProvider, setDetailedReportProvider] = useState(‘ALL’);
+
+// Generate detailed weekly data for the month
+const generateDetailedWeeklyData = () => {
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+const currentYear = currentDate.getFullYear();
+
+```
+// Get first day of current month
+const firstDay = new Date(currentYear, currentMonth, 1);
+const lastDay = new Date(currentYear, currentMonth + 1, 0);
+
+// Generate weeks for the month
+const weeks = [];
+let currentWeekStart = new Date(firstDay);
+
+// Adjust to start of week (Monday)
+const dayOfWeek = currentWeekStart.getDay();
+const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+currentWeekStart.setDate(currentWeekStart.getDate() - daysToSubtract);
+
+let weekNumber = 1;
+
+while (currentWeekStart <= lastDay) {
+  const weekEnd = new Date(currentWeekStart);
+  weekEnd.setDate(weekEnd.getDate() + 6);
+  
+  // Filter vouchers for this week
+  const weekVouchers = vouchers.filter(voucher => {
+    const voucherDate = new Date(voucher.createdDate);
+    const matchesProvider = detailedReportProvider === 'ALL' || voucher.providerId === detailedReportProvider;
+    const inWeekRange = voucherDate >= currentWeekStart && voucherDate <= weekEnd;
+    return matchesProvider && inWeekRange;
+  });
+  
+  // Calculate daily redemptions for this week
+  const dailyRedemptions = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(currentWeekStart);
+    day.setDate(day.getDate() + i);
+    
+    const dayVouchers = weekVouchers.filter(v => {
+      const voucherDate = new Date(v.createdDate);
+      return voucherDate.toDateString() === day.toDateString();
+    });
+    
+    const redeemedOnDay = dayVouchers.filter(v => {
+      if (!v.redemptionDate) return false;
+      const redemptionDate = new Date(v.redemptionDate);
+      return redemptionDate.toDateString() === day.toDateString();
+    });
+    
+    dailyRedemptions.push({
+      date: day.toISOString().split('T')[0],
+      dayName: day.toLocaleDateString('en-US', { weekday: 'short' }),
+      generated: dayVouchers.length,
+      redeemed: redeemedOnDay.length,
+      generatedValue: dayVouchers.reduce((sum, v) => sum + v.voucherAmount, 0),
+      redeemedValue: redeemedOnDay.reduce((sum, v) => sum + v.voucherAmount, 0)
+    });
+  }
+  
+  const weekGenerated = weekVouchers.length;
+  const weekRedeemed = weekVouchers.filter(v => v.isUsed).length;
+  const weekGeneratedValue = weekVouchers.reduce((sum, v) => sum + v.voucherAmount, 0);
+  const weekRedeemedValue = weekVouchers.filter(v => v.isUsed).reduce((sum, v) => sum + v.voucherAmount, 0);
+  
+  weeks.push({
+    weekNumber,
+    weekStart: currentWeekStart.toISOString().split('T')[0],
+    weekEnd: weekEnd.toISOString().split('T')[0],
+    generated: weekGenerated,
+    redeemed: weekRedeemed,
+    generatedValue: weekGeneratedValue,
+    redeemedValue: weekRedeemedValue,
+    redemptionRate: weekGenerated > 0 ? ((weekRedeemed / weekGenerated) * 100).toFixed(1) : '0',
+    dailyRedemptions
+  });
+  
+  currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+  weekNumber++;
+}
+
+return {
+  month: currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+  weeks: weeks.filter(week => week.generated > 0 || detailedReportProvider === 'ALL')
+};
+```
+
+};
+
+const detailedWeeklyData = generateDetailedWeeklyData();
+
+// Generate reports data
+const generateReportsData = () => {
+const currentDate = new Date();
+const weekAgo = new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+```
+// Filter vouchers by provider and date range
+const filteredVouchers = vouchers.filter(voucher => {
+  const voucherDate = new Date(voucher.createdDate);
+  const matchesProvider = reportProvider === 'ALL' || voucher.providerId === reportProvider;
+  const withinWeek = voucherDate >= weekAgo;
+  return matchesProvider && withinWeek;
+});
+
+const generated = filteredVouchers.length;
+const redeemed = filteredVouchers.filter(v => v.isUsed).length;
+const generatedValue = filteredVouchers.reduce((sum, v) => sum + v.voucherAmount, 0);
+const redeemedValue = filteredVouchers.filter(v => v.isUsed).reduce((sum, v) => sum + v.voucherAmount, 0);
+
+// Group by provider for detailed breakdown
+const providerBreakdown = providers.map(provider => {
+  const providerVouchers = filteredVouchers.filter(v => v.providerId === provider.id);
+  const providerGenerated = providerVouchers.length;
+  const providerRedeemed = providerVouchers.filter(v => v.isUsed).length;
+  const providerGeneratedValue = providerVouchers.reduce((sum, v) => sum + v.voucherAmount, 0);
+  const providerRedeemedValue = providerVouchers.filter(v => v.isUsed).reduce((sum, v) => sum + v.voucherAmount, 0);
+  
+  return {
+    provider: provider.name,
+    generated: providerGenerated,
+    redeemed: providerRedeemed,
+    generatedValue: providerGeneratedValue,
+    redeemedValue: providerRedeemedValue,
+    redemptionRate: providerGenerated > 0 ? ((providerRedeemed / providerGenerated) * 100).toFixed(1) : '0'
+  };
+}).filter(p => p.generated > 0 || reportProvider === 'ALL');
+
+return {
+  summary: {
+    generated,
+    redeemed,
+    generatedValue,
+    redeemedValue,
+    redemptionRate: generated > 0 ? ((redeemed / generated) * 100).toFixed(1) : '0',
+    outstandingValue: generatedValue - redeemedValue
+  },
+  providerBreakdown,
+  dateRange: {
+    from: weekAgo.toISOString().split('T')[0],
+    to: currentDate.toISOString().split('T')[0]
+  }
+};
+```
+
+};
+
+const reportsData = generateReportsData();
+// Reset payment
+const resetPayment = () => {
+setVoucherCode(’’);
+setVoucherStatus(’’);
+setAppliedVoucher(null);
+};
+
+return (
+<div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
+<div className="bg-white rounded-lg shadow-lg">
+{/* Header */}
+<div className="border-b border-gray-200">
+<nav className="flex space-x-8 px-6">
+<button
+onClick={() => setActiveTab(‘payment’)}
+className={`py-4 px-1 border-b-2 font-medium text-sm ${ activeTab === 'payment' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700' }`}
+>
+Patient Payment
+</button>
+<button
+onClick={() => setActiveTab(‘admin’)}
+className={`py-4 px-1 border-b-2 font-medium text-sm ${ activeTab === 'admin' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700' }`}
+>
+Admin - Generate Vouchers
+</button>
+<button
+onClick={() => setActiveTab(‘manage’)}
+className={`py-4 px-1 border-b-2 font-medium text-sm ${ activeTab === 'manage' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700' }`}
+>
+Manage Vouchers
+</button>
+<button
+onClick={() => setActiveTab(‘reports’)}
+className={`py-4 px-1 border-b-2 font-medium text-sm ${ activeTab === 'reports' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700' }`}
+>
+Reports Dashboard - Weekly Summary
+</button>
+<button
+onClick={() => setActiveTab(‘reports-detailed’)}
+className={`py-4 px-1 border-b-2 font-medium text-sm ${ activeTab === 'reports-detailed' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700' }`}
+>
+Reports Dashboard - Weekly Detailed
+</button>
+</nav>
+</div>
+
+```
+    {/* Patient Payment Tab */}
+    {activeTab === 'payment' && (
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-6">Consultation Payment</h2>
+        
+        <div className="bg-gray-50 p-4 rounded-lg mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <span className="text-lg">Consultation Fee:</span>
+            <span className="text-2xl font-bold">R{consultationAmount}</span>
+          </div>
+          
+          {voucherStatus === 'applied' && appliedVoucher && (
+            <div className="flex justify-between items-center mb-4 text-green-600">
+              <span>Voucher Discount ({appliedVoucher.voucherType}):</span>
+              <span className="text-xl font-bold">-R{Math.min(appliedVoucher.voucherAmount, consultationAmount)}</span>
+            </div>
+          )}
+          
+          <div className="border-t pt-4">
+            <div className="flex justify-between items-center">
+              <span className="text-xl font-bold">Total:</span>
+              <span className="text-3xl font-bold">
+                R{voucherStatus === 'applied' && appliedVoucher ? 
+                  Math.max(0, consultationAmount - appliedVoucher.voucherAmount) : 
+                  consultationAmount}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        {voucherStatus !== 'applied' && (
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Have a voucher code? Enter here (optional)
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={voucherCode}
+                onChange={(e) => setVoucherCode(e.target.value.toUpperCase())}
+                placeholder="Enter voucher code"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                maxLength={11}
+              />
+              <button
+                onClick={() => validateVoucher(voucherCode)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Check
+              </button>
+            </div>
+            
+            {voucherStatus === 'error' && (
+              <div className="mt-2 flex items-center text-red-600">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                <span className="text-sm">Invalid voucher code. Please contact reception.</span>
+              </div>
+            )}
+            
+            {voucherStatus === 'used' && (
+              <div className="mt-2 flex items-center text-red-600">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                <span className="text-sm">Voucher has already been used.</span>
+              </div>
+            )}
+            
+            {voucherStatus === 'valid' && appliedVoucher && (
+              <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-md">
+                <div className="flex items-center text-green-600 mb-2">
+                  <CheckCircle className="w-4 h-4 mr-1" />
+                  <span className="text-sm font-medium">Valid voucher found!</span>
+                </div>
+                <div className="text-sm text-green-700 mb-3">
+                  <div>Provider: {appliedVoucher.providerName}</div>
+                  <div>Type: {appliedVoucher.voucherType}</div>
+                  <div>Amount: R{appliedVoucher.voucherAmount}</div>
+                  <div>Client: {appliedVoucher.clientType === 'INDIVIDUAL' ? 
+                    `${appliedVoucher.firstName} ${appliedVoucher.lastName}` : 
+                    appliedVoucher.company}</div>
+                  <div>Coverage: {appliedVoucher.voucherAmount >= consultationAmount ? 'Full consultation' : `Partial (R${appliedVoucher.voucherAmount})`}</div>
+                </div>
+                <button
+                  onClick={applyVoucher}
+                  className="w-full px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
+                >
+                  Apply Voucher
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+        
+        {voucherStatus === 'applied' && (
+          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-md">
+            <div className="flex items-center text-green-600 mb-2">
+              <CheckCircle className="w-5 h-5 mr-2" />
+              <span className="font-medium">Voucher Applied Successfully!</span>
+            </div>
+            <div className="text-sm text-green-700">
+              <div>Voucher: {appliedVoucher?.id}</div>
+              <div>Provider: {appliedVoucher?.providerName}</div>
+              <div>Type: {appliedVoucher?.voucherType}</div>
+              <div>Client: {appliedVoucher?.clientType === 'INDIVIDUAL' ? 
+                `${appliedVoucher?.firstName} ${appliedVoucher?.lastName}` : 
+                appliedVoucher?.company}</div>
+              <div>Discount: R{appliedVoucher?.voucherAmount}</div>
+              <div>{appliedVoucher?.voucherAmount >= consultationAmount ? 'Full consultation covered' : `Partial coverage - R${Math.max(0, consultationAmount - appliedVoucher.voucherAmount)} remaining`}</div>
+            </div>
+            <button
+              onClick={resetPayment}
+              className="mt-2 text-sm text-green-600 hover:text-green-800"
+            >
+              Remove voucher
+            </button>
+          </div>
+        )}
+        
+        <div className="flex gap-4">
+          {voucherStatus === 'applied' ? (
+            <button className="flex-1 py-3 bg-green-600 text-white rounded-md font-medium">
+              Generate Invoice (R{appliedVoucher ? Math.max(0, consultationAmount - appliedVoucher.voucherAmount) : 0})
+            </button>
+          ) : (
+            <button className="flex-1 py-3 bg-blue-600 text-white rounded-md font-medium">
+              Proceed to Payment (R{consultationAmount})
+            </button>
+          )}
+        </div>
+      </div>
+    )}
+    
+    {/* Admin Tab */}
+    {activeTab === 'admin' && (
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-6">Generate Voucher</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Client Type
+            </label>
+            <select
+              value={newVoucher.clientType}
+              onChange={(e) => setNewVoucher({...newVoucher, clientType: e.target.value, firstName: '', lastName: '', company: 'WOOLWORTHS'})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="INDIVIDUAL">INDIVIDUAL</option>
+              <option value="CORPORATE">CORPORATE</option>
+            </select>
+          </div>
+          
+          {newVoucher.clientType === 'INDIVIDUAL' && (
+            <>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={newVoucher.firstName}
+                  onChange={(e) => setNewVoucher({...newVoucher, firstName: e.target.value})}
+                  placeholder="Enter first name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  value={newVoucher.lastName}
+                  onChange={(e) => setNewVoucher({...newVoucher, lastName: e.target.value})}
+                  placeholder="Enter last name"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </>
+          )}
+          
+          {newVoucher.clientType === 'CORPORATE' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Company
+              </label>
+              <select
+                value={newVoucher.company}
+                onChange={(e) => setNewVoucher({...newVoucher, company: e.target.value})}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="WOOLWORTHS">WOOLWORTHS</option>
+                <option value="OTHER">OTHER</option>
+              </select>
+            </div>
+          )}
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Provider
+            </label>
+            <select
+              value={newVoucher.providerId}
+              onChange={(e) => setNewVoucher({...newVoucher, providerId: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {providers.map(provider => (
+                <option key={provider.id} value={provider.id}>
+                  {provider.name} ({provider.id})
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Patient Date of Birth
+            </label>
+            <input
+              type="date"
+              value={newVoucher.patientDOB}
+              onChange={(e) => setNewVoucher({...newVoucher, patientDOB: e.target.value})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              SA ID Number (for records)
+            </label>
+            <input
+              type="text"
+              value={newVoucher.idNumber}
+              onChange={(e) => setNewVoucher({...newVoucher, idNumber: e.target.value})}
+              placeholder="1234567890123"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Voucher Type & Amount
+            </label>
+            <select
+              value={newVoucher.voucherType}
+              onChange={(e) => setNewVoucher({...newVoucher, voucherType: e.target.value, customAmount: ''})}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="CONSULTATION">CONSULTATION - R350</option>
+              <option value="CUSTOM AMOUNT">CUSTOM AMOUNT</option>
+            </select>
+          </div>
+          
+          {newVoucher.voucherType === 'CUSTOM AMOUNT' && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Custom Amount (R)
+              </label>
+              <input
+                type="number"
+                value={newVoucher.customAmount}
+                onChange={(e) => setNewVoucher({...newVoucher, customAmount: e.target.value})}
+                placeholder="Enter amount"
+                min="0"
+                step="0.01"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          )}
+        </div>
+        
+        {newVoucher.patientDOB && (
+          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-md">
+            <h3 className="font-medium text-blue-900 mb-2">Generated Voucher Code:</h3>
+            <div className="text-2xl font-mono font-bold text-blue-600 mb-2">
+              {generateVoucherCode()}
+            </div>
+            <div className="text-sm text-blue-700">
+              <div>Batch: {getCurrentBatch()}</div>
+              <div>Provider: {providers.find(p => p.id === newVoucher.providerId)?.name}</div>
+              <div>Type: {newVoucher.voucherType}</div>
+              <div>Amount: R{newVoucher.voucherType === 'CONSULTATION' ? '350' : (newVoucher.customAmount || '0')}</div>
+              <div>Client: {newVoucher.clientType === 'INDIVIDUAL' ? 
+                `${newVoucher.firstName} ${newVoucher.lastName}`.trim() : 
+                newVoucher.company}</div>
+              {newVoucher.clientType === 'INDIVIDUAL' && newVoucher.firstName && newVoucher.lastName && newVoucher.patientDOB && newVoucher.idNumber && (
+                <div className="mt-2 p-2 bg-white rounded border">
+                  <div className="text-xs font-medium text-blue-800 mb-1">Annual Voucher Eligibility:</div>
+                  {(() => {
+                    const eligibility = getVoucherEligibility(newVoucher.patientDOB, newVoucher.idNumber, newVoucher.firstName, newVoucher.lastName);
+                    return (
+                      <div className="text-xs">
+                        <div>Created this year: {eligibility.totalCreated}/3</div>
+                        <div>Used this year: {eligibility.totalUsed}</div>
+                        <div className={eligibility.remaining > 0 ? 'text-green-600' : 'text-red-600'}>
+                          Remaining usage: {eligibility.remaining}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        
+        <div className="mt-6">
+          <button
+            onClick={createVoucher}
+            disabled={
+              !newVoucher.patientDOB || 
+              (newVoucher.voucherType === 'CUSTOM AMOUNT' && (!newVoucher.customAmount || parseFloat(newVoucher.customAmount) <= 0)) ||
+              (newVoucher.clientType === 'INDIVIDUAL' && (!newVoucher.firstName.trim() || !newVoucher.lastName.trim()))
+            }
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
+          >
+            Create Voucher
+          </button>
+        </div>
+      </div>
+    )}
+    
+    {/* Reports Dashboard Tab */}
+    {activeTab === 'reports' && (
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Reports Dashboard - Weekly Summary</h2>
+          <div className="flex items-center gap-4">
+            <label className="text-sm font-medium text-gray-700">
+              Provider Filter:
+            </label>
+            <select
+              value={reportProvider}
+              onChange={(e) => setReportProvider(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="ALL">All Providers</option>
+              {providers.map(provider => (
+                <option key={provider.id} value={provider.id}>
+                  {provider.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        {/* Date Range Display */}
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+          <h3 className="font-medium text-gray-700 mb-2">Report Period (Last 7 Days)</h3>
+          <div className="text-sm text-gray-600">
+            {reportsData.dateRange.from} to {reportsData.dateRange.to}
+          </div>
+        </div>
+        
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-blue-600">Vouchers Generated</p>
+                <p className="text-3xl font-bold text-blue-900">{reportsData.summary.generated}</p>
+              </div>
+              <div className="text-blue-500">
+                <Users className="h-8 w-8" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-green-50 p-6 rounded-lg border border-green-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-green-600">Vouchers Redeemed</p>
+                <p className="text-3xl font-bold text-green-900">{reportsData.summary.redeemed}</p>
+              </div>
+              <div className="text-green-500">
+                <CheckCircle className="h-8 w-8" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-purple-600">Generated Value</p>
+                <p className="text-3xl font-bold text-purple-900">R{reportsData.summary.generatedValue}</p>
+              </div>
+              <div className="text-purple-500">
+                <Hash className="h-8 w-8" />
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-orange-600">Redeemed Value</p>
+                <p className="text-3xl font-bold text-orange-900">R{reportsData.summary.redeemedValue}</p>
+              </div>
+              <div className="text-orange-500">
+                <Calendar className="h-8 w-8" />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="font-medium text-gray-700 mb-2">Redemption Rate</h3>
+            <div className="text-2xl font-bold text-gray-900">{reportsData.summary.redemptionRate}%</div>
+            <div className="text-sm text-gray-500">
+              {reportsData.summary.redeemed} of {reportsData.summary.generated} vouchers used
+            </div>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="font-medium text-gray-700 mb-2">Outstanding Value</h3>
+            <div className="text-2xl font-bold text-gray-900">R{reportsData.summary.outstandingValue}</div>
+            <div className="text-sm text-gray-500">
+              Unredeemed voucher value
+            </div>
+          </div>
+          
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="font-medium text-gray-700 mb-2">Average Voucher Value</h3>
+            <div className="text-2xl font-bold text-gray-900">
+              R{reportsData.summary.generated > 0 ? Math.round(reportsData.summary.generatedValue / reportsData.summary.generated) : 0}
+            </div>
+            <div className="text-sm text-gray-500">
+              Per voucher generated
+            </div>
+          </div>
+        </div>
+        
+        {/* Provider Breakdown Table */}
+        <div className="bg-white rounded-lg border border-gray-200">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h3 className="text-lg font-medium text-gray-900">Provider Breakdown</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Provider</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Generated</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Redeemed</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Redemption Rate</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Generated Value</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Redeemed Value</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Outstanding</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {reportsData.providerBreakdown.map((provider, index) => (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {provider.provider}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {provider.generated}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {provider.redeemed}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        parseFloat(provider.redemptionRate) >= 70 
+                          ? 'bg-green-100 text-green-800' 
+                          : parseFloat(provider.redemptionRate) >= 40 
+                          ? 'bg-yellow-100 text-yellow-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {provider.redemptionRate}%
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      R{provider.generatedValue}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      R{provider.redeemedValue}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      R{provider.generatedValue - provider.redeemedValue}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          {reportsData.providerBreakdown.length === 0 && (
+            <div className="px-6 py-8 text-center text-gray-500">
+              No voucher data available for the selected period and provider.
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+    
+    {/* Reports Dashboard - Weekly Detailed Tab */}
+    {activeTab === 'reports-detailed' && (
+      <div className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Reports Dashboard - Weekly Detailed</h2>
+          <div className="flex items-center gap-4">
+            <label className="text-sm font-medium text-gray-700">
+              Provider Filter:
+            </label>
+            <select
+              value={detailedReportProvider}
+              onChange={(e) => setDetailedReportProvider(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="ALL">All Providers</option>
+              {providers.map(provider => (
+                <option key={provider.id} value={provider.id}>
+                  {provider.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        
+        {/* Month Display */}
+        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
+          <h3 className="font-medium text-gray-700 mb-2">Monthly Report - {detailedWeeklyData.month}</h3>
+          <div className="text-sm text-gray-600">
+            Daily redemption patterns by week
+          </div>
+        </div>
+        
+        {/* Weekly Breakdown */}
+        <div className="space-y-6">
+          {detailedWeeklyData.weeks.map((week, weekIndex) => (
+            <div key={weekIndex} className="bg-white rounded-lg border border-gray-200">
+              <div className="px-6 py-4 border-b border-gray-200 bg-gray-50">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    Week {week.weekNumber} ({week.weekStart} to {week.weekEnd})
+                  </h3>
+                  <div className="flex items-center gap-6 text-sm">
+                    <div className="text-blue-600">
+                      <span className="font-medium">Generated:</span> {week.generated} (R{week.generatedValue})
+                    </div>
+                    <div className="text-green-600">
+                      <span className="font-medium">Redeemed:</span> {week.redeemed} (R{week.redeemedValue})
+                    </div>
+                    <div className="text-purple-600">
+                      <span className="font-medium">Rate:</span> {week.redemptionRate}%
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Daily Breakdown Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Day</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Generated</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Redeemed</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Generated Value</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Redeemed Value</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Daily Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {week.dailyRedemptions.map((day, dayIndex) => (
+                      <tr key={dayIndex} className={dayIndex % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {day.dayName}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {day.date}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            day.generated > 0 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-500'
+                          }`}>
+                            {day.generated}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          <span className={`px-2 py-1 rounded-full text-xs ${
+                            day.redeemed > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-500'
+                          }`}>
+                            {day.redeemed}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          R{day.generatedValue}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          R{day.redeemedValue}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {day.generated > 0 ? 
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              ((day.redeemed / day.generated) * 100) >= 70 
+                                ? 'bg-green-100 text-green-800' 
+                                : ((day.redeemed / day.generated) * 100) >= 40 
+                                ? 'bg-yellow-100 text-yellow-800' 
+                                : 'bg-red-100 text-red-800'
+                            }`}>
+                              {((day.redeemed / day.generated) * 100).toFixed(1)}%
+                            </span>
+                            : 
+                            <span className="text-gray-400">-</span>
+                          }
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+          
+          {detailedWeeklyData.weeks.length === 0 && (
+            <div className="bg-white rounded-lg border border-gray-200 p-8 text-center text-gray-500">
+              No voucher data available for {detailedWeeklyData.month} with the selected provider filter.
+            </div>
+          )}
+        </div>
+      </div>
+    )}
+    
+    {/* Manage Tab */}
+    {activeTab === 'manage' && (
+      <div className="p-6">
+        <h2 className="text-2xl font-bold mb-6">Manage Vouchers</h2>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-gray-200">
+            <thead>
+              <tr className="bg-gray-50">
+                <th className="border border-gray-200 px-4 py-2 text-left">Voucher Code</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Provider</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Client Type</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">First Name</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Last Name</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Company</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">SA ID Number</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Patient DOB</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Voucher Type</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Amount</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Batch</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Status</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Annual Usage</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Created Date</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Created By</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Redemption Date</th>
+                <th className="border border-gray-200 px-4 py-2 text-left">Redeemed By</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vouchers.map(voucher => (
+                <tr key={voucher.id} className={voucher.isUsed ? 'bg-gray-50' : ''}>
+                  <td className="border border-gray-200 px-4 py-2 font-mono">
+                    {voucher.id}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.providerName}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.clientType}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.clientType === 'INDIVIDUAL' ? voucher.firstName : '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.clientType === 'INDIVIDUAL' ? voucher.lastName : '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.clientType === 'CORPORATE' ? voucher.company : '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2 font-mono">
+                    {voucher.idNumber || '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.patientDOB}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.voucherType}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    R{voucher.voucherAmount}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2 font-mono">
+                    {voucher.batch}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      voucher.isUsed 
+                        ? 'bg-red-100 text-red-800' 
+                        : 'bg-green-100 text-green-800'
+                    }`}>
+                      {voucher.isUsed ? 'Used' : 'Active'}
+                    </span>
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.clientType === 'INDIVIDUAL' && voucher.firstName && voucher.lastName ? (() => {
+                      const eligibility = getVoucherEligibility(voucher.patientDOB, voucher.idNumber, voucher.firstName, voucher.lastName);
+                      return (
+                        <div className="text-xs">
+                          <div>Used: {eligibility.totalUsed}/3</div>
+                          <div className={eligibility.remaining > 0 ? 'text-green-600' : 'text-red-600'}>
+                            Remaining: {eligibility.remaining}
+                          </div>
+                        </div>
+                      );
+                    })() : '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.createdDate}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.createdBy}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.redemptionDate || '-'}
+                  </td>
+                  <td className="border border-gray-200 px-4 py-2">
+                    {voucher.redeemedBy || '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+```
+
+);
+};
+
+export default VoucherSystem;
