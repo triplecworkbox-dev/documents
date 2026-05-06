@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Therapist Response Form — Aniké Jenneker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1410;
+    --paper: #f5f0e8;
+    --warm: #c9a96e;
+    --rust: #9b4a2b;
+    --sage: #5a6b5d;
+    --muted: #8a7d6e;
+    --divider: #d9d0c0;
+    --field-bg: #fff;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: var(–paper);
+color: var(–ink);
+font-family: ‘Cormorant Garamond’, Georgia, serif;
+min-height: 100vh;
+overflow-x: hidden;
+}
+
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 0;
+opacity: 0.6;
+}
+
+.page {
+max-width: 760px;
+margin: 0 auto;
+padding: 80px 48px 120px;
+position: relative;
+z-index: 1;
+}
+
+/* Header */
+.header {
+margin-bottom: 56px;
+opacity: 0;
+animation: fadeUp 0.9s ease forwards;
+}
+
+.label {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 20px;
+}
+
+.title {
+font-size: clamp(2rem, 5vw, 3.2rem);
+font-weight: 300;
+line-height: 1.15;
+color: var(–ink);
+margin-bottom: 8px;
+}
+
+.title em {
+font-style: italic;
+color: var(–rust);
+}
+
+.subtitle {
+font-size: 1rem;
+color: var(–muted);
+font-style: italic;
+font-weight: 300;
+margin-top: 10px;
+}
+
+.rule {
+width: 48px;
+height: 1px;
+background: var(–warm);
+margin: 28px 0;
+}
+
+/* Context box */
+.context-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.15s forwards;
+margin-bottom: 64px;
+}
+
+.section-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–sage);
+margin-bottom: 18px;
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.section-label::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–divider);
+}
+
+.context-box {
+border-left: 2px solid var(–warm);
+padding: 24px 28px;
+background: rgba(201, 169, 110, 0.06);
+}
+
+.context-box p {
+font-size: 1.1rem;
+line-height: 1.85;
+font-weight: 300;
+color: var(–ink);
+margin-bottom: 1em;
+}
+
+.context-box p:last-child { margin-bottom: 0; }
+.context-box p em { font-style: italic; color: var(–rust); }
+
+/* Therapist info fields */
+.therapist-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.25s forwards;
+margin-bottom: 64px;
+}
+
+.fields-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 20px;
+}
+
+.field-group {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.field-group.full { grid-column: 1 / -1; }
+
+.field-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–muted);
+}
+
+input[type=“text”],
+input[type=“email”] {
+font-family: ‘Cormorant Garamond’, Georgia, serif;
+font-size: 1.05rem;
+font-weight: 300;
+color: var(–ink);
+background: var(–field-bg);
+border: 1px solid var(–divider);
+border-bottom: 2px solid var(–warm);
+padding: 10px 14px;
+width: 100%;
+outline: none;
+transition: border-color 0.2s ease;
+-webkit-appearance: none;
+border-radius: 0;
+}
+
+input[type=“text”]:focus,
+input[type=“email”]:focus {
+border-color: var(–warm);
+border-bottom-color: var(–rust);
+}
+
+/* Questions */
+.questions-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.35s forwards;
+}
+
+.question-block {
+margin-bottom: 52px;
+padding-bottom: 52px;
+border-bottom: 1px solid var(–divider);
+}
+
+.question-block:last-child {
+border-bottom: none;
+margin-bottom: 0;
+}
+
+.q-header {
+display: grid;
+grid-template-columns: 40px 1fr;
+gap: 20px;
+margin-bottom: 16px;
+align-items: start;
+}
+
+.q-number {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–warm);
+letter-spacing: 0.1em;
+padding-top: 3px;
+}
+
+.q-meta {}
+
+.q-theme {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–sage);
+margin-bottom: 8px;
+}
+
+.q-text {
+font-size: 1.15rem;
+font-weight: 400;
+line-height: 1.7;
+color: var(–ink);
+font-style: italic;
+}
+
+.response-area {
+margin-top: 16px;
+padding-left: 60px;
+}
+
+.response-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: var(–muted);
+margin-bottom: 8px;
+}
+
+textarea {
+width: 100%;
+min-height: 120px;
+font-family: ‘Cormorant Garamond’, Georgia, serif;
+font-size: 1.05rem;
+font-weight: 300;
+line-height: 1.75;
+color: var(–ink);
+background: var(–field-bg);
+border: 1px solid var(–divider);
+border-bottom: 2px solid var(–warm);
+padding: 14px 16px;
+resize: vertical;
+outline: none;
+transition: border-color 0.2s ease;
+-webkit-appearance: none;
+border-radius: 0;
+}
+
+textarea:focus {
+border-color: var(–warm);
+border-bottom-color: var(–rust);
+}
+
+textarea::placeholder {
+color: var(–divider);
+font-style: italic;
+}
+
+/* Submit area */
+.submit-section {
+opacity: 0;
+animation: fadeUp 0.9s ease 0.5s forwards;
+margin-top: 64px;
+padding-top: 40px;
+border-top: 1px solid var(–divider);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 20px;
+}
+
+.submit-note {
+font-size: 0.95rem;
+color: var(–muted);
+font-style: italic;
+font-weight: 300;
+max-width: 360px;
+line-height: 1.6;
+}
+
+.btn-group {
+display: flex;
+gap: 12px;
+flex-wrap: wrap;
+}
+
+.btn {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+padding: 12px 24px;
+cursor: pointer;
+border: none;
+transition: all 0.2s ease;
+}
+
+.btn-primary {
+background: var(–rust);
+color: var(–paper);
+}
+
+.btn-primary:hover { background: var(–ink); }
+
+.btn-secondary {
+background: none;
+color: var(–muted);
+border: 1px solid var(–divider);
+}
+
+.btn-secondary:hover {
+border-color: var(–warm);
+color: var(–warm);
+}
+
+/* Success state */
+.success-banner {
+display: none;
+background: rgba(90, 107, 93, 0.1);
+border-left: 2px solid var(–sage);
+padding: 20px 24px;
+margin-top: 24px;
+}
+
+.success-banner p {
+font-size: 1.05rem;
+color: var(–sage);
+font-style: italic;
+}
+
+/* Footer */
+.footer {
+margin-top: 48px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 12px;
+opacity: 0;
+animation: fadeUp 0.9s ease 0.6s forwards;
+}
+
+.footer-note {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–muted);
+line-height: 1.8;
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(16px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+.page { padding: 48px 24px 80px; }
+.fields-grid { grid-template-columns: 1fr; }
+.response-area { padding-left: 0; }
+.q-header { grid-template-columns: 32px 1fr; gap: 12px; }
+.submit-section { flex-direction: column; align-items: flex-start; }
+}
+
+@media print {
+body::before { display: none; }
+.btn, .btn-group { display: none; }
+.header, .context-section, .therapist-section,
+.questions-section, .submit-section, .footer {
+opacity: 1; animation: none;
+}
+textarea { border: 1px solid #ccc; min-height: 80px; }
+}
+</style>
+
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+
+  <div class="header">
+    <div class="label">Therapist Response Form</div>
+    <h1 class="title">Getting to know<br><em>each other</em></h1>
+    <p class="subtitle">Sent by Aniké Jenneker — please respond in your own words and at your own pace</p>
+    <div class="rule"></div>
+  </div>
+
+  <!-- Context for therapist -->
+
+  <div class="context-section">
+    <div class="section-label">A note from Aniké</div>
+    <div class="context-box">
+      <p>My name is Aniké Jenneker. I am a Coloured South African currently living in Wellington, New Zealand, with a life that has spanned South Africa, China, Dubai, Australia, and now here. I am reaching out because I am ready to commit to genuine therapeutic support — and I want to be honest from the beginning, which is something I have not always managed to do.</p>
+      <p>I am carrying a great deal at once: the weight of cultural displacement and identity, significant financial stress, complicated family relationships, and the pressure of building multiple ventures simultaneously. I am also exploring the possibility that I may be neurodivergent, and I process the world better through reading and writing than through unstructured verbal conversation.</p>
+      <p>What I need most is a therapist who can <em>hold the full complexity of what I am building and surviving</em> — without asking me to scale down or simplify. These questions are not a test. They are an invitation to a real conversation about whether we are a good fit.</p>
+    </div>
+  </div>
+
+  <!-- Therapist info -->
+
+  <div class="therapist-section">
+    <div class="section-label">Your details</div>
+    <div class="fields-grid">
+      <div class="field-group">
+        <span class="field-label">Full name</span>
+        <input type="text" id="therapist-name" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="field-group">
+        <span class="field-label">Practice / Organisation</span>
+        <input type="text" id="therapist-practice" placeholder="Where you practise">
+      </div>
+      <div class="field-group">
+        <span class="field-label">Email address</span>
+        <input type="email" id="therapist-email" placeholder="Your email">
+      </div>
+      <div class="field-group">
+        <span class="field-label">Modalities / Approach</span>
+        <input type="text" id="therapist-modality" placeholder="e.g. ACT, somatic, CBT">
+      </div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+
+  <div class="questions-section">
+    <div class="section-label">Five questions</div>
+
+```
+<div class="question-block">
+  <div class="q-header">
+    <div class="q-number">01</div>
+    <div class="q-meta">
+      <div class="q-theme">Complexity & Simultaneity</div>
+      <div class="q-text">"Have you worked with clients managing multiple simultaneous life crises — financial, relational, identity, and career — rather than a single presenting issue? How do you approach sessions when everything feels equally urgent and nothing can wait?"</div>
+    </div>
+  </div>
+  <div class="response-area">
+    <div class="response-label">Your response</div>
+    <textarea id="ans1" placeholder="Please share your thoughts honestly and in your own words…"></textarea>
+  </div>
+</div>
+
+<div class="question-block">
+  <div class="q-header">
+    <div class="q-number">02</div>
+    <div class="q-meta">
+      <div class="q-theme">Cultural Identity & Migration</div>
+      <div class="q-text">"I have lived across South Africa, China, Dubai, Australia, and New Zealand. My identity as a Coloured South African shapes how I experience belonging, otherness, and self-worth in ways that are difficult to categorise. How do you approach layered cultural identity in your work — particularly when a client's background doesn't fit neatly into your own frame of reference?"</div>
+    </div>
+  </div>
+  <div class="response-area">
+    <div class="response-label">Your response</div>
+    <textarea id="ans2" placeholder="Please share your thoughts honestly and in your own words…"></textarea>
+  </div>
+</div>
+
+<div class="question-block">
+  <div class="q-header">
+    <div class="q-number">03</div>
+    <div class="q-meta">
+      <div class="q-theme">Vision, Ambition & Non-Pathologising</div>
+      <div class="q-text">"I am currently building multiple ventures simultaneously — this is central to who I am, not a symptom. How do you work with clients whose lives look structurally chaotic from the outside but are driven by a coherent internal vision? And would you ever encourage a client to scale back their ambitions as a therapeutic goal?"</div>
+    </div>
+  </div>
+  <div class="response-area">
+    <div class="response-label">Your response</div>
+    <textarea id="ans3" placeholder="Please share your thoughts honestly and in your own words…"></textarea>
+  </div>
+</div>
+
+<div class="question-block">
+  <div class="q-header">
+    <div class="q-number">04</div>
+    <div class="q-meta">
+      <div class="q-theme">Financial Accessibility</div>
+      <div class="q-text">"I am navigating significant debt and active financial pressure — this is part of what I am in therapy to work through. How do you approach fee structures for clients in financial hardship, and how do you ensure that money does not become a recurring source of shame or stress within our working relationship?"</div>
+    </div>
+  </div>
+  <div class="response-area">
+    <div class="response-label">Your response</div>
+    <textarea id="ans4" placeholder="Please share your thoughts honestly and in your own words…"></textarea>
+  </div>
+</div>
+
+<div class="question-block">
+  <div class="q-header">
+    <div class="q-number">05</div>
+    <div class="q-meta">
+      <div class="q-theme">Communication Style & Neurodivergence</div>
+      <div class="q-text">"I process information significantly better through reading and writing than through open-ended verbal conversation. I am also exploring the possibility that I may be neurodivergent. Do you have experience adapting your style for clients who find unstructured talking overwhelming? Do you offer written components — reflections, summaries, or asynchronous check-ins — and how flexible are you with session format?"</div>
+    </div>
+  </div>
+  <div class="response-area">
+    <div class="response-label">Your response</div>
+    <textarea id="ans5" placeholder="Please share your thoughts honestly and in your own words…"></textarea>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Submit -->
+
+  <div class="submit-section">
+    <p class="submit-note">There are no right or wrong answers here — only honest ones. Aniké is looking for genuine fit, not a perfect résumé.</p>
+    <div class="btn-group">
+      <button class="btn btn-secondary" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn btn-primary" onclick="sendByEmail()">Send responses to Aniké</button>
+    </div>
+  </div>
+
+  <div class="success-banner" id="success-banner">
+    <p>Your email client is opening with all responses pre-filled — just hit send.</p>
+  </div>
+
+  <div class="success-banner" id="error-banner" style="display:none; border-left-color: var(--rust);">
+    <p style="color: var(--rust);">Please fill in at least your name and one response before sending.</p>
+  </div>
+
+  <!-- Footer -->
+
+  <div class="footer">
+    <div class="footer-note">
+      Aniké Jenneker — Therapist Screening<br>
+      Confidential · Wellington, New Zealand
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function sendByEmail() {
+    const name     = document.getElementById('therapist-name').value.trim();
+    const practice = document.getElementById('therapist-practice').value.trim() || 'Not provided';
+    const email    = document.getElementById('therapist-email').value.trim() || 'Not provided';
+    const modality = document.getElementById('therapist-modality').value.trim() || 'Not provided';
+    const a1 = document.getElementById('ans1').value.trim();
+    const a2 = document.getElementById('ans2').value.trim();
+    const a3 = document.getElementById('ans3').value.trim();
+    const a4 = document.getElementById('ans4').value.trim();
+    const a5 = document.getElementById('ans5').value.trim();
+
+    // Basic validation
+    if (!name || (!a1 && !a2 && !a3 && !a4 && !a5)) {
+      document.getElementById('error-banner').style.display = 'block';
+      setTimeout(() => { document.getElementById('error-banner').style.display = 'none'; }, 4000);
+      return;
+    }
+
+    const subject = encodeURIComponent(`Therapist Screening Response — ${name}`);
+
+    const body = encodeURIComponent(
+`THERAPIST SCREENING RESPONSES
+For: Aniké Jenneker
+————————————————————————————
+
+THERAPIST DETAILS
+Name: ${name}
+Practice: ${practice}
+Email: ${email}
+Approach / Modalities: ${modality}
+
+————————————————————————————
+
+Q1 — Complexity & Simultaneity
+${a1 || '(no response)'}
+
+Q2 — Cultural Identity & Migration
+${a2 || '(no response)'}
+
+Q3 — Vision, Ambition & Non-Pathologising
+${a3 || '(no response)'}
+
+Q4 — Financial Accessibility
+${a4 || '(no response)'}
+
+Q5 — Communication Style & Neurodivergence
+${a5 || '(no response)'}
+
+————————————————————————————
+Confidential · Wellington, New Zealand`
+    );
+
+    window.location.href = `mailto:anike@triple-c.co.nz?subject=${subject}&body=${body}`;
+
+    const banner = document.getElementById('success-banner');
+    banner.style.display = 'block';
+    setTimeout(() => { banner.style.display = 'none'; }, 5000);
+  }
+</script>
+
+</body>
+</html>
