@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GloStaff — Business Agents</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a38;
+    --border2: #3a3a50;
+    --accent: #6c63ff;
+    --accent2: #a78bfa;
+    --text: #e8e8f0;
+    --text2: #8888a8;
+    --text3: #5555770;
+    --sa: #f59e0b;
+    --nz: #6c63ff;
+    --success: #10b981;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── API KEY SCREEN ── */
+  #keyScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse at 50% 0%, #1a1040 0%, var(--bg) 70%);
+  }
+  .key-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+  }
+  .key-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+  }
+  .key-flags { font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .key-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .key-card p { font-size: 0.875rem; color: var(--text2); margin-bottom: 1.5rem; line-height: 1.6; }
+  .key-card a { color: var(--accent2); text-decoration: none; }
+  .key-card a:hover { text-decoration: underline; }
+  .key-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .key-input:focus { border-color: var(--accent); }
+  .key-input::placeholder { color: var(--text2); }
+  .key-btn {
+    width: 100%;
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .key-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .key-note {
+    font-size: 11px;
+    color: var(--text2);
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  /* ── MAIN APP ── */
+  #app { display: none; min-height: 100vh; }
+
+  /* Nav */
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.8);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6c63ff, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  .country-toggle {
+    display: flex;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 3px;
+    gap: 3px;
+  }
+  .ctry-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ctry-btn.active {
+    background: var(--accent);
+    color: #fff;
+  }
+  .reset-btn {
+    font-size: 11px;
+    color: var(--text2);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { color: var(--text); border-color: var(--border2); }
+
+  /* Main layout */
+  .main { display: flex; height: calc(100vh - 57px); }
+
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    padding: 1rem;
+    overflow-y: auto;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 8px;
+    margin-top: 4px;
+  }
+  .agent-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .agent-btn:hover { background: var(--surface2); color: var(--text); }
+  .agent-btn.active { background: rgba(108,99,255,0.15); color: var(--text); border: 1px solid rgba(108,99,255,0.3); }
+  .agent-icon { font-size: 16px; flex-shrink: 0; }
+  .agent-label { font-size: 12px; font-weight: 500; line-height: 1.3; }
+  .agent-sub { font-size: 10px; color: var(--text2); }
+  .new-pill {
+    font-size: 9px;
+    background: var(--success);
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 20px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* Chat area */
+  .chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .chat-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface);
+  }
+  .chat-header-icon { font-size: 22px; }
+  .chat-header-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .chat-header-sub { font-size: 12px; color: var(--text2); }
+  .country-badge {
+    margin-left: auto;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .badge-sa { background: rgba(245,158,11,0.15); color: var(--sa); border: 1px solid rgba(245,158,11,0.3); }
+  .badge-nz { background: rgba(108,99,255,0.15); color: var(--accent2); border: 1px solid rgba(108,99,255,0.3); }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+  }
+  .messages::-webkit-scrollbar { width: 4px; }
+  .messages::-webkit-scrollbar-track { background: transparent; }
+  .messages::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  .msg {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    animation: fadeUp 0.2s ease;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  .msg-agent {
+    align-self: flex-start;
+    background: var(--surface2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+  .msg-user {
+    align-self: flex-end;
+    background: var(--accent);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+  .msg-thinking {
+    align-self: flex-start;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+  }
+  .dots { display: flex; gap: 5px; align-items: center; }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--text2);
+    animation: blink 1.2s infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0.3;transform:scale(0.8)} 40%{opacity:1;transform:scale(1)} }
+
+  .quick-prompts {
+    padding: 0 1.5rem 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .qp-btn {
+    font-size: 11.5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .qp-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--accent); }
+
+  .input-bar {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    background: var(--surface);
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-input::placeholder { color: var(--text2); }
+  .send-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 12px;
+    padding: 11px 20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .send-btn:hover { opacity: 0.85; }
+  .send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Empty state */
+  .empty-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--text2);
+    font-size: 13px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 8px; }
+
+  @media (max-width: 640px) {
+    .sidebar { width: 60px; }
+    .agent-label, .agent-sub, .new-pill, .sidebar-label { display: none; }
+    .agent-btn { justify-content: center; padding: 10px; }
+    .chat-header-sub { display: none; }
+    .msg { max-width: 95%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- API KEY SCREEN -->
+<div id="keyScreen">
+  <div class="key-card">
+    <div class="key-logo">GloStaff</div>
+    <div class="key-flags">🇿🇦 🇳🇿</div>
+    <h2>Enter your free Gemini API key</h2>
+    <p>Your key is stored only in your browser and never sent anywhere except directly to Google's API. Get a free key (no credit card) at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></p>
+    <input type="password" id="keyInput" class="key-input" placeholder="AIza..." />
+    <button class="key-btn" onclick="saveKey()">Open GloStaff →</button>
+    <p class="key-note">Free tier: 1,500 requests/day · No credit card required</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <nav class="nav">
+    <div class="nav-logo">GloStaff</div>
+    <div class="nav-right">
+      <div class="country-toggle">
+        <button class="ctry-btn active" onclick="setCountry('sa')" id="btnSA">🇿🇦 South Africa</button>
+        <button class="ctry-btn" onclick="setCountry('nz')" id="btnNZ">🇳🇿 New Zealand</button>
+      </div>
+      <button class="reset-btn" onclick="resetKey()">⚙ Change key</button>
+    </div>
+  </nav>
+  <div class="main">
+    <div class="sidebar" id="sidebar"></div>
+    <div class="chat-area">
+      <div class="chat-header">
+        <div class="chat-header-icon" id="hIcon">📊</div>
+        <div>
+          <div class="chat-header-name" id="hName">Finance & accounting</div>
+          <div class="chat-header-sub" id="hSub">SARS · VAT · IFRS</div>
+        </div>
+        <span class="country-badge badge-sa" id="hBadge">🇿🇦 SA</span>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="quick-prompts" id="quickPrompts"></div>
+      <div class="input-bar">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Ask your agent…" />
+        <button class="send-btn" id="sendBtn" onclick="sendMsg()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const AGENTS = [
+  { id:'finance', icon:'📊', name:'Finance & accounting', isNew:false,
+    sa:{sub:'SARS · VAT · IFRS',system:'You are a Finance & Accounting agent for a South African company. You specialise in SARS tax, VAT (15%), IFRS reporting, CIPC compliance, SARB forex, PAYE, UIF, SDL, and SA corporate tax (27%). Be concise and practical. Always clarify you provide guidance not formal advice.'},
+    nz:{sub:'IRD · GST · FRS',system:'You are a Finance & Accounting agent for a New Zealand company. You specialise in IRD obligations, GST (15%), NZ IFRS reporting, Companies Office, PAYE, KiwiSaver, and NZ corporate tax (28%). Be concise and practical.'} },
+  { id:'hr', icon:'👥', name:'HR & payroll', isNew:false,
+    sa:{sub:'BCEA · LRA · CCMA',system:'You are an HR & Payroll agent for a South African company. You specialise in the BCEA, LRA, EEA, CCMA, UIF/SDL/PAYE, leave, retrenchment, and B-BBEE obligations.'},
+    nz:{sub:'ERA · Holidays Act',system:'You are an HR & Payroll agent for a New Zealand company. You specialise in the Employment Relations Act, Holidays Act, KiwiSaver, ACC levies, 90-day trials, and Personal Grievance processes.'} },
+  { id:'legal', icon:'⚖️', name:'Legal & compliance', isNew:false,
+    sa:{sub:'Companies Act · POPIA',system:'You are a Legal & Compliance agent for a South African company. Specialise in Companies Act 2008, POPIA, Consumer Protection Act, B-BBEE, CIPC, FICA. Always recommend consulting a qualified SA attorney for formal advice.'},
+    nz:{sub:'Companies Act · Privacy Act',system:'You are a Legal & Compliance agent for a New Zealand company. Specialise in Companies Act 1993, Privacy Act 2020, Consumer Guarantees Act, Fair Trading Act, NZBN. Always recommend consulting a NZ solicitor for formal advice.'} },
+  { id:'sales', icon:'📣', name:'Sales & CRM', isNew:false,
+    sa:{sub:'SA market context',system:'You are a Sales & CRM agent for a South African company. Help with sales strategy, pipeline, pricing for SA, B2B/B2C, township economy, and enterprise sales in South Africa.'},
+    nz:{sub:'NZ market context',system:'You are a Sales & CRM agent for a New Zealand company. Help with sales strategy, pipeline, pricing for NZ, SME approaches, government procurement, and Australasian market expansion.'} },
+  { id:'ops', icon:'⚙️', name:'Operations', isNew:false,
+    sa:{sub:'SA supply chain',system:'You are an Operations agent for a South African company. Help with operational planning, supply chain including load-shedding contingency, vendor management, project management, and SLA drafting.'},
+    nz:{sub:'NZ supply chain',system:'You are an Operations agent for a New Zealand company. Help with operational planning, Pacific supply chain, vendor management, project management, and SLA drafting.'} },
+  { id:'marketing', icon:'📱', name:'Marketing & social', isNew:true,
+    sa:{sub:'WhatsApp · POPIA',system:'You are a Marketing & Social Media Manager for a South African company. Specialise in WhatsApp Business (dominant SA channel), Meta/Instagram/TikTok/LinkedIn for SA audiences, load-shedding-aware scheduling, POPIA-compliant email marketing, Google Ads and SEO for SA, and influencer marketing. Help write copy and plan content calendars with SA nuances.'},
+    nz:{sub:'NZ platforms · Māori',system:'You are a Marketing & Social Media Manager for a New Zealand company. Specialise in Meta/Instagram/LinkedIn/TikTok for NZ audiences, Privacy Act 2020-compliant email marketing, trans-Tasman marketing, Māori cultural considerations and tikanga in campaigns, and Google Ads/SEO for NZ. Help write copy with NZ cultural sensitivity.'} },
+  { id:'security', icon:'🔐', name:'Digital & security', isNew:true,
+    sa:{sub:'POPIA · cybersec',system:'You are a Digital Systems & Security agent for a South African company. Specialise in POPIA compliance, cybersecurity for SA (SIM swap fraud, phishing, BEC attacks), IT infrastructure for load-shedding resilience (UPS, cloud-first, backups), SA ISP landscape, cloud platforms for SA, SaaS selection, and incident response. Practical advice for SA SMEs.'},
+    nz:{sub:'Privacy Act · NCSC',system:'You are a Digital Systems & Security agent for a New Zealand company. Specialise in Privacy Act 2020 compliance (mandatory OPC breach notification), NCSC NZ guidance, cybersecurity for NZ businesses, cloud with NZ/AU regions, SaaS selection, and incident response. Practical advice for NZ SMEs.'} },
+];
+
+const QUICK = {
+  finance:{sa:['VAT filing deadlines?','Explain provisional tax','How does PAYE work?'],nz:['GST filing periods?','Provisional tax NZ','PAYE in New Zealand?']},
+  hr:{sa:['What leave am I entitled to?','Handle a CCMA dispute','B-BBEE for SMEs'],nz:['Annual leave NZ?','90-day trial periods','KiwiSaver obligations']},
+  legal:{sa:['POPIA requirements','Register a company SA',"Directors' duties"],nz:['Privacy Act requirements','Incorporate in NZ?',"Directors' duties NZ"]},
+  sales:{sa:['Enterprise sales SA','Pricing for SA market','B2G sales SA'],nz:['Enterprise sales NZ','Pricing for NZ market','Sell to NZ govt']},
+  ops:{sa:['Load shedding plan','SA vendor contracts','OKRs for SA SME'],nz:['NZ supply chain resilience','NZ vendor contracts','OKRs for NZ SME']},
+  marketing:{sa:['WhatsApp Business strategy','LinkedIn post for SA','POPIA email campaign'],nz:['Social calendar NZ','LinkedIn post for NZ','Privacy Act email tips']},
+  security:{sa:['SIM swap protection','POPIA breach steps','IT for load-shedding'],nz:['Privacy Act breach NZ','Cybersec for NZ SME','Best NZ cloud region']},
+};
+
+let country = 'sa';
+let activeAgent = 'finance';
+let conversations = {};
+let loading = false;
+let apiKey = '';
+
+function getKey() { return localStorage.getItem('glostaff_gemini_key') || ''; }
+
+function saveKey() {
+  const val = document.getElementById('keyInput').value.trim();
+  if (!val.startsWith('AIza')) { alert('Please enter a valid Gemini API key (starts with AIza)'); return; }
+  localStorage.setItem('glostaff_gemini_key', val);
+  apiKey = val;
+  showApp();
+}
+
+function resetKey() {
+  localStorage.removeItem('glostaff_gemini_key');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('keyScreen').style.display = 'flex';
+}
+
+function showApp() {
+  document.getElementById('keyScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  renderSidebar();
+  renderChat();
+}
+
+function setCountry(c) {
+  country = c;
+  document.getElementById('btnSA').classList.toggle('active', c === 'sa');
+  document.getElementById('btnNZ').classList.toggle('active', c === 'nz');
+  renderChat();
+  renderSidebar();
+}
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  sb.innerHTML = '<div class="sidebar-label">Agents</div>' + AGENTS.map(a => `
+    <button class="agent-btn${activeAgent === a.id ? ' active' : ''}" onclick="selectAgent('${a.id}')">
+      <span class="agent-icon">${a.icon}</span>
+      <div>
+        <div class="agent-label">${a.name}${a.isNew ? '<span class="new-pill">New</span>' : ''}</div>
+        <div class="agent-sub">${a[country].sub}</div>
+      </div>
+    </button>`).join('');
+}
+
+function selectAgent(id) {
+  activeAgent = id;
+  renderSidebar();
+  renderChat();
+}
+
+function convKey() { return `${activeAgent}-${country}`; }
+
+function renderChat() {
+  const a = AGENTS.find(x => x.id === activeAgent);
+  const ctx = a[country];
+  const flag = country === 'sa' ? '🇿🇦' : '🇳🇿';
+  const label = country === 'sa' ? '🇿🇦 SA' : '🇳🇿 NZ';
+
+  document.getElementById('hIcon').textContent = a.icon;
+  document.getElementById('hName').textContent = a.name;
+  document.getElementById('hSub').textContent = ctx.sub;
+  const badge = document.getElementById('hBadge');
+  badge.textContent = label;
+  badge.className = 'country-badge ' + (country === 'sa' ? 'badge-sa' : 'badge-nz');
+  document.getElementById('chatInput').placeholder = `Ask your ${a.name.toLowerCase()} agent…`;
+
+  const msgs = conversations[convKey()] || [];
+  const list = document.getElementById('messages');
+
+  if (msgs.length === 0) {
+    list.innerHTML = `<div class="msg msg-agent">Hi! I'm your ${flag} ${a.name} agent — loaded with <strong>${ctx.sub}</strong> context. What can I help you with today?</div>`;
+  } else {
+    list.innerHTML = msgs.map(m =>
+      `<div class="msg msg-${m.role === 'user' ? 'user' : 'agent'}">${m.content}</div>`
+    ).join('');
+  }
+  list.scrollTop = list.scrollHeight;
+
+  const qps = document.getElementById('quickPrompts');
+  qps.innerHTML = msgs.length === 0
+    ? QUICK[activeAgent][country].map(q =>
+        `<button class="qp-btn" onclick="sendQuick('${q.replace(/'/g,"\\'")}')">↗ ${q}</button>`
+      ).join('') : '';
+}
+
+function sendQuick(t) {
+  document.getElementById('chatInput').value = t;
+  sendMsg();
+}
+
+async function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || loading) return;
+  input.value = '';
+
+  const a = AGENTS.find(x => x.id === activeAgent);
+  const ctx = a[country];
+  const k = convKey();
+  if (!conversations[k]) conversations[k] = [];
+  const msgs = conversations[k];
+  msgs.push({ role: 'user', content: text });
+
+  const list = document.getElementById('messages');
+  document.getElementById('quickPrompts').innerHTML = '';
+  list.innerHTML += `<div class="msg msg-user">${text}</div>`;
+  const thinkId = 'think_' + Date.now();
+  list.innerHTML += `<div class="msg-thinking" id="${thinkId}"><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>`;
+  list.scrollTop = list.scrollHeight;
+
+  loading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const contents = msgs.map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }]
+    }));
+
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${getKey()}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          system_instruction: { parts: [{ text: ctx.system }] },
+          contents,
+          generationConfig: { maxOutputTokens: 1024 }
+        })
+      }
+    );
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    msgs.push({ role: 'assistant', content: reply });
+    document.getElementById(thinkId)?.remove();
+    list.innerHTML += `<div class="msg msg-agent">${reply}</div>`;
+  } catch (e) {
+    document.getElementById(thinkId)?.remove();
+    list.innerHTML += `<div class="msg msg-agent" style="color:#f87171">Error: ${e.message}. Check your API key.</div>`;
+  }
+
+  loading = false;
+  document.getElementById('sendBtn').disabled = false;
+  list.scrollTop = list.scrollHeight;
+}
+
+document.getElementById('chatInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+});
+
+// Init
+apiKey = getKey();
+if (apiKey) {
+  showApp();
+}
+</script>
+</body>
+</html>
