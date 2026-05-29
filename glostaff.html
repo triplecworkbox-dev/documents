@@ -397,11 +397,11 @@
   <div class="key-card">
     <div class="key-logo">GloStaff</div>
     <div class="key-flags">🇿🇦 🇳🇿</div>
-    <h2>Enter your free Gemini API key</h2>
-    <p>Your key is stored only in your browser and never sent anywhere except directly to Google's API. Get a free key (no credit card) at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></p>
-    <input type="password" id="keyInput" class="key-input" placeholder="AIza..." />
+    <h2>Enter your free OpenRouter API key</h2>
+    <p>Free, no credit card needed. Get your key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai/keys</a> — sign up with Google, click "Create Key", copy it.</p>
+    <input type="password" id="keyInput" class="key-input" placeholder="sk-or-v1-..." />
     <button class="key-btn" onclick="saveKey()">Open GloStaff →</button>
-    <p class="key-note">Free tier: 1,500 requests/day · No credit card required</p>
+    <p class="key-note">Free tier · No credit card required · Powered by free AI models</p>
   </div>
 </div>
 
@@ -479,18 +479,18 @@ let conversations = {};
 let loading = false;
 let apiKey = '';
 
-function getKey() { return localStorage.getItem('glostaff_gemini_key') || ''; }
+function getKey() { return localStorage.getItem('glostaff_openrouter_key') || ''; }
 
 function saveKey() {
   const val = document.getElementById('keyInput').value.trim();
-  if (!val || val.length < 10) { alert('Please paste your Gemini API key'); return; }
-  localStorage.setItem('glostaff_gemini_key', val);
+  if (!val || val.length < 10) { alert('Please paste your OpenRouter API key'); return; }
+  localStorage.setItem('glostaff_openrouter_key', val);
   apiKey = val;
   showApp();
 }
 
 function resetKey() {
-  localStorage.removeItem('glostaff_gemini_key');
+  localStorage.removeItem('glostaff_openrouter_key');
   document.getElementById('app').style.display = 'none';
   document.getElementById('keyScreen').style.display = 'flex';
 }
@@ -592,26 +592,26 @@ async function sendMsg() {
   document.getElementById('sendBtn').disabled = true;
 
   try {
-    const contents = msgs.map(m => ({
-      role: m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }]
-    }));
-
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${getKey()}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: ctx.system }] },
-          contents,
-          generationConfig: { maxOutputTokens: 1024 }
-        })
-      }
-    );
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${getKey()}`,
+        'HTTP-Referer': 'https://glostaff.app',
+        'X-Title': 'GloStaff Business Agents'
+      },
+      body: JSON.stringify({
+        model: 'meta-llama/llama-3.3-70b-instruct:free',
+        messages: [
+          { role: 'system', content: ctx.system },
+          ...msgs.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content }))
+        ],
+        max_tokens: 1024
+      })
+    });
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    const reply = data.choices?.[0]?.message?.content || 'No response.';
     msgs.push({ role: 'assistant', content: reply });
     document.getElementById(thinkId)?.remove();
     list.innerHTML += `<div class="msg msg-agent">${reply}</div>`;
