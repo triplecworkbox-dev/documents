@@ -1,0 +1,467 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--text-primary);background:transparent}
+.tabs{display:flex;gap:0;border-bottom:0.5px solid var(--border);overflow-x:auto;flex-wrap:nowrap}
+.tab{padding:10px 14px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;font-size:13px;color:var(--text-secondary);background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{border-bottom-color:var(--text-accent);color:var(--text-accent);font-weight:500}
+.tab:hover:not(.active){color:var(--text-primary)}
+.panel{padding:1rem}
+.card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:12px}
+.label{font-size:12px;color:var(--text-secondary);margin-bottom:4px}
+.val{font-size:22px;font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+input,select{width:100%;padding:7px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--surface-2);color:var(--text-primary);font-size:13px;margin-top:4px}
+input:focus,select:focus{outline:none;border-color:var(--border-accent)}
+.btn{padding:8px 16px;border-radius:var(--radius);border:0.5px solid var(--border-strong);background:var(--surface-2);color:var(--text-primary);cursor:pointer;font-size:13px;font-weight:500}
+.btn:hover{background:var(--surface-1)}
+.btn-primary{background:var(--fill-accent);color:var(--on-accent);border-color:var(--fill-accent)}
+.btn-primary:hover{background:var(--fill-accent-hover)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-green{background:var(--bg-success);color:var(--text-success)}
+.badge-red{background:var(--bg-danger);color:var(--text-danger)}
+.badge-blue{background:var(--bg-accent);color:var(--text-accent)}
+.badge-amber{background:var(--bg-warning);color:var(--text-warning)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:8px 10px;color:var(--text-secondary);border-bottom:0.5px solid var(--border);font-weight:500;white-space:nowrap}
+td{padding:8px 10px;border-bottom:0.5px solid var(--border);vertical-align:middle}
+.form-row{margin-bottom:12px}
+.form-row label{font-size:12px;color:var(--text-secondary);font-weight:500}
+.alert{padding:10px 14px;border-radius:var(--radius);font-size:13px;margin-top:8px;display:flex;align-items:center;gap:8px}
+.alert-success{background:var(--bg-success);color:var(--text-success);border:0.5px solid var(--border-success)}
+.alert-danger{background:var(--bg-danger);color:var(--text-danger);border:0.5px solid var(--border-danger)}
+.alert-warning{background:var(--bg-warning);color:var(--text-warning);border:0.5px solid var(--border-warning)}
+.section-title{font-size:15px;font-weight:500;margin-bottom:12px;color:var(--text-primary)}
+.divider{height:0.5px;background:var(--border);margin:14px 0}
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius);border:0.5px solid var(--border)}
+.rate-good{background:var(--bg-success);color:var(--text-success);padding:2px 7px;border-radius:20px;font-size:11px}
+.rate-mid{background:var(--bg-warning);color:var(--text-warning);padding:2px 7px;border-radius:20px;font-size:11px}
+.rate-low{background:var(--bg-danger);color:var(--text-danger);padding:2px 7px;border-radius:20px;font-size:11px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.voucher-preview{background:var(--surface-1);border:0.5px solid var(--border);border-radius:var(--radius);padding:12px;margin-top:10px;font-size:13px}
+.voucher-preview .vc{font-size:18px;font-weight:500;letter-spacing:1px;color:var(--text-accent);margin-bottom:8px}
+.payment-total{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+.payment-total.final{font-size:16px;font-weight:500;border-top:0.5px solid var(--border);margin-top:4px;padding-top:12px}
+</style>
+
+<h2 class="sr-only">Voucher management system with patient payment, admin, manage, and reporting tabs</h2>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="payment">Patient payment</button>
+  <button class="tab" data-tab="admin">Admin – generate</button>
+  <button class="tab" data-tab="manage">Manage vouchers</button>
+  <button class="tab" data-tab="reports">Weekly summary</button>
+  <button class="tab" data-tab="detailed">Weekly detailed</button>
+</div>
+
+<div id="content"></div>
+
+<script>
+const providers=[{id:'EZ',name:'Ezintsha'},{id:'MC',name:'MediCare'},{id:'HC',name:'HealthCorp'}];
+let vouchers=[
+{id:'EZ240715001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1990-07-15',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Sarah',lastName:'Johnson',company:'',idNumber:'9007150123456',isUsed:true,createdDate:'2025-07-07 09:15:30',createdBy:'Reception Staff',redemptionDate:'2025-07-07 14:22:15',redeemedBy:'Reception Staff'},
+{id:'MC240716001',providerId:'MC',providerName:'MediCare',patientDOB:'1985-04-16',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Michael',lastName:'Smith',company:'',idNumber:'8504160987654',isUsed:false,createdDate:'2025-07-08 11:30:45',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null},
+{id:'EZ240717001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1992-03-17',voucherType:'CUSTOM AMOUNT',voucherAmount:200,clientType:'CORPORATE',firstName:'',lastName:'',company:'WOOLWORTHS',idNumber:'9203170456789',isUsed:true,createdDate:'2025-07-09 13:45:20',createdBy:'Reception Staff',redemptionDate:'2025-07-09 16:30:10',redeemedBy:'Reception Staff'},
+{id:'HC240718001',providerId:'HC',providerName:'HealthCorp',patientDOB:'1988-12-18',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Emma',lastName:'Wilson',company:'',idNumber:'8812180234567',isUsed:true,createdDate:'2025-07-10 10:20:15',createdBy:'Reception Staff',redemptionDate:'2025-07-10 15:45:30',redeemedBy:'Reception Staff'},
+{id:'EZ240719001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1995-06-19',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'David',lastName:'Brown',company:'',idNumber:'9506190345678',isUsed:false,createdDate:'2025-07-11 14:10:25',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null},
+{id:'EZ240720001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1987-01-20',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Lisa',lastName:'Anderson',company:'',idNumber:'8701200123456',isUsed:true,createdDate:'2025-07-14 08:30:00',createdBy:'Reception Staff',redemptionDate:'2025-07-14 11:15:45',redeemedBy:'Reception Staff'},
+{id:'MC240721001',providerId:'MC',providerName:'MediCare',patientDOB:'1993-09-21',voucherType:'CUSTOM AMOUNT',voucherAmount:500,clientType:'CORPORATE',firstName:'',lastName:'',company:'OTHER',idNumber:'9309210987654',isUsed:true,createdDate:'2025-07-14 12:45:30',createdBy:'Reception Staff',redemptionDate:'2025-07-14 13:20:15',redeemedBy:'Reception Staff'},
+{id:'EZ240722001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1991-05-22',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'James',lastName:'Taylor',company:'',idNumber:'9105220456789',isUsed:true,createdDate:'2025-07-15 09:20:10',createdBy:'Reception Staff',redemptionDate:'2025-07-15 14:30:25',redeemedBy:'Reception Staff'},
+{id:'HC240723001',providerId:'HC',providerName:'HealthCorp',patientDOB:'1989-11-23',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Maria',lastName:'Garcia',company:'',idNumber:'8911230234567',isUsed:false,createdDate:'2025-07-15 15:10:40',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null},
+{id:'EZ240724001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1994-02-24',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Robert',lastName:'Martinez',company:'',idNumber:'9402240345678',isUsed:true,createdDate:'2025-07-16 10:45:15',createdBy:'Reception Staff',redemptionDate:'2025-07-16 16:20:30',redeemedBy:'Reception Staff'},
+{id:'MC240725001',providerId:'MC',providerName:'MediCare',patientDOB:'1986-08-25',voucherType:'CUSTOM AMOUNT',voucherAmount:150,clientType:'INDIVIDUAL',firstName:'Jennifer',lastName:'Lee',company:'',idNumber:'8608250123456',isUsed:false,createdDate:'2025-07-16 13:25:50',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null},
+{id:'EZ240726001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1990-04-26',voucherType:'CONSULTATION',voucherAmount:350,clientType:'CORPORATE',firstName:'',lastName:'',company:'WOOLWORTHS',idNumber:'9004260987654',isUsed:true,createdDate:'2025-07-17 11:15:25',createdBy:'Reception Staff',redemptionDate:'2025-07-17 12:45:10',redeemedBy:'Reception Staff'},
+{id:'HC240727001',providerId:'HC',providerName:'HealthCorp',patientDOB:'1992-07-27',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'Kevin',lastName:'White',company:'',idNumber:'9207270456789',isUsed:false,createdDate:'2025-07-17 14:30:35',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null},
+{id:'EZ240728001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'1988-10-28',voucherType:'CUSTOM AMOUNT',voucherAmount:250,clientType:'INDIVIDUAL',firstName:'Amanda',lastName:'Davis',company:'',idNumber:'8810280234567',isUsed:true,createdDate:'2025-07-17 16:20:15',createdBy:'Reception Staff',redemptionDate:'2025-07-17 17:10:30',redeemedBy:'Reception Staff'},
+{id:'EZ240315001',providerId:'EZ',providerName:'Ezintsha',patientDOB:'2024-03-15',voucherType:'CONSULTATION',voucherAmount:350,clientType:'INDIVIDUAL',firstName:'John',lastName:'Doe',company:'',idNumber:'1234567890123',isUsed:false,createdDate:'2024-07-10 14:30:15',createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null}
+];
+
+const CONSULTATION=350;
+let activeTab='payment';
+let paymentState={code:'',status:'',applied:null};
+let newV={providerId:'EZ',patientDOB:'',idNumber:'',voucherType:'CONSULTATION',customAmount:'',clientType:'INDIVIDUAL',firstName:'',lastName:'',company:'WOOLWORTHS'};
+let reportFilter='ALL';
+let detailFilter='ALL';
+
+function getNow(){
+  const n=new Date();
+  const p=x=>String(x).padStart(2,'0');
+  return `${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())} ${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+}
+function getBatch(){
+  const n=new Date();const p=x=>String(x).padStart(2,'0');
+  return `${n.getFullYear()}${p(n.getMonth()+1)}${p(n.getDate())}`;
+}
+function getEligibility(dob,id,fn,ln){
+  const yr=new Date().getFullYear().toString();
+  const pv=vouchers.filter(v=>v.patientDOB===dob&&v.idNumber===id&&(v.firstName||'').toLowerCase()===(fn||'').toLowerCase()&&(v.lastName||'').toLowerCase()===(ln||'').toLowerCase()&&v.createdDate.startsWith(yr));
+  const used=pv.filter(v=>v.isUsed).length;
+  return{totalCreated:pv.length,totalUsed:used,remaining:Math.max(0,3-used),canCreateMore:pv.length<3,canUseMore:Math.max(0,3-used)>0};
+}
+function genCode(){
+  if(!newV.patientDOB)return'';
+  const d=new Date(newV.patientDOB);
+  const df=`${String(d.getFullYear()).slice(-2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+  const batch=getBatch();
+  const ex=vouchers.filter(v=>v.providerId===newV.providerId&&v.patientDOB===newV.patientDOB&&v.batch===batch);
+  return`${newV.providerId}${df}${String(ex.length+1).padStart(3,'0')}`;
+}
+function rateClass(r){return parseFloat(r)>=70?'rate-good':parseFloat(r)>=40?'rate-mid':'rate-low'}
+function fmt(n){return'R'+n.toLocaleString()}
+
+// ---- PAYMENT TAB ----
+function renderPayment(){
+  const{status,applied}=paymentState;
+  const disc=applied?Math.min(applied.voucherAmount,CONSULTATION):0;
+  const total=CONSULTATION-disc;
+  return`
+<div class="panel">
+  <div class="section-title" style="margin-bottom:14px">Consultation payment</div>
+  <div class="card">
+    <div class="payment-total"><span>Consultation fee</span><span>${fmt(CONSULTATION)}</span></div>
+    ${status==='applied'&&applied?`<div class="payment-total" style="color:var(--text-success)"><span>Voucher discount (${applied.voucherType})</span><span>-${fmt(disc)}</span></div>`:''}
+    <div class="payment-total final"><span>Total</span><span>${fmt(total)}</span></div>
+  </div>
+
+  ${status!=='applied'?`
+  <div class="form-row">
+    <label>Voucher code (optional)</label>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <input id="vcInput" value="${paymentState.code}" placeholder="Enter voucher code" maxlength="11" style="text-transform:uppercase;flex:1" oninput="paymentState.code=this.value.toUpperCase();this.value=this.value.toUpperCase()">
+      <button class="btn" onclick="checkVoucher()">Check</button>
+    </div>
+  </div>
+  ${status==='error'?`<div class="alert alert-danger"><i class="ti ti-alert-circle" aria-hidden="true"></i>Invalid voucher code. Please contact reception.</div>`:''}
+  ${status==='used'?`<div class="alert alert-warning"><i class="ti ti-clock" aria-hidden="true"></i>This voucher has already been used.</div>`:''}
+  ${status==='valid'&&applied?`
+    <div class="voucher-preview">
+      <div class="vc">${applied.id}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px">
+        <div><span style="color:var(--text-secondary)">Provider: </span>${applied.providerName}</div>
+        <div><span style="color:var(--text-secondary)">Type: </span>${applied.voucherType}</div>
+        <div><span style="color:var(--text-secondary)">Amount: </span>${fmt(applied.voucherAmount)}</div>
+        <div><span style="color:var(--text-secondary)">Client: </span>${applied.clientType==='INDIVIDUAL'?applied.firstName+' '+applied.lastName:applied.company}</div>
+      </div>
+      <div style="margin-top:8px"><span class="badge ${applied.voucherAmount>=CONSULTATION?'badge-green':'badge-amber'}">${applied.voucherAmount>=CONSULTATION?'Full consultation covered':'Partial coverage'}</span></div>
+      <button class="btn btn-primary" style="margin-top:10px;width:100%" onclick="applyVoucher()">Apply voucher</button>
+    </div>`:''}
+  `:`
+  <div class="alert alert-success">
+    <i class="ti ti-circle-check" aria-hidden="true"></i>
+    <div>
+      <div style="font-weight:500">Voucher applied</div>
+      <div style="font-size:12px;margin-top:2px">${applied.id} – ${applied.providerName} – ${fmt(applied.voucherAmount)} discount</div>
+    </div>
+    <button class="btn" style="margin-left:auto;font-size:12px" onclick="removeVoucher()">Remove</button>
+  </div>`}
+
+  <div style="display:flex;gap:8px;margin-top:14px">
+    <button class="btn btn-primary" style="flex:1" onclick="alert('Invoice generated for ${fmt(total)}')">
+      ${status==='applied'?`Generate invoice (${fmt(total)})`:`Proceed to payment (${fmt(CONSULTATION)})`}
+    </button>
+    ${status==='applied'||status===''?'':`<button class="btn" onclick="resetPayment()">Reset</button>`}
+  </div>
+</div>`;
+}
+function checkVoucher(){
+  const code=paymentState.code.toUpperCase();
+  const v=vouchers.find(x=>x.id===code);
+  if(!v){paymentState.status='error';paymentState.applied=null;}
+  else if(v.isUsed){paymentState.status='used';paymentState.applied=null;}
+  else{paymentState.status='valid';paymentState.applied=v;}
+  render();
+}
+function applyVoucher(){
+  if(!paymentState.applied)return;
+  const a=paymentState.applied;
+  if(a.clientType==='INDIVIDUAL'){
+    const e=getEligibility(a.patientDOB,a.idNumber,a.firstName,a.lastName);
+    if(!e.canUseMore){alert('No remaining voucher allowance for this patient this year.');return;}
+  }
+  vouchers=vouchers.map(v=>v.id===a.id?{...v,isUsed:true,redemptionDate:getNow(),redeemedBy:'Reception Staff'}:v);
+  paymentState.status='applied';
+  render();
+}
+function removeVoucher(){paymentState={code:'',status:'',applied:null};render();}
+function resetPayment(){paymentState={code:'',status:'',applied:null};render();}
+
+// ---- ADMIN TAB ----
+function renderAdmin(){
+  const code=genCode();
+  const elig=newV.clientType==='INDIVIDUAL'&&newV.firstName&&newV.lastName&&newV.patientDOB&&newV.idNumber
+    ?getEligibility(newV.patientDOB,newV.idNumber,newV.firstName,newV.lastName):null;
+  return`
+<div class="panel">
+  <div class="section-title">Generate voucher</div>
+  <div class="grid2">
+    <div class="form-row">
+      <label>Client type</label>
+      <select onchange="newV.clientType=this.value;render()">
+        <option value="INDIVIDUAL" ${newV.clientType==='INDIVIDUAL'?'selected':''}>Individual</option>
+        <option value="CORPORATE" ${newV.clientType==='CORPORATE'?'selected':''}>Corporate</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Provider</label>
+      <select onchange="newV.providerId=this.value;render()">
+        ${providers.map(p=>`<option value="${p.id}" ${newV.providerId===p.id?'selected':''}>${p.name} (${p.id})</option>`).join('')}
+      </select>
+    </div>
+  </div>
+
+  ${newV.clientType==='INDIVIDUAL'?`
+  <div class="grid2">
+    <div class="form-row"><label>First name</label><input value="${newV.firstName}" oninput="newV.firstName=this.value;render()" placeholder="First name"></div>
+    <div class="form-row"><label>Last name</label><input value="${newV.lastName}" oninput="newV.lastName=this.value;render()" placeholder="Last name"></div>
+  </div>`:`
+  <div class="form-row">
+    <label>Company</label>
+    <select onchange="newV.company=this.value;render()">
+      <option value="WOOLWORTHS" ${newV.company==='WOOLWORTHS'?'selected':''}>Woolworths</option>
+      <option value="OTHER" ${newV.company==='OTHER'?'selected':''}>Other</option>
+    </select>
+  </div>`}
+
+  <div class="grid2">
+    <div class="form-row"><label>Date of birth</label><input type="date" value="${newV.patientDOB}" onchange="newV.patientDOB=this.value;render()"></div>
+    <div class="form-row"><label>SA ID number</label><input value="${newV.idNumber}" oninput="newV.idNumber=this.value;render()" placeholder="1234567890123" maxlength="13"></div>
+  </div>
+
+  <div class="form-row">
+    <label>Voucher type</label>
+    <select onchange="newV.voucherType=this.value;render()">
+      <option value="CONSULTATION" ${newV.voucherType==='CONSULTATION'?'selected':''}>Consultation – R350</option>
+      <option value="CUSTOM AMOUNT" ${newV.voucherType==='CUSTOM AMOUNT'?'selected':''}>Custom amount</option>
+    </select>
+  </div>
+  ${newV.voucherType==='CUSTOM AMOUNT'?`
+  <div class="form-row"><label>Custom amount (R)</label><input type="number" value="${newV.customAmount}" oninput="newV.customAmount=this.value;render()" placeholder="0" min="0"></div>`:''}
+
+  ${newV.patientDOB?`
+  <div class="voucher-preview">
+    <div class="label" style="margin-bottom:6px">Generated code</div>
+    <div class="vc">${code}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;margin-top:4px">
+      <div><span style="color:var(--text-secondary)">Batch: </span>${getBatch()}</div>
+      <div><span style="color:var(--text-secondary)">Provider: </span>${providers.find(p=>p.id===newV.providerId)?.name}</div>
+      <div><span style="color:var(--text-secondary)">Type: </span>${newV.voucherType}</div>
+      <div><span style="color:var(--text-secondary)">Amount: </span>R${newV.voucherType==='CONSULTATION'?'350':newV.customAmount||'0'}</div>
+      <div><span style="color:var(--text-secondary)">Client: </span>${newV.clientType==='INDIVIDUAL'?(newV.firstName+' '+newV.lastName).trim()||'—':newV.company}</div>
+    </div>
+    ${elig?`
+    <div class="divider"></div>
+    <div style="font-size:12px">
+      <div style="font-weight:500;margin-bottom:6px;color:var(--text-secondary)">Annual eligibility</div>
+      <div style="display:flex;gap:12px">
+        <span>Created: ${elig.totalCreated}/3</span>
+        <span>Used: ${elig.totalUsed}</span>
+        <span style="color:${elig.remaining>0?'var(--text-success)':'var(--text-danger)'}">Remaining: ${elig.remaining}</span>
+      </div>
+      ${!elig.canCreateMore?`<div class="alert alert-danger" style="margin-top:8px;font-size:12px"><i class="ti ti-alert-circle" aria-hidden="true"></i>Maximum of 3 vouchers per year reached.</div>`:''}
+    </div>`:''}
+  </div>`:''}
+
+  <button class="btn btn-primary" style="margin-top:12px;width:100%" onclick="createVoucher()">Create voucher</button>
+</div>`;
+}
+function createVoucher(){
+  const code=genCode();
+  if(!code){alert('Please enter a date of birth.');return;}
+  if(newV.clientType==='INDIVIDUAL'){
+    const e=getEligibility(newV.patientDOB,newV.idNumber,newV.firstName,newV.lastName);
+    if(!e.canCreateMore){alert(`Maximum of 3 vouchers per year reached for ${newV.firstName} ${newV.lastName}.`);return;}
+  }
+  const amt=newV.voucherType==='CONSULTATION'?350:parseFloat(newV.customAmount)||0;
+  vouchers=[...vouchers,{
+    id:code,providerId:newV.providerId,providerName:providers.find(p=>p.id===newV.providerId)?.name,
+    patientDOB:newV.patientDOB,batch:getBatch(),voucherType:newV.voucherType,voucherAmount:amt,
+    clientType:newV.clientType,firstName:newV.firstName,lastName:newV.lastName,
+    company:newV.clientType==='CORPORATE'?newV.company:'',idNumber:newV.idNumber,
+    isUsed:false,createdDate:getNow(),createdBy:'Reception Staff',redemptionDate:null,redeemedBy:null
+  }];
+  alert(`Voucher ${code} created successfully.`);
+  newV={providerId:'EZ',patientDOB:'',idNumber:'',voucherType:'CONSULTATION',customAmount:'',clientType:'INDIVIDUAL',firstName:'',lastName:'',company:'WOOLWORTHS'};
+  render();
+}
+
+// ---- MANAGE TAB ----
+function renderManage(){
+  return`
+<div class="panel">
+  <div class="section-title">All vouchers (${vouchers.length})</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th>Code</th><th>Provider</th><th>Client</th><th>Type</th><th>Amount</th><th>Status</th><th>Annual usage</th><th>Created</th><th>Redeemed</th>
+      </tr></thead>
+      <tbody>
+      ${vouchers.map(v=>{
+        const elig=v.clientType==='INDIVIDUAL'&&v.firstName?getEligibility(v.patientDOB,v.idNumber,v.firstName,v.lastName):null;
+        return`<tr>
+          <td style="font-family:var(--font-mono);font-size:11px">${v.id}</td>
+          <td>${v.providerName}</td>
+          <td style="white-space:nowrap">${v.clientType==='INDIVIDUAL'?v.firstName+' '+v.lastName:v.company}</td>
+          <td>${v.voucherType}</td>
+          <td>${fmt(v.voucherAmount)}</td>
+          <td><span class="badge ${v.isUsed?'badge-red':'badge-green'}">${v.isUsed?'Used':'Active'}</span></td>
+          <td>${elig?`<span style="font-size:11px">Used ${elig.totalUsed}/3 · <span style="color:${elig.remaining>0?'var(--text-success)':'var(--text-danger)'}">${elig.remaining} left</span></span>`:'—'}</td>
+          <td style="font-size:11px;color:var(--text-secondary);white-space:nowrap">${v.createdDate.split(' ')[0]}</td>
+          <td style="font-size:11px;color:var(--text-secondary);white-space:nowrap">${v.redemptionDate?v.redemptionDate.split(' ')[0]:'—'}</td>
+        </tr>`;
+      }).join('')}
+      </tbody>
+    </table>
+  </div>
+</div>`;
+}
+
+// ---- REPORTS TAB ----
+function genReports(){
+  const now=new Date();const weekAgo=new Date(now-7*864e5);
+  const fv=vouchers.filter(v=>{
+    const d=new Date(v.createdDate);
+    return(reportFilter==='ALL'||v.providerId===reportFilter)&&d>=weekAgo;
+  });
+  const gen=fv.length,red=fv.filter(v=>v.isUsed).length;
+  const genVal=fv.reduce((s,v)=>s+v.voucherAmount,0);
+  const redVal=fv.filter(v=>v.isUsed).reduce((s,v)=>s+v.voucherAmount,0);
+  const rate=gen>0?((red/gen)*100).toFixed(1):'0';
+  const pb=providers.map(p=>{
+    const pv=fv.filter(v=>v.providerId===p.id);
+    const pg=pv.length,pr=pv.filter(v=>v.isUsed).length;
+    const pgv=pv.reduce((s,v)=>s+v.voucherAmount,0),prv=pv.filter(v=>v.isUsed).reduce((s,v)=>s+v.voucherAmount,0);
+    return{name:p.name,gen:pg,red:pr,genVal:pgv,redVal:prv,rate:pg>0?((pr/pg)*100).toFixed(1):'0'};
+  });
+  return{gen,red,genVal,redVal,rate,out:genVal-redVal,pb,from:weekAgo.toISOString().split('T')[0],to:now.toISOString().split('T')[0]};
+}
+function renderReports(){
+  const r=genReports();
+  return`
+<div class="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="section-title" style="margin:0">Weekly summary</div>
+    <select style="width:auto" onchange="reportFilter=this.value;render()">
+      <option value="ALL" ${reportFilter==='ALL'?'selected':''}>All providers</option>
+      ${providers.map(p=>`<option value="${p.id}" ${reportFilter===p.id?'selected':''}>${p.name}</option>`).join('')}
+    </select>
+  </div>
+  <div style="font-size:12px;color:var(--text-secondary);margin-bottom:12px">${r.from} → ${r.to}</div>
+  <div class="grid4" style="margin-bottom:14px">
+    <div class="card" style="padding:12px"><div class="label">Generated</div><div class="val">${r.gen}</div></div>
+    <div class="card" style="padding:12px"><div class="label">Redeemed</div><div class="val">${r.red}</div></div>
+    <div class="card" style="padding:12px"><div class="label">Generated value</div><div class="val" style="font-size:16px">${fmt(r.genVal)}</div></div>
+    <div class="card" style="padding:12px"><div class="label">Redeemed value</div><div class="val" style="font-size:16px">${fmt(r.redVal)}</div></div>
+  </div>
+  <div class="grid3" style="margin-bottom:14px">
+    <div class="card" style="padding:12px"><div class="label">Redemption rate</div><div class="val" style="font-size:18px">${r.rate}%</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px">${r.red} of ${r.gen} used</div></div>
+    <div class="card" style="padding:12px"><div class="label">Outstanding value</div><div class="val" style="font-size:18px">${fmt(r.out)}</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px">Unredeemed</div></div>
+    <div class="card" style="padding:12px"><div class="label">Avg voucher value</div><div class="val" style="font-size:18px">${fmt(r.gen>0?Math.round(r.genVal/r.gen):0)}</div><div style="font-size:11px;color:var(--text-muted);margin-top:4px">Per voucher</div></div>
+  </div>
+  <div class="section-title">Provider breakdown</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Provider</th><th>Generated</th><th>Redeemed</th><th>Rate</th><th>Gen value</th><th>Red value</th><th>Outstanding</th></tr></thead>
+      <tbody>
+      ${r.pb.filter(p=>p.gen>0||reportFilter==='ALL').map(p=>`<tr>
+        <td>${p.name}</td><td>${p.gen}</td><td>${p.red}</td>
+        <td><span class="${rateClass(p.rate)}">${p.rate}%</span></td>
+        <td>${fmt(p.genVal)}</td><td>${fmt(p.redVal)}</td><td>${fmt(p.genVal-p.redVal)}</td>
+      </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>
+</div>`;
+}
+
+// ---- DETAILED TAB ----
+function genDetailed(){
+  const now=new Date(),cm=now.getMonth(),cy=now.getFullYear();
+  const first=new Date(cy,cm,1),last=new Date(cy,cm+1,0);
+  const weeks=[];let ws=new Date(first);
+  const dow=ws.getDay(),sub=dow===0?6:dow-1;ws.setDate(ws.getDate()-sub);
+  let wn=1;
+  while(ws<=last){
+    const we=new Date(ws);we.setDate(we.getDate()+6);
+    const wv=vouchers.filter(v=>{
+      const d=new Date(v.createdDate);
+      return(detailFilter==='ALL'||v.providerId===detailFilter)&&d>=ws&&d<=we;
+    });
+    const days=[];
+    for(let i=0;i<7;i++){
+      const d=new Date(ws);d.setDate(d.getDate()+i);
+      const dv=wv.filter(v=>new Date(v.createdDate).toDateString()===d.toDateString());
+      const rv=dv.filter(v=>v.redemptionDate&&new Date(v.redemptionDate).toDateString()===d.toDateString());
+      days.push({date:d.toISOString().split('T')[0],day:d.toLocaleDateString('en-US',{weekday:'short'}),gen:dv.length,red:rv.length,genVal:dv.reduce((s,v)=>s+v.voucherAmount,0),redVal:rv.reduce((s,v)=>s+v.voucherAmount,0)});
+    }
+    const wgen=wv.length,wred=wv.filter(v=>v.isUsed).length;
+    weeks.push({wn,ws:ws.toISOString().split('T')[0],we:we.toISOString().split('T')[0],gen:wgen,red:wred,genVal:wv.reduce((s,v)=>s+v.voucherAmount,0),redVal:wv.filter(v=>v.isUsed).reduce((s,v)=>s+v.voucherAmount,0),rate:wgen>0?((wred/wgen)*100).toFixed(1):'0',days});
+    ws.setDate(ws.getDate()+7);wn++;
+  }
+  return{month:now.toLocaleDateString('en-US',{month:'long',year:'numeric'}),weeks:weeks.filter(w=>w.gen>0)};
+}
+function renderDetailed(){
+  const d=genDetailed();
+  return`
+<div class="panel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div class="section-title" style="margin:0">Weekly detailed – ${d.month}</div>
+    <select style="width:auto" onchange="detailFilter=this.value;render()">
+      <option value="ALL" ${detailFilter==='ALL'?'selected':''}>All providers</option>
+      ${providers.map(p=>`<option value="${p.id}" ${detailFilter===p.id?'selected':''}>${p.name}</option>`).join('')}
+    </select>
+  </div>
+  ${d.weeks.length===0?`<div style="color:var(--text-muted);font-size:13px">No data for ${d.month}.</div>`:''}
+  ${d.weeks.map(w=>`
+    <div class="card" style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-weight:500">Week ${w.wn} <span style="font-size:12px;color:var(--text-secondary)">(${w.ws} – ${w.we})</span></div>
+        <div style="display:flex;gap:10px;font-size:12px">
+          <span>Gen: ${w.gen} (${fmt(w.genVal)})</span>
+          <span>Red: ${w.red} (${fmt(w.redVal)})</span>
+          <span class="${rateClass(w.rate)}">${w.rate}%</span>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Day</th><th>Date</th><th>Gen</th><th>Red</th><th>Gen value</th><th>Red value</th><th>Rate</th></tr></thead>
+          <tbody>
+          ${w.days.map(day=>`<tr>
+            <td>${day.day}</td>
+            <td style="font-size:11px;color:var(--text-secondary)">${day.date}</td>
+            <td>${day.gen>0?`<span class="badge badge-blue">${day.gen}</span>`:'<span style="color:var(--text-muted)">—</span>'}</td>
+            <td>${day.red>0?`<span class="badge badge-green">${day.red}</span>`:'<span style="color:var(--text-muted)">—</span>'}</td>
+            <td>${fmt(day.genVal)}</td>
+            <td>${fmt(day.redVal)}</td>
+            <td>${day.gen>0?`<span class="${rateClass(((day.red/day.gen)*100).toFixed(1))}">${((day.red/day.gen)*100).toFixed(1)}%</span>`:'—'}</td>
+          </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `).join('')}
+</div>`;
+}
+
+// ---- RENDER ----
+function render(){
+  let html='';
+  if(activeTab==='payment')html=renderPayment();
+  else if(activeTab==='admin')html=renderAdmin();
+  else if(activeTab==='manage')html=renderManage();
+  else if(activeTab==='reports')html=renderReports();
+  else if(activeTab==='detailed')html=renderDetailed();
+  document.getElementById('content').innerHTML=html;
+}
+
+document.getElementById('tabs').addEventListener('click',e=>{
+  const tab=e.target.closest('[data-tab]');
+  if(!tab)return;
+  activeTab=tab.dataset.tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===activeTab));
+  render();
+});
+
+render();
+</script>
