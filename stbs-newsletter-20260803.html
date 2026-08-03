@@ -3,11 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Saint Barnabas Parish Update</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f2ec;
+      color: #222;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    main {
+      width: 100%;
+      padding: 24px 16px;
+    }
+
+    article {
+      width: min(100%, 900px);
+      margin: 0 auto;
+      padding: clamp(20px, 5vw, 56px);
+      background: #ffffff;
+    }
+
+    header {
+      margin-bottom: 48px;
+      text-align: center;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.2;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+    }
+
+    section {
+      margin-bottom: clamp(48px, 8vw, 80px);
+    }
+
+    .image-placeholder {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto 24px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #e8e5df;
+      aspect-ratio: 16 / 9;
+    }
+
+    .image-placeholder img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    p {
+      margin: 0 0 18px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+      }
+
+      main {
+        padding: 0;
+      }
+
+      article {
+        padding: 28px 16px;
+      }
+
+      header {
+        margin-bottom: 36px;
+      }
+
+      section {
+        margin-bottom: 48px;
+      }
+
+      .image-placeholder {
+        margin-bottom: 20px;
+        border-radius: 6px;
+        aspect-ratio: 4 / 3;
+      }
+    }
+
+    @media (min-width: 1000px) {
+      .image-placeholder {
+        max-height: 470px;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <main>
     <article>
+      <div class="image-placeholder">
+          <img
+            src="banner.jpg"
+            alt="Saint Barnabus Banner"
+            loading="lazy"
+          />
+        </div>
+
       <header>
         <h1>Saint Barnabas Parish Update</h1>
         <p><em>A few cheerful updates from around Saint Barnabas</em></p>
@@ -15,78 +134,129 @@
 
       <section>
         <h2>Around the Grounds</h2>
+
         <div class="image-placeholder">
-          <img src="PLACEHOLDER-GROUNDS-IMAGE.jpg" alt="Placeholder image for church grounds or vicarage" />
+          <img
+            src="grounds.jpg"
+            alt="Church grounds or vicarage"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          There’s been plenty happening on the property front. The <strong>vicarage painting work is now complete</strong>,
-          which has freshened things up nicely. You may also have noticed that the <strong>fence by the school has been repaired</strong>
-          — with thanks to the Ministry of Education for that work.
+          There’s been plenty happening on the property front. The
+          <strong>vicarage painting work is now complete</strong>, which has
+          freshened things up nicely. You may also have noticed that the
+          <strong>fence by the school has been repaired</strong> — with thanks
+          to the Ministry of Education for that work.
         </p>
+
         <p>
-          We’re also keeping an eye on a few maintenance items around the church grounds so that things stay safe, sound,
-          and welcoming for everyone.
+          We’re also keeping an eye on a few maintenance items around the
+          church grounds so that things stay safe, sound, and welcoming for
+          everyone.
         </p>
       </section>
 
       <section>
         <h2>Growing Good Things</h2>
+
         <div class="image-placeholder">
-          <img src="gardening.jpg" alt="Placeholder image for Roseneath School gardening project" />
+          <img
+            src="gardening.JPG"
+            alt="Roseneath School gardening project"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          A lovely development has been the <strong>gardening work with Roseneath School</strong>. It’s been exciting to see
-          young people getting involved, growing things, and connecting with the church in practical ways. It’s a wonderful
-          sign of community life in action.
+          A lovely development has been the
+          <strong>gardening work with Roseneath School</strong>. It’s been
+          exciting to see young people getting involved, growing things, and
+          connecting with the church in practical ways. It’s a wonderful sign
+          of community life in action.
         </p>
       </section>
 
       <section>
         <h2>Warm Hands, Warm Hearts</h2>
+
         <div class="image-placeholder">
-          <img src="IMG20260719112620.jpg" alt="Placeholder image for beanies or knitting project" />
+          <img
+            src="IMG20260719112620.jpg"
+            alt="Beanies made for the Seafarers Mission"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          A big thank you to everyone involved in the recent effort to support the <strong>Seafarers Mission</strong>.
-          <strong>Seventy beanies</strong> were knitted and presented — a fantastic contribution.
+          A big thank you to everyone involved in the recent effort to support
+          the <strong>Seafarers Mission</strong>.
+          <strong>Seventy beanies</strong> were knitted and presented — a
+          fantastic contribution.
         </p>
+
         <p>
-          We also hear that <strong>fingerless gloves</strong> would be especially useful, for anyone looking for their next knitting project.
+          We also hear that <strong>fingerless gloves</strong> would be
+          especially useful, for anyone looking for their next knitting
+          project.
         </p>
       </section>
 
       <section>
         <h2>Looking Ahead</h2>
+
         <div class="image-placeholder">
-          <img src="PLACEHOLDER-COMMUNITY-EVENT-IMAGE.jpg" alt="Placeholder image for parish gathering or shared meal" />
+          <img
+            src="christening.jpg"
+            alt="Parish gathering or shared meal"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          There are a few community events coming up in the life of the parish, including shared meals and opportunities
-          to gather, talk, and stay connected. More details will be shared soon, so keep an eye out.
+          There are a few community events coming up in the life of the parish,
+          including shared meals and opportunities to gather, talk, and stay
+          connected. More details will be shared soon, so keep an eye out.
         </p>
       </section>
 
       <section>
         <h2>In the Community</h2>
+
         <div class="image-placeholder">
-          <img src="PLACEHOLDER-COMMUNITY-IMAGE.jpg" alt="Placeholder image for community engagement" />
+          <img
+            src="PLACEHOLDER-COMMUNITY-IMAGE.jpg"
+            alt="Saint Barnabas community engagement"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          Saint Barnabas continues to take an active interest in the wider community, including support for initiatives
-          that help people and families thrive. It’s encouraging to see parishioners connecting faith, action, and
-          everyday life in practical ways.
+          Saint Barnabas continues to take an active interest in the wider
+          community, including support for initiatives that help people and
+          families thrive. It’s encouraging to see parishioners connecting
+          faith, action, and everyday life in practical ways.
         </p>
       </section>
 
       <section>
         <h2>A Parish Full of Life</h2>
+
         <div class="image-placeholder">
-          <img src="PLACEHOLDER-PARISH-LIFE-IMAGE.jpg" alt="Placeholder image for parish life" />
+          <img
+            src="PLACEHOLDER-PARISH-LIFE-IMAGE.jpg"
+            alt="Life in the Saint Barnabas parish"
+            loading="lazy"
+          />
         </div>
+
         <p>
-          It’s been heartening to see the many different ways people are contributing — through care for the buildings,
-          support for local schools, knitting, technology, hospitality, and community engagement. Saint Barnabas is full
-          of quiet good work, and it’s worth celebrating.
+          It’s been heartening to see the many different ways people are
+          contributing — through care for the buildings, support for local
+          schools, knitting, technology, hospitality, and community
+          engagement. Saint Barnabas is full of quiet good work, and it’s worth
+          celebrating.
         </p>
       </section>
     </article>
