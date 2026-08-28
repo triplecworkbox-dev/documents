@@ -5,398 +5,108 @@
 <meta charset="UTF-8">
 <title>Opportunity — Volunteer Reactivation Cards</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-  :root{
-    --navy:#231955;
-    --navy-deep:#160f38;
-    --teal:#2FDCC9;
-    --teal-deep:#12B8A6;
-    --cream:#FBFAF7;
-    --ink:#1A1533;
-    --yellow:#FFC93C;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  body{
-    background:#0d0a1f;
-    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
-    padding:40px 0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:36px;
-  }
-  .toolbar{
-    color:#8a83b0;
-    font-size:13px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    margin-bottom:-10px;
-    text-align:center;
-    max-width:400px;
-    line-height:1.6;
-  }
-
-.card{
-position:relative;
-width:360px;
-height:640px;
-border-radius:28px;
-overflow:hidden;
-box-shadow:0 30px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.05);
-background:var(–navy);
-display:flex;
-flex-direction:column;
-color:var(–cream);
-flex-shrink:0;
-}
-.card-label{
-color:#5b5487;
-font-size:11px;
-letter-spacing:.1em;
-text-transform:uppercase;
-text-align:center;
-margin-bottom:8px;
-}
-.frame{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-}
-
-.ticks{
-position:absolute;
-top:14px; left:14px; right:14px;
-display:flex;
-gap:5px;
-z-index:5;
-}
-.ticks span{
-flex:1;
-height:3px;
-border-radius:3px;
-background:rgba(255,255,255,.25);
-}
-.ticks span.done{background:rgba(255,255,255,.9);}
-
-.kicker-row{
-position:absolute;
-top:30px; left:20px; right:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:5;
-font-size:12px;
-letter-spacing:.06em;
-color:rgba(255,255,255,.75);
-text-transform:uppercase;
-font-weight:700;
-}
-.kicker-row .step-tag{
-background:rgba(255,255,255,.12);
-padding:4px 10px;
-border-radius:20px;
-}
-
-.content{
-flex:1;
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding:90px 26px 40px;
-position:relative;
-z-index:2;
-}
-
-.eyebrow{
-font-size:14px;
-font-weight:800;
-letter-spacing:.14em;
-text-transform:uppercase;
-color:var(–teal);
-margin-bottom:14px;
-}
-h1.headline{
-font-size:38px;
-line-height:1.08;
-font-weight:800;
-letter-spacing:-.01em;
-margin-bottom:16px;
-}
-h2.headline{
-font-size:29px;
-line-height:1.12;
-font-weight:800;
-letter-spacing:-.01em;
-margin-bottom:18px;
-}
-.sub{
-font-size:17px;
-line-height:1.45;
-color:rgba(255,255,255,.82);
-font-weight:500;
-}
-
-.say-block{
-margin-top:20px;
-background:rgba(255,255,255,.08);
-border-left:4px solid var(–teal);
-border-radius:0 14px 14px 0;
-padding:16px 18px;
-}
-.say-label{
-font-size:11px;
-font-weight:800;
-letter-spacing:.12em;
-text-transform:uppercase;
-color:var(–teal);
-margin-bottom:8px;
-}
-.say-text{
-font-size:17px;
-line-height:1.4;
-font-style:italic;
-font-weight:600;
-}
-
-ul.list{
-margin-top:18px;
-list-style:none;
-display:flex;
-flex-direction:column;
-gap:13px;
-}
-ul.list li{
-font-size:17px;
-line-height:1.4;
-font-weight:600;
-padding-left:32px;
-position:relative;
-}
-ul.list li::before{
-content:””;
-position:absolute;
-left:0; top:5px;
-width:18px; height:18px;
-border-radius:6px;
-background:var(–teal);
-}
-ul.list.alt li::before{background:var(–yellow);}
-
-.footer-tag{
-position:absolute;
-bottom:22px; left:0; right:0;
-text-align:center;
-font-size:12px;
-font-weight:700;
-letter-spacing:.08em;
-text-transform:uppercase;
-color:rgba(255,255,255,.45);
-z-index:5;
-}
-
-.badge-num{
-width:60px; height:60px;
-border-radius:18px;
-background:var(–teal);
-color:var(–navy-deep);
-font-size:26px;
-font-weight:900;
-display:flex;
-align-items:center;
-justify-content:center;
-margin-bottom:20px;
-box-shadow:0 10px 24px rgba(47,220,201,.35);
-}
-
-.pill-row{
-display:flex;
-flex-wrap:wrap;
-gap:8px;
-margin-top:16px;
-}
-.pill{
-background:rgba(255,255,255,.1);
-border:1px solid rgba(255,255,255,.18);
-padding:8px 14px;
-border-radius:30px;
-font-size:13px;
-font-weight:700;
-}
-
-.card.intro{background:radial-gradient(circle at 30% 20%, #2b2166 0%, var(–navy-deep) 70%);}
-.ring{width:120px; height:120px; border-radius:50%; border:22px solid var(–teal); margin-bottom:24px;}
-.intro .content{ align-items:center; text-align:center; justify-content:center; padding-top:0;}
-.intro h1.headline{font-size:42px;}
-.intro .sub{font-size:18px;}
-.wordmark{font-weight:900; font-size:24px; letter-spacing:.02em; margin-top:4px;}
-
-.goal-row{display:flex; align-items:flex-start; gap:14px; margin-top:14px;}
-.goal-dot{
-flex-shrink:0; width:28px; height:28px; border-radius:50%;
-background:var(–teal); color:var(–navy-deep); font-weight:900; font-size:13px;
-display:flex; align-items:center; justify-content:center;
-}
-.goal-text{font-size:16px; font-weight:600; line-height:1.4; padding-top:3px;}
-
-.card.scenario{background:linear-gradient(165deg, var(–navy) 0%, #171041 100%);}
-.card.branch{background:linear-gradient(165deg, #2A2060 0%, var(–navy-deep) 100%);}
-
-.branch-tag{
-display:inline-block;
-background:var(–yellow);
-color:var(–navy-deep);
-font-weight:900;
-font-size:12px;
-letter-spacing:.06em;
-text-transform:uppercase;
-padding:6px 14px;
-border-radius:20px;
-margin-bottom:14px;
-}
-.neg-tag{background:#FF6B6B;}
-.pos-tag{background:var(–teal);}
-
-.card.template{background:linear-gradient(165deg, #12314F 0%, var(–navy-deep) 100%);}
-.sms-bubble{
-margin-top:18px;
-background:rgba(255,255,255,.95);
-color:var(–ink);
-border-radius:20px 20px 20px 4px;
-padding:16px;
-font-size:14px;
-line-height:1.42;
-font-weight:500;
-box-shadow:0 10px 24px rgba(0,0,0,.25);
-}
-.sms-bubble b{color:var(–navy-deep);}
-
-.stat-block{
-display:flex;
-align-items:baseline;
-gap:10px;
-margin-top:18px;
-}
-.stat-num{
-font-size:56px;
-font-weight:900;
-color:var(–teal);
-line-height:1;
-}
-.stat-label{
-font-size:15px;
-font-weight:700;
-color:rgba(255,255,255,.75);
-}
-
-.card.closing{background:radial-gradient(circle at 70% 80%, #133C36 0%, var(–navy-deep) 65%);}
-.closing .content{align-items:center; text-align:center; justify-content:center;}
-.check{
-width:76px;height:76px;border-radius:50%;
-background:var(–teal);
-display:flex;align-items:center;justify-content:center;
-margin-bottom:22px;
-box-shadow:0 10px 30px rgba(47,220,201,.4);
-}
-.check svg{width:38px;height:38px;}
-
-.fill-tag{
-display:inline-block;
-background:rgba(255,255,255,.14);
-border:1px dashed rgba(255,255,255,.4);
-padding:3px 8px;
-border-radius:6px;
-font-style:normal;
-font-size:13px;
-}
-
-@media (max-width:420px){
-body{padding:20px 12px;}
-.card{width:92vw; max-width:360px; height:calc(92vw * 16 / 9); max-height:640px;}
-}
-</style>
-
 </head>
-<body>
+<body style="background:#0d0a1f; font-family:'Segoe UI', system-ui, -apple-system, sans-serif; margin:0; padding:40px 0; display:flex; flex-direction:column; align-items:center; gap:36px;">
 
-<div class="toolbar">Opportunity Party — Volunteer Reactivation Training · Story Cards · For calling dormant + existing supporters back into action · 12 cards</div>
+<div style="color:#8a83b0; font-size:13px; letter-spacing:.08em; text-transform:uppercase; text-align:center; max-width:400px; line-height:1.6; padding:0 20px;">Opportunity Party — Volunteer Reactivation Training · Story Cards · For calling dormant + existing supporters back into action · 12 cards</div>
 
 <!-- 1 INTRO -->
 
-<div class="frame">
-  <div class="card-label">Card 1 · Intro</div>
-  <div class="card intro">
-    <div class="ticks"><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="ring"></div>
-      <div class="wordmark" style="color:var(--teal)">OPPORTUNITY</div>
-      <h1 class="headline" style="margin-top:16px;">Reactivation<br>Calling</h1>
-      <p class="sub">You're not chasing strangers. You're reconnecting with people who already like us.</p>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 1 · Intro</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:radial-gradient(circle at 30% 20%, #2b2166 0%, #160f38 70%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="position:absolute; top:14px; left:14px; right:14px; display:flex; gap:5px; z-index:5;">
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.9);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
+      <span style="flex:1; height:3px; border-radius:3px; background:rgba(255,255,255,.25);"></span>
     </div>
-    <div class="footer-tag">Bringing our own people back in</div>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:26px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="width:120px; height:120px; border-radius:50%; border:22px solid #2FDCC9; margin-bottom:24px; box-sizing:border-box;"></div>
+      <div style="font-weight:900; font-size:24px; letter-spacing:.02em; color:#2FDCC9;">OPPORTUNITY</div>
+      <h1 style="font-size:42px; line-height:1.08; font-weight:800; letter-spacing:-.01em; margin:16px 0 16px; color:#FBFAF7;">Reactivation<br>Calling</h1>
+      <p style="font-size:18px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:0;">You're not chasing strangers. You're reconnecting with people who already like us.</p>
+    </div>
+    <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.45); z-index:5;">Bringing our own people back in</div>
   </div>
 </div>
 
 <!-- 2 WHO WE'RE CALLING -->
 
-<div class="frame">
-  <div class="card-label">Card 2 · Who We're Calling</div>
-  <div class="card scenario">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="kicker-row"><span>Before You Start</span></div>
-    <div class="content">
-      <div class="eyebrow">Your list today</div>
-      <h2 class="headline">Friendly faces, gone quiet</h2>
-      <p class="sub">Everyone on this list has already expressed interest in Opportunity before — as a member, a past volunteer, or someone who signed up and never got a follow-up.</p>
-      <p class="sub" style="margin-top:14px;">No cold energy needed. This is a warm reconnection.</p>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 2 · Who We're Calling</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #231955 0%, #171041 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="position:absolute; top:30px; left:20px; right:20px; z-index:5; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.75); text-transform:uppercase; font-weight:700;">Before You Start</div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#2FDCC9; margin-bottom:14px;">Your list today</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Friendly faces, gone quiet</h2>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:0;">Everyone on this list has already expressed interest in Opportunity before — as a member, a past volunteer, or someone who signed up and never got a follow-up.</p>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:14px 0 0;">No cold energy needed. This is a warm reconnection.</p>
     </div>
   </div>
 </div>
 
 <!-- 3 GOALS -->
 
-<div class="frame">
-  <div class="card-label">Card 3 · Our Goals</div>
-  <div class="card scenario">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="eyebrow">Two outcomes we want</div>
-      <h2 class="headline">Simple call, simple goal</h2>
-      <div class="goal-row"><div class="goal-dot">1</div><div class="goal-text">Get them to one upcoming volunteering session</div></div>
-      <div class="goal-row"><div class="goal-dot">2</div><div class="goal-text">Update the database — busy, keen, or no more calls</div></div>
-      <p class="sub" style="margin-top:20px;">That's it. Don't overload the call with anything else.</p>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 3 · Our Goals</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #231955 0%, #171041 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#2FDCC9; margin-bottom:14px;">Two outcomes we want</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Simple call, simple goal</h2>
+      <div style="display:flex; align-items:flex-start; gap:14px; margin-top:14px;">
+        <div style="flex-shrink:0; width:28px; height:28px; border-radius:50%; background:#2FDCC9; color:#160f38; font-weight:900; font-size:13px; display:flex; align-items:center; justify-content:center; box-sizing:border-box;">1</div>
+        <div style="font-size:16px; font-weight:600; line-height:1.4; padding-top:3px; color:#FBFAF7;">Get them to one upcoming volunteering session</div>
+      </div>
+      <div style="display:flex; align-items:flex-start; gap:14px; margin-top:14px;">
+        <div style="flex-shrink:0; width:28px; height:28px; border-radius:50%; background:#2FDCC9; color:#160f38; font-weight:900; font-size:13px; display:flex; align-items:center; justify-content:center; box-sizing:border-box;">2</div>
+        <div style="font-size:16px; font-weight:600; line-height:1.4; padding-top:3px; color:#FBFAF7;">Update the database — busy, keen, or no more calls</div>
+      </div>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:20px 0 0;">That's it. Don't overload the call with anything else.</p>
     </div>
   </div>
 </div>
 
 <!-- 4 MOMENTUM STAT -->
 
-<div class="frame">
-  <div class="card-label">Card 4 · Why It Matters</div>
-  <div class="card branch">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="eyebrow">Opportunity is growing</div>
-      <div class="stat-block"><div class="stat-num">8%</div><div class="stat-label">and climbing<br>in the polls</div></div>
-      <h2 class="headline" style="margin-top:22px;">Momentum needs people</h2>
-      <p class="sub">Polling only tells half the story — turning that into votes takes volunteers having real conversations, one call at a time.</p>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 4 · Why It Matters</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #2A2060 0%, #160f38 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#2FDCC9; margin-bottom:14px;">Opportunity is growing</div>
+      <div style="display:flex; align-items:baseline; gap:10px; margin-top:18px;">
+        <div style="font-size:56px; font-weight:900; color:#2FDCC9; line-height:1;">8%</div>
+        <div style="font-size:15px; font-weight:700; color:rgba(255,255,255,.75);">and climbing<br>in the polls</div>
+      </div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:22px 0 18px; color:#FBFAF7;">Momentum needs people</h2>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:0;">Polling only tells half the story — turning that into votes takes volunteers having real conversations, one call at a time.</p>
     </div>
   </div>
 </div>
 
 <!-- 5 OPENING -->
 
-<div class="frame">
-  <div class="card-label">Card 5 · Step 1</div>
-  <div class="card scenario">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="kicker-row"><span>The Script</span><span class="step-tag">Step 1</span></div>
-    <div class="content">
-      <div class="eyebrow">Open warm</div>
-      <h2 class="headline">Remind them why they signed up</h2>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"Hi <span class="fill-tag">name</span>! This is <span class="fill-tag">you</span>, a volunteer with the Opportunity Party. You signed up with us a while back — I wanted to check in and see how you're doing."</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 5 · Step 1</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #231955 0%, #171041 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="position:absolute; top:30px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:5; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.75); text-transform:uppercase; font-weight:700;">
+      <span>The Script</span>
+      <span style="background:rgba(255,255,255,.12); padding:4px 10px; border-radius:20px;">Step 1</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#2FDCC9; margin-bottom:14px;">Open warm</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Remind them why they signed up</h2>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"Hi <span style="display:inline-block; background:rgba(255,255,255,.14); border:1px dashed rgba(255,255,255,.4); padding:3px 8px; border-radius:6px; font-style:normal; font-size:13px;">name</span>! This is <span style="display:inline-block; background:rgba(255,255,255,.14); border:1px dashed rgba(255,255,255,.4); padding:3px 8px; border-radius:6px; font-style:normal; font-size:13px;">you</span>, a volunteer with the Opportunity Party. You signed up with us a while back — I wanted to check in and see how you're doing."</div>
       </div>
     </div>
   </div>
@@ -404,17 +114,16 @@ body{padding:20px 12px;}
 
 <!-- 6 NO GUILT -->
 
-<div class="frame">
-  <div class="card-label">Card 6 · Step 1 continued</div>
-  <div class="card branch">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="branch-tag pos-tag">Golden rule</div>
-      <h2 class="headline">No guilt, ever</h2>
-      <p class="sub">Life gets busy. Don't apologise on their behalf, and don't make them explain why it's been a while.</p>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"No matter your experience, or how long it's been since your last event, we'll make sure you have everything you need to jump back in."</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 6 · Step 1 continued</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #2A2060 0%, #160f38 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="display:inline-block; background:#2FDCC9; color:#160f38; font-weight:900; font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:6px 14px; border-radius:20px; margin-bottom:14px; width:fit-content;">Golden rule</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">No guilt, ever</h2>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:0;">Life gets busy. Don't apologise on their behalf, and don't make them explain why it's been a while.</p>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"No matter your experience, or how long it's been since your last event, we'll make sure you have everything you need to jump back in."</div>
       </div>
     </div>
   </div>
@@ -422,110 +131,119 @@ body{padding:20px 12px;}
 
 <!-- 7 THE ASK -->
 
-<div class="frame">
-  <div class="card-label">Card 7 · Step 2</div>
-  <div class="card scenario">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span><span></span></div>
-    <div class="kicker-row"><span>The Script</span><span class="step-tag">Step 2</span></div>
-    <div class="content">
-      <div class="eyebrow">Make the ask</div>
-      <h2 class="headline">Give them one clear next step</h2>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"We've got an event coming up on <span class="fill-tag">date</span> at <span class="fill-tag">location</span> — no experience needed. Would you be up for coming along?"</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 7 · Step 2</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #231955 0%, #171041 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="position:absolute; top:30px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:5; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.75); text-transform:uppercase; font-weight:700;">
+      <span>The Script</span>
+      <span style="background:rgba(255,255,255,.12); padding:4px 10px; border-radius:20px;">Step 2</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="font-size:14px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#2FDCC9; margin-bottom:14px;">Make the ask</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Give them one clear next step</h2>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"We've got an event coming up on <span style="display:inline-block; background:rgba(255,255,255,.14); border:1px dashed rgba(255,255,255,.4); padding:3px 8px; border-radius:6px; font-style:normal; font-size:13px;">date</span> at <span style="display:inline-block; background:rgba(255,255,255,.14); border:1px dashed rgba(255,255,255,.4); padding:3px 8px; border-radius:6px; font-style:normal; font-size:13px;">location</span> — no experience needed. Would you be up for coming along?"</div>
       </div>
-      <p class="sub" style="margin-top:16px;">One event, one clear invite. Don't list five options.</p>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:16px 0 0;">One event, one clear invite. Don't list five options.</p>
     </div>
   </div>
 </div>
 
 <!-- 8 BRANCH YES -->
 
-<div class="frame">
-  <div class="card-label">Card 8 · Branch</div>
-  <div class="card branch">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="branch-tag pos-tag">If yes</div>
-      <h2 class="headline">Lock it in immediately</h2>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"Brilliant! I'll text you the sign-up link right now so it's easy to find later."</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 8 · Branch</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #2A2060 0%, #160f38 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="display:inline-block; background:#2FDCC9; color:#160f38; font-weight:900; font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:6px 14px; border-radius:20px; margin-bottom:14px; width:fit-content;">If yes</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Lock it in immediately</h2>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"Brilliant! I'll text you the sign-up link right now so it's easy to find later."</div>
       </div>
-      <p class="sub" style="margin-top:16px;">Send the text before you hang up — momentum fades fast.</p>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:16px 0 0;">Send the text before you hang up — momentum fades fast.</p>
     </div>
   </div>
 </div>
 
 <!-- 9 BRANCH BUSY -->
 
-<div class="frame">
-  <div class="card-label">Card 9 · Branch</div>
-  <div class="card branch">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span><span></span></div>
-    <div class="content">
-      <div class="branch-tag">If busy right now</div>
-      <h2 class="headline">Keep the door open</h2>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"No worries at all — I'll send you the sign-up link so you can find something that fits whenever you're ready."</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 9 · Branch</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #2A2060 0%, #160f38 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="display:inline-block; background:#FFC93C; color:#160f38; font-weight:900; font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:6px 14px; border-radius:20px; margin-bottom:14px; width:fit-content;">If busy right now</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Keep the door open</h2>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"No worries at all — I'll send you the sign-up link so you can find something that fits whenever you're ready."</div>
       </div>
-      <p class="sub" style="margin-top:16px;">Note it in the system as "keen, sent link" — this is still a good outcome.</p>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:16px 0 0;">Note it in the system as "keen, sent link" — this is still a good outcome.</p>
     </div>
   </div>
 </div>
 
 <!-- 10 BRANCH NOT INTERESTED -->
 
-<div class="frame">
-  <div class="card-label">Card 10 · Branch</div>
-  <div class="card branch">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span><span></span></div>
-    <div class="content">
-      <div class="branch-tag neg-tag">If not interested anymore</div>
-      <h2 class="headline">Thank them, close the loop</h2>
-      <div class="say-block">
-        <div class="say-label">You say</div>
-        <div class="say-text">"Totally understand. Thanks so much for everything you've already given us — have a great day."</div>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 10 · Branch</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #2A2060 0%, #160f38 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="display:inline-block; background:#FF6B6B; color:#160f38; font-weight:900; font-size:12px; letter-spacing:.06em; text-transform:uppercase; padding:6px 14px; border-radius:20px; margin-bottom:14px; width:fit-content;">If not interested anymore</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Thank them, close the loop</h2>
+      <div style="margin-top:20px; background:rgba(255,255,255,.08); border-left:4px solid #2FDCC9; border-radius:0 14px 14px 0; padding:16px 18px; box-sizing:border-box;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#2FDCC9; margin-bottom:8px;">You say</div>
+        <div style="font-size:17px; line-height:1.4; font-style:italic; font-weight:600; color:#FBFAF7;">"Totally understand. Thanks so much for everything you've already given us — have a great day."</div>
       </div>
-      <p class="sub" style="margin-top:14px;">Update their record so we don't call again unnecessarily.</p>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:14px 0 0;">Update their record so we don't call again unnecessarily.</p>
     </div>
   </div>
 </div>
 
 <!-- 11 WRAP UP -->
 
-<div class="frame">
-  <div class="card-label">Card 11 · Step 3</div>
-  <div class="card scenario">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span></span></div>
-    <div class="kicker-row"><span>Closing</span><span class="step-tag">Step 3</span></div>
-    <div class="content">
-      <div class="badge-num">✓</div>
-      <h2 class="headline">Wrap it up right</h2>
-      <ul class="list">
-        <li>Send the text before you move to your next call</li>
-        <li>Log the outcome — keen, busy, or not interested</li>
-        <li>Thank them either way. They said yes once already.</li>
-      </ul>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 11 · Step 3</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:linear-gradient(165deg, #231955 0%, #171041 100%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="position:absolute; top:30px; left:20px; right:20px; display:flex; justify-content:space-between; align-items:center; z-index:5; font-size:12px; letter-spacing:.06em; color:rgba(255,255,255,.75); text-transform:uppercase; font-weight:700;">
+      <span>Closing</span>
+      <span style="background:rgba(255,255,255,.12); padding:4px 10px; border-radius:20px;">Step 3</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="width:60px; height:60px; border-radius:18px; background:#2FDCC9; color:#160f38; font-size:26px; font-weight:900; display:flex; align-items:center; justify-content:center; margin-bottom:20px; box-sizing:border-box;">✓</div>
+      <h2 style="font-size:29px; line-height:1.12; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; color:#FBFAF7;">Wrap it up right</h2>
+      <div style="display:flex; flex-direction:column; gap:13px; margin-top:18px;">
+        <div style="font-size:17px; line-height:1.4; font-weight:600; padding-left:32px; position:relative; color:#FBFAF7;">
+          <span style="position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:6px; background:#2FDCC9; display:inline-block;"></span>
+          Send the text before you move to your next call
+        </div>
+        <div style="font-size:17px; line-height:1.4; font-weight:600; padding-left:32px; position:relative; color:#FBFAF7;">
+          <span style="position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:6px; background:#2FDCC9; display:inline-block;"></span>
+          Log the outcome — keen, busy, or not interested
+        </div>
+        <div style="font-size:17px; line-height:1.4; font-weight:600; padding-left:32px; position:relative; color:#FBFAF7;">
+          <span style="position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:6px; background:#2FDCC9; display:inline-block;"></span>
+          Thank them either way. They said yes once already.
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- 12 CLOSING -->
 
-<div class="frame">
-  <div class="card-label">Card 12 · Outro</div>
-  <div class="card closing">
-    <div class="ticks"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
-    <div class="content">
-      <div class="check">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="#160f38" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+  <div style="color:#5b5487; font-size:11px; letter-spacing:.1em; text-transform:uppercase; text-align:center; margin-bottom:8px;">Card 12 · Outro</div>
+  <div style="position:relative; width:360px; height:640px; border-radius:28px; overflow:hidden; box-shadow:0 30px 60px rgba(0,0,0,.55); background:radial-gradient(circle at 70% 80%, #133C36 0%, #160f38 65%); display:flex; flex-direction:column; color:#FBFAF7; box-sizing:border-box;">
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:90px 26px 40px; position:relative; z-index:2; box-sizing:border-box;">
+      <div style="width:76px; height:76px; border-radius:50%; background:#2FDCC9; display:flex; align-items:center; justify-content:center; margin-bottom:22px; box-sizing:border-box;">
+        <svg viewBox="0 0 24 24" fill="none" style="width:38px; height:38px;"><path d="M4 12l5 5L20 6" stroke="#160f38" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      <h1 class="headline">Every call<br>brings someone back</h1>
-      <p class="sub">You're not persuading strangers — you're welcoming friends back in. Talk to your team leader with any questions.</p>
+      <h1 style="font-size:38px; line-height:1.08; font-weight:800; letter-spacing:-.01em; margin:0 0 16px; color:#FBFAF7;">Every call<br>brings someone back</h1>
+      <p style="font-size:17px; line-height:1.45; color:rgba(255,255,255,.82); font-weight:500; margin:0;">You're not persuading strangers — you're welcoming friends back in. Talk to your team leader with any questions.</p>
     </div>
-    <div class="footer-tag">Opportunity Party · Reactivation Calling</div>
+    <div style="position:absolute; bottom:22px; left:0; right:0; text-align:center; font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.45); z-index:5;">Opportunity Party · Reactivation Calling</div>
   </div>
 </div>
 
