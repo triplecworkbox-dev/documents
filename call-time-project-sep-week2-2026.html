@@ -1,0 +1,177 @@
+/* =========================================================
+   OPPORTUNITY — WHITE DOCUMENT VERSION
+   ========================================================= */
+
+:root {
+  --op-teal: #20BDC7;
+  --op-teal-dark: #087F89;
+  --op-teal-deep: #075D68;
+  --op-navy: #123B5D;
+  --op-navy-deep: #092B45;
+
+  --op-teal-soft: #E8F7F8;
+  --op-blue-soft: #EAF3F8;
+
+  --ink: #102F43;
+  --ink-soft: #526A78;
+
+  /* WHITE PAGE */
+  --paper: #FFFFFF;
+  --panel: #FFFFFF;
+
+  --line: #D7E5E9;
+
+  --call: #087F89;
+  --call-soft: #DDF5F6;
+
+  --all: #1769A8;
+  --all-soft: #E4F0F8;
+
+  --warn: #C43D52;
+  --warn-soft: #FCECEF;
+
+  --sans: "Avenir Next", Avenir, "Segoe UI", Helvetica, Arial, sans-serif;
+  --serif: Georgia, "Times New Roman", serif;
+}
+
+body {
+  margin: 0;
+  background: #FFFFFF;
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+}
+
+
+/* =========================================================
+   REAL OPPORTUNITY LOGO
+   ========================================================= */
+
+.brandbar {
+  background: #FFFFFF;
+  margin: -40px -32px 38px;
+  padding: 22px 32px 18px;
+
+  display: flex;
+  align-items: center;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.opportunity-logo {
+  width: 150px;
+  height: auto;
+  display: block;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header.masthead {
+  border-bottom: 4px solid var(--op-teal);
+  padding-bottom: 22px;
+  margin-bottom: 40px;
+}
+
+.kicker {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--op-teal-dark);
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-family: var(--sans);
+  font-size: 35px;
+  line-height: 1.1;
+  margin: 0 0 10px;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--op-navy-deep);
+}
+
+.subhead {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 66ch;
+}
+
+
+/* =========================================================
+   GOAL BOX
+   ========================================================= */
+
+.goal-box {
+  background: var(--op-teal-soft);
+  border: 1px solid #B9E7EA;
+  border-left: 6px solid var(--op-teal);
+  padding: 22px 26px;
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--op-navy);
+  margin: 24px 0 8px;
+}
+
+.goal-box strong {
+  color: var(--op-navy-deep);
+}
+
+
+/* =========================================================
+   CHART PANEL
+   ========================================================= */
+
+.chart-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--op-teal);
+  padding: 28px 28px 20px;
+  margin: 20px 0;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table.compare {
+  background: #FFFFFF;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .wrap {
+    padding: 30px 18px 60px;
+  }
+
+  .brandbar {
+    margin: -30px -18px 30px;
+    padding: 18px;
+  }
+
+  .opportunity-logo {
+    width: 130px;
+  }
+
+  h1 {
+    font-size: 27px;
+  }
+}
