@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agentic AI Healthcare | Technical Product Owner Interview</title>
+<style>
+:root{--n:#17324d;--t:#167c80;--ink:#243746;--muted:#607382;--line:#d5e0e7;--p:#f4f8fa}
+*{box-sizing:border-box}body{margin:0;background:#edf2f5;color:var(--ink);font:15px/1.5 system-ui,Arial,sans-serif}
+header{background:linear-gradient(120deg,var(--n),#24566b);color:white;padding:30px 20px}
+.wrap,main{max-width:1000px;margin:auto}header h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem)}header p{margin:5px 0 0;color:#e0ebf1}
+main{padding:18px 14px 45px}.card{background:white;border:1px solid var(--line);border-radius:13px;padding:20px;margin:15px 0;box-shadow:0 3px 12px #17324d0a}
+h2{color:var(--n);font-size:1.2rem;margin:0 0 8px}h3{color:var(--t);font-size:1rem;margin:18px 0 7px}.muted,.listen,.small{color:var(--muted)}.muted{margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+label.field{display:block;font-weight:650;font-size:.9rem}input[type=text],input[type=date],textarea,select{width:100%;margin-top:6px;padding:10px;border:1px solid #bdcbd5;border-radius:8px;font:inherit;color:var(--ink);background:white}
+textarea{min-height:72px;resize:vertical}.question{border-top:1px solid var(--line);padding:14px 0}.qtitle{font-weight:700;color:var(--n);margin:0 0 5px}.listen{font-size:.85rem;margin:0 0 8px}
+.rating{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.rating label{border:1px solid var(--line);border-radius:20px;padding:5px 10px;font-size:.88rem}.rating input{accent-color:var(--t)}
+.notice{background:#fff8e7;border-left:4px solid #d49a28;padding:12px;border-radius:5px}
+button{border:0;border-radius:8px;padding:11px 15px;font:650 .95rem system-ui;cursor:pointer}.primary{background:var(--t);color:white}.secondary{background:#e7eef2;color:var(--n)}.danger{background:#f8eaea;color:#933}
+.actions{display:flex;gap:9px;flex-wrap:wrap}.score{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.metric{background:var(--p);padding:13px;border-radius:9px}.metric strong{display:block;font-size:1.5rem;color:var(--n)}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;border:1px solid var(--line);text-align:left}th{background:var(--n);color:white}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:15px}
+@media(max-width:650px){.grid,.score{grid-template-columns:1fr}.card{padding:15px}}
+@media print{body{background:white}.card{box-shadow:none;break-inside:avoid}header{background:var(--n)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.no-print{display:none!important}}
+</style></head>
+<body>
+<header><div class="wrap"><h1>Technical Product Owner Interview</h1><p>Agentic AI Healthcare Product · Interview questionnaire & assessment</p></div></header>
+<main><form id="form">
+<section class="card"><h2>Candidate details</h2><p class="muted">Complete before starting the interview.</p>
+<div class="grid">
+<label class="field">Candidate name<input name="candidate" type="text" required></label>
+<label class="field">Interviewer(s)<input name="interviewers" type="text"></label>
+<label class="field">Interview date<input name="date" type="date"></label>
+<label class="field">Role / programme<input name="role" type="text" value="Technical Product Owner – Agentic AI Healthcare"></label>
+</div></section>
+<section class="card"><h2>Interview purpose</h2><p>Assess whether the candidate can own the technical product direction for an agentic AI healthcare product—not merely coordinate delivery. The successful candidate should translate business and clinical needs into a safe, reliable and commercially viable product; understand AI agents, workflows, integrations, data and system architecture; engage credibly with engineering; and manage risk.</p><div class="notice"><b>Interviewer guidance:</b> Ask for concrete examples, the candidate’s personal contribution, alternatives considered and measurable outcomes. Distinguish what they personally owned from what engineers, architects, clinicians or data specialists delivered.</div></section>
+<div id="sections"></div>
+<section class="card"><h2>4. Practical scenario: Agentic AI healthcare MVP</h2>
+<p><b>Read to the candidate:</b> We want to launch an agentic AI healthcare product. A patient interacts with the product, provides information, receives assistance, and may trigger actions such as booking an appointment, routing a query, summarising information for a clinician or updating a connected system. The product may integrate with clinical systems and must operate safely, securely and reliably.</p>
+<h3>Ask the candidate to work through</h3><ol>
+<li>Define the primary user problem, intended use and target users. What must be clarified before solution design?</li>
+<li>Map the end-to-end user journey and identify which steps are agent-led, deterministic or human-led.</li>
+<li>Propose a high-level architecture: agent orchestration, models, tools, APIs, knowledge retrieval, data stores and monitoring.</li>
+<li>Identify key integrations and explain authentication, permissions, errors and retries.</li>
+<li>Write five initial user stories. For one AI capability, define measurable acceptance criteria and safety tests.</li>
+<li>Define the evaluation plan: test data, success measures, failure categories, red-team cases and release thresholds.</li>
+<li>Identify clinical, privacy, security, operational and commercial risks, with mitigations.</li>
+<li>Propose a phased MVP roadmap, including a controlled pilot and criteria for expanding autonomy.</li></ol>
+<h3>Complication to introduce</h3><p><b>The CEO wants the agent to autonomously assess symptoms, advise patients and book appointments. The clinical lead is concerned that the system may miss urgent cases or provide unsafe advice. The launch date is three months away. What would you do?</b></p>
+<p class="listen">Listen for intended-use clarification; clinical accountability; risk-tiering; appropriate scope; deterministic emergency/escalation pathways; human review for higher-risk cases; robust evaluation; safe fallback; privacy/security controls; staged pilot; monitoring and go/no-go criteria. A disclaimer or prompt instruction alone is not a sufficient safety control.</p>
+<label class="field">Scenario notes<textarea name="scenario_notes" placeholder="Record the candidate’s approach, trade-offs and key observations..."></textarea></label>
+</section>
+<section class="card"><h2>5. Assessment scorecard</h2><p class="muted">Rate each competency from 1 to 5. Weighted points = rating ÷ 5 × weighting.</p><div id="scores"></div>
+<div class="score" aria-live="polite"><div class="metric"><span class="small">Weighted score</span><strong id="total">— / 5</strong></div><div class="metric"><span class="small">Hiring signal</span><strong id="signal">Not assessed</strong></div></div>
+<p class="small">Suggested threshold: Do not progress a candidate who scores below 4/5 in agentic AI architecture, agent design/tool orchestration, evaluation and safety, or technical problem-solving—even if the overall score is high.</p>
+<label class="field">Overall recommendation<select name="recommendation"><option value="">Select recommendation</option><option>Strong hire</option><option>Hire</option><option>Further assessment</option><option>No hire</option></select></label>
+</section>
+<section class="card"><h2>6. Hiring calibration & interviewer notes</h2>
+<p><b>Delivery-focused PO:</b> tracks sprint progress and ticket completion, passes technical questions to developers, treats AI output as a feature and assumes launch means feature-complete.</p>
+<p><b>Technically capable AI healthcare PO:</b> owns product outcomes and technical trade-offs, interrogates agent architecture and failure modes, defines evaluation and guardrails, and balances value, clinical risk, reliability, privacy and operational readiness.</p>
+<div class="grid">
+<label class="field">Key strengths<textarea name="strengths"></textarea></label><label class="field">Concerns / gaps to validate<textarea name="concerns"></textarea></label>
+<label class="field">Final rationale<textarea name="rationale"></textarea></label><label class="field">Next steps<textarea name="next_steps"></textarea></label>
+</div></section>
+<section class="card no-print"><h2>Save or export assessment</h2><p class="small">This standalone form does not transmit candidate information to a server. Download a JSON copy or print/save the completed assessment as PDF. To make this a shared online workflow, connect it to an approved backend with appropriate access controls, privacy safeguards and retention rules.</p><div class="actions"><button class="primary" type="button" id="export">Download assessment (JSON)</button><button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button><button class="danger" type="reset">Clear form</button></div></section>
+</form><footer>Confidential · Agentic AI Healthcare Product · Interview assessment</footer></main>
+<script>
+const groups=[
+["1. Agentic AI architecture & technical depth","Establish whether the candidate understands how to design, build, integrate, evaluate and operate AI agents in healthcare.",[
+["How would you approach the technical architecture of an agentic AI healthcare product from scratch?","Agent orchestration, model layer, tools/function calling, workflow/state management, APIs, data stores, identity, observability, deployment, scalability and human oversight."],
+["What is the difference between a chatbot, an AI assistant, an agent and a multi-agent system? When would you use each?","Clear distinctions between conversational response, tool-enabled assistance, goal-directed execution and coordinated specialist agents; avoids unnecessary multi-agent complexity."],
+["How would you decide whether a task should be handled by an LLM agent, deterministic software workflow or a human?","Risk-based task allocation, reliability, repeatability, cost/latency, clinical impact, uncertainty thresholds and human-in-the-loop design."],
+["How would you design an agent that can call external tools or APIs while preventing unsafe or unauthorised actions?","Tool allowlists, scoped credentials, schema validation, permission checks, confirmation gates, least privilege, sandboxing, rate limits and audit logs."],
+["How would you manage agent state, memory and context across a multi-step healthcare interaction?","Explicit state, session boundaries, approved memory, provenance, retention, minimisation, patient identity and context-contamination controls."],
+["What approaches would you use to reduce hallucinations and ensure that an agent grounds its answers in trusted healthcare information?","Retrieval-augmented generation, approved knowledge sources, citations/provenance, versioning, constrained outputs, confidence/abstention and clinical review."],
+["How would you evaluate an AI agent before release and monitor it after launch?","Representative test sets, golden datasets, task completion, factuality, groundedness, safety, tool-call accuracy, regression/adversarial testing, drift and production monitoring."],
+["How would you approach model selection and the trade-offs between hosted foundation models, smaller models and open-source/self-hosted models?","Quality, privacy, latency, cost, availability, data processing terms, residency, vendor lock-in, model governance and fallback strategy."],
+["How would you design reliable integrations between an agent and healthcare systems such as EHR/EMR, booking, billing or patient-management platforms?","API standards, FHIR/HL7 awareness where relevant, authentication, webhooks, retries, idempotency, rate limits, error queues, reconciliation and integration testing."],
+["What would you include in the technical design to make agent behaviour traceable and debuggable?","End-to-end traces, prompt/model/version records, tool inputs/outputs, correlation IDs, audit events, redaction of sensitive data, metrics and incident replay."]]],
+["2. Healthcare safety, privacy & governance","Test whether the candidate understands the elevated risks of AI systems acting on or communicating about health information.",[
+["What risks arise when an AI agent gives health information or takes actions in a healthcare workflow?","Incorrect or overconfident advice, missed escalation, bias, automation error, privacy leakage, unsafe actions and unclear accountability."],
+["How would you define the boundaries of what the agent is and is not permitted to do?","Intended use, prohibited actions, clinical scope, triage/escalation rules, emergency handling, human approval and clear patient-facing disclosure."],
+["How would you design human-in-the-loop controls for high-risk decisions or actions?","Risk tiers, approval gates, clinician review, confirmation before consequential actions, escalation paths, override and audit trail."],
+["How would you protect patient data across prompts, model providers, retrieval systems, logs and third-party tools?","Data minimisation, encryption, access control, redaction, retention, vendor assessment, secure secrets, data residency and privacy impact assessment."],
+["What governance would you put in place for prompts, models, knowledge sources and agent workflow changes?","Version control, approvals, test evidence, change management, rollback, model/knowledge provenance, monitoring and accountable owners."],
+["What regulatory and assurance questions would you raise before launch in South Africa and other target markets?","POPIA and applicable local laws, cross-border transfers, health-professional rules, clinical safety, intended-use claims and whether software/AI medical-device requirements apply."]]],
+["3. Product ownership, delivery & leadership","Establish independent ownership, commercial judgement and the ability to lead decisions across business, clinical and engineering stakeholders.",[
+["How do you turn a business or clinical vision into an AI product roadmap and a prioritised backlog?","User and clinical needs, measurable outcomes, risk, feasibility, dependencies, data readiness, evaluation criteria and phased releases."],
+["How do you decide what belongs in the MVP—and what should remain human-led or be deferred?","Narrow use case, safe scope, value hypothesis, operational readiness, baseline performance, human fallback and explicit exclusions."],
+["How do you write acceptance criteria for an AI feature when outputs are probabilistic rather than fully deterministic?","Task-based thresholds, representative test cases, allowed/blocked behaviours, safety criteria, escalation, evaluation methodology and monitoring."],
+["Tell us about a technically complex product or AI capability you personally helped take from concept to production. What did you own?","Specific personal contribution, architecture and delivery decisions, cross-functional work, production realities and measurable results."],
+["Describe a time you challenged an engineering or architecture decision. What was the disagreement and outcome?","Evidence-led challenge, trade-offs, technical curiosity, respect for specialist expertise and documented decision."],
+["How would you handle a CEO request to launch an AI capability quickly when evaluation evidence or safety controls are not yet adequate?","Clear risk communication, staged release, limited pilot, guardrails, human review, go/no-go criteria and willingness to recommend no-go."],
+["How do you prioritise work across model quality, product features, integrations, infrastructure, privacy and technical debt?","Risk- and outcome-based prioritisation, dependencies, lifecycle cost, reliability and transparent trade-offs."],
+["What would your first 90 days look like, and what tangible product and technical outcomes would you target?","Discovery, intended-use definition, architecture/data/risk review, agent evaluation baseline, MVP scope, roadmap, delivery cadence and launch criteria."]]]
+];
+let n=0;const host=document.getElementById("sections");
+groups.forEach(g=>{const sec=document.createElement("section");sec.className="card";sec.innerHTML=`<h2>${g[0]}</h2><p class="muted">${g[1]}</p>`;g[2].forEach(q=>{n++;const d=document.createElement("div");d.className="question";d.innerHTML=`<p class="qtitle">${n}. ${q[0]}</p><p class="listen">Listen for: ${q[1]}</p><div class="rating" role="group" aria-label="Rating for question ${n}">${[1,2,3,4,5].map(v=>`<label><input type="radio" name="q${n}_rating" value="${v}"> ${v}</label>`).join("")}</div><textarea name="q${n}_notes" aria-label="Notes for question ${n}" placeholder="Interview notes / evidence / examples..."></textarea>`;sec.appendChild(d)});host.appendChild(sec)});
+const comps=[["Agentic AI architecture and systems thinking",20],["LLM/agent design, tool use and orchestration",15],["Evaluation, reliability and AI safety",15],["Healthcare workflow and clinical risk understanding",15],["APIs, integrations and data architecture",10],["Privacy, security and regulatory awareness",10],["Product ownership and commercial judgement",10],["Communication and technical leadership",5]];
+const scoreHost=document.getElementById("scores");
+comps.forEach((c,i)=>{const d=document.createElement("div");d.className="question";d.innerHTML=`<div class="grid"><div><b>${c[0]}</b><div class="small">Weight: ${c[1]}%</div></div><label class="field">Rating<select class="comp" name="competency_${i}"><option value="">Not rated</option>${[1,2,3,4,5].map(x=>`<option>${x}</option>`).join("")}</select></label></div>`;scoreHost.appendChild(d)});
+function calc(){let pts=0,count=0,critical=true;comps.forEach((c,i)=>{let v=Number(document.querySelector(`[name="competency_${i}"]`).value);if(v){pts+=v/5*c[1];count++}if(i<3&&v<4)critical=false});document.getElementById("total").textContent=count===8?(pts/100*5).toFixed(2)+" / 5":count+" of 8 rated";document.getElementById("signal").textContent=count<8?"In progress":!critical?"Below critical threshold":pts>=80?"Strong signal":"Review evidence"}
+document.addEventListener("change",e=>{if(e.target.classList.contains("comp"))calc()});
+document.getElementById("export").addEventListener("click",()=>{const f=document.getElementById("form"),answers={};new FormData(f).forEach((v,k)=>answers[k]=v);let pts=0;const scoring={};comps.forEach((c,i)=>{const v=Number(f.elements["competency_"+i].value)||null;const wp=v?v/5*c[1]:0;pts+=wp;scoring[c[0]]={weightPercent:c[1],rating:v,weightedPoints:wp}});const out={exportedAt:new Date().toISOString(),answers,score:{competencies:scoring,weightedPoints:Number(pts.toFixed(2)),averageOutOfFive:Number((pts/100*5).toFixed(2))}};const blob=new Blob([JSON.stringify(out,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="Agentic_AI_Healthcare_Interview_Assessment.json";a.click();URL.revokeObjectURL(url)});
+document.getElementById("form").addEventListener("reset",()=>setTimeout(calc,0));
+</script></body></html>
