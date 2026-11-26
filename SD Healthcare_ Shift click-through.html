@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SD Healthcare: Shift click-through</title>
+<title>SD Healthcare: Check-in click-through</title>
 <style>
 :root{--bg:#e9e9ee;--ink:#111;--mut:#6b6b76;--line:#e4e4ea;--acc:#2d2a8f;--bar:#fff;--bart:#111;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -17,7 +17,7 @@ body{background:var(--bg);font-family:"Helvetica Neue",Arial,sans-serif;color:va
 @media (prefers-color-scheme:dark){.bar button{color:#a9a6ff}}
 .bar button:disabled{opacity:.3;cursor:default}
 .phone{position:relative;width:100%;max-width:390px;flex:1;min-height:0;background:#fff;overflow:hidden;display:flex;flex-direction:column}
-@media (min-width:520px){body{justify-content:center;gap:0}.phone{flex:none;height:780px;border-radius:0 0 28px 28px;box-shadow:0 20px 50px rgba(0,0,0,.25)}.bar{border-radius:14px 14px 0 0}}
+@media (min-width:520px){body{justify-content:center}.phone{flex:none;height:780px;border-radius:0 0 28px 28px;box-shadow:0 20px 50px rgba(0,0,0,.25)}.bar{border-radius:14px 14px 0 0}}
 .sb{display:flex;justify-content:space-between;padding:10px 20px 6px;font-size:12px;font-weight:600}
 .app{display:flex;flex-direction:column;flex:1;min-height:0}
 .hd{display:flex;justify-content:space-between;align-items:center;padding:6px 18px;font-size:12px;font-weight:600}
@@ -36,7 +36,7 @@ h3{font-size:12px;margin:6px 2px 8px}
 button.card{cursor:pointer}
 .hot{border-color:#111;animation:p 1.6s ease-in-out infinite}
 @keyframes p{50%{box-shadow:0 0 0 4px rgba(45,42,143,.28)}}
-@media (prefers-reduced-motion:reduce){.hot,.hotb{animation:none}}
+@media (prefers-reduced-motion:reduce){.hot,.hotb{animation:none}.sheet{animation:none}}
 .tabs{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-around;background:#fff;border-top:1px solid var(--line);padding:10px 0 16px;font-size:10px}
 .tabs div{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mut)}.tabs .on{color:#111;font-weight:700}
 .dim{position:absolute;inset:0;background:rgba(0,0,0,.55)}
@@ -45,55 +45,61 @@ button.card{cursor:pointer}
 .sheet h2{font-size:20px;margin:6px 0 2px}.sheet .sub{font-size:12px;color:var(--mut);margin-bottom:14px}
 .sheet .row{font-size:11px;color:#333;margin:8px 0}
 .chk{font-size:11px;margin-bottom:4px}
-.btn{display:block;width:100%;border-radius:99px;padding:14px;font:600 13px inherit;font-family:inherit;margin-top:10px;cursor:pointer;border:1px solid #111}
+.btn{display:block;width:100%;border-radius:99px;padding:14px;font-size:13px;font-weight:600;font-family:inherit;margin-top:10px;cursor:pointer;border:1px solid #111}
 .btn.p{background:#111;color:#fff}.btn.s{background:#fff;color:#111}
 .hotb{animation:p 1.6s ease-in-out infinite}
-.lock{flex:1;background:linear-gradient(160deg,#d8d8dc,#7a7a82 45%,#2a2a2f);color:#fff;text-align:center;display:flex;flex-direction:column}
-.lock .d{margin-top:34px;font-size:15px}.lock .t{font-size:104px;font-weight:700;letter-spacing:-4px;line-height:1;opacity:.85}
-.note{margin:26px 14px 0;text-align:left;background:rgba(40,40,46,.7);backdrop-filter:blur(10px);border-radius:16px;padding:12px 14px;border:0;color:#fff;font:inherit;cursor:pointer;width:calc(100% - 28px)}
-.note b{display:block;font-size:12px}.note span{font-size:12px;opacity:.85}
-.lock .hint{margin-top:auto;padding:0 0 26px;font-size:11px;opacity:.7}
+.found{margin:8px 16px 0;background:#111;color:#fff;border-radius:14px;padding:12px 14px;font-size:12px;line-height:1.45;display:flex;gap:10px;align-items:flex-start}
+.found .ic{font-size:18px;line-height:1}
+.found b{display:block;font-size:13px;margin-bottom:2px}
+.login{flex:1;padding:26px 22px;overflow:auto}
+.login h1{font-size:24px;margin:10px 0 4px}.login p{font-size:12px;color:var(--mut);margin-bottom:22px}
+.login label{display:block;font-size:11px;font-weight:600;margin:14px 0 6px}
+.field{width:100%;border:1px solid #c9c9d2;border-radius:10px;padding:13px;font-size:14px;font-family:inherit;background:#fafafc;color:#111}
+.logo{font-weight:700;font-size:13px;letter-spacing:.2px}
+.done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+.done .ok{width:72px;height:72px;border-radius:50%;background:#111;color:#fff;font-size:34px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.done h2{font-size:22px}.done p{font-size:13px;color:var(--mut);margin:8px 0 14px}
 </style>
 </head>
 <body>
 <div class="bar"><button id="back">‹ Back</button><b id="lbl"></b><button id="rst">Restart</button></div>
 <div class="phone" id="phone"></div>
 <script>
-var H1={title:"Groote Schuur Hospital",sub:"Today, 16:00 - 21:00"};
-function badge(s){return s==0?'<span class="tag">Not Confirmed</span>':s==1?'<span class="tag" style="background:#e4e4ea;border-color:#e4e4ea">✓ Confirmed</span>':'<span class="tag dk">✓ Checked In</span>'}
+var SHIFT={title:"Helderberg Hospital",sub:"Today, 05:00 - 13:00"};
+function badge(s){return s==0?'<span class="tag">Not Checked In</span>':'<span class="tag dk">✓ Checked In</span>'}
+function login(){
+ return '<div class="app"><div class="sb"><span>13:53</span><span>▮▮▮</span></div>'+
+ '<div class="found"><span class="ic">📍</span><div><b>Facility found: Helderberg Hospital</b>The QR code you scanned at this facility takes you straight to check-in once you log in.</div></div>'+
+ '<div class="login"><div class="logo">SD Healthcare App</div><h1>Welcome back</h1><p>Log in to check in to your shift.</p>'+
+ '<label>Username</label><input class="field" value="charlotte.carter" readonly>'+
+ '<label>Password</label><input class="field" type="password" value="nursepass123" readonly>'+
+ '<button class="btn p hotb" style="margin-top:24px" data-go="next">Log in</button></div></div>';
+}
 function home(s,sheet){
  var hot=sheet?'':' hot';
  var h='<div class="app"><div class="sb"><span>13:53</span><span>▮▮▮</span></div><div class="hd"><span>SD Healthcare App</span><span>🔔</span></div>'+
  '<div class="greet">Good Day,<b>Charlotte Carter</b></div><div class="scroll"><div class="promo">Did you know?<b>Discount at Dischem for active SD Recruit Members</b><span>Learn More</span></div>'+
- '<h3>Upcoming Shifts</h3><button class="card'+hot+'" data-go="next"><div><div class="tags"><span class="tag dk">EMERGENCY</span>'+badge(s)+'</div><b>'+H1.title+'</b><small>'+H1.sub+'</small></div>›</button>'+
- '<div class="card"><div><b>Groote Schuur Hospital</b><small>08 May 2026, 05:00 - 13:00</small></div>›</div>'+
- '<div class="card"><div><b>Helderberg Hospital</b><small>10 May 2026, 05:00 - 13:00</small></div>›</div>'+
- '<h3>Applied Shifts</h3><div class="card"><div><b>Pending review</b><small>Waiting on the hospital</small></div></div></div>'+
+ '<h3>Upcoming Shifts</h3><button class="card'+hot+'" data-go="'+(s==0?'1':'next')+'"><div><div class="tags"><span class="tag dk">EMERGENCY</span>'+badge(s)+'</div><b>'+SHIFT.title+'</b><small>'+SHIFT.sub+'</small></div>›</button></div>'+
  '<div class="tabs"><div class="on">⌂<span>Home</span></div><div>☰<span>Shifts</span></div><div>▦<span>Schedule</span></div><div>☺<span>Profile</span></div></div></div>';
  return h+(sheet||'');
 }
 function sheet(top,btns){
- return '<div class="dim"></div><div class="sheet">'+(top?'<div class="chk">✓ Checked In</div>':'')+'<h2>Helderberg Hospital</h2><div class="sub">Trauma &amp; Emergency</div>'+
+ return '<div class="dim"></div><div class="sheet">'+(top?'<div class="chk">✓ Checked In</div>':'')+'<h2>'+SHIFT.title+'</h2><div class="sub">Trauma &amp; Emergency</div>'+
  '<div class="row">📅 08 May 2026</div><div class="row">🕐 05:00 - 13:00</div><div class="row">📍 2.3km from you, Observatory, Cape Town</div><div class="row">🚌 Transport Available</div>'+btns+'</div>';
 }
-function lock(t,m){return '<div class="lock"><div class="sb"><span>Vodacom</span><span>▮▮▮</span></div><div class="d">Thu 18 Jun</div><div class="t">08:35</div><button class="note hotb" data-go="next"><b>'+t+'</b><span>'+m+'</span></button><div class="hint">Tap the notification</div></div>'}
+function end(){return '<div class="app"><div class="sb"><span>13:53</span><span>▮▮▮</span></div><div class="done"><div class="ok">✓</div><h2>Shift complete</h2><p>Thank you for completing your shift at '+SHIFT.title+'.</p><button class="btn p" style="max-width:240px" data-go="0">Start over</button></div></div>'}
 var S=[
- {n:"Home: shift not confirmed",v:function(){return home(0)}},
- {n:"Notification: confirm shift",v:function(){return lock("Upcoming Shift","Please confirm your upcoming shift.")}},
- {n:"Confirm shift",v:function(){return home(0,sheet(0,'<button class="btn p hotb" data-go="next">Confirm Shift 👍</button><button class="btn s" data-go="0">Cancel Shift 👎</button>'))}},
- {n:"Home: confirmed",v:function(){return home(1)}},
- {n:"Notification: it’s time",v:function(){return lock("It’s time","Please check-in to your assigned shift soon.")}},
- {n:"Check in to shift",v:function(){return home(1,sheet(0,'<button class="btn p hotb" data-go="next">Check-In</button><button class="btn s" data-go="3">Close</button>'))}},
- {n:"Home: checked in",v:function(){return home(2)}},
- {n:"Notification: shift ending",v:function(){return lock("Shift Ended","Your shift is about to end. Don’t forget to check out.")}},
- {n:"Check out of shift",v:function(){return home(2,sheet(1,'<button class="btn p hotb" data-go="next">Check-Out</button><button class="btn s" data-go="6">Close</button>'))}},
- {n:"Notification: shift complete",v:function(){return lock("Shift complete","Thank you for completing your shift.")},end:1}
+ {n:"Login",v:login},
+ {n:"Check in to shift",v:function(){return home(0,sheet(0,'<button class="btn p hotb" data-go="2">Check-In</button><button class="btn s" data-go="5">Close</button>'))}},
+ {n:"Home: checked in",v:function(){return home(1)}},
+ {n:"Check out of shift",v:function(){return home(1,sheet(1,'<button class="btn p hotb" data-go="4">Check-Out</button><button class="btn s" data-go="2">Close</button>'))}},
+ {n:"Shift complete",v:end},
+ {n:"Home: not checked in",v:function(){return home(0)},side:1}
 ];
 var i=0,P=document.getElementById('phone');
-function show(){P.innerHTML=S[i].v();document.getElementById('lbl').textContent=(i+1)+' / '+S.length+'  '+S[i].n;document.getElementById('back').disabled=i==0;
- if(S[i].end){var b=P.querySelector('.note');b.dataset.go='0'}}
-P.addEventListener('click',function(e){var t=e.target.closest('[data-go]');if(!t)return;var g=t.dataset.go;i=g=='next'?Math.min(i+1,S.length-1):+g;show()});
-document.getElementById('back').onclick=function(){if(i>0){i--;show()}};
+function show(){P.innerHTML=S[i].v();document.getElementById('lbl').textContent=(S[i].side?'':(i+1)+' / 5  ')+S[i].n;document.getElementById('back').disabled=i==0}
+P.addEventListener('click',function(e){var t=e.target.closest('[data-go]');if(!t)return;var g=t.dataset.go;i=g=='next'?i+1:+g;show()});
+document.getElementById('back').onclick=function(){i=i==5?1:i==2?1:Math.max(0,i-1);show()};
 document.getElementById('rst').onclick=function(){i=0;show()};
 show();
 </script>
